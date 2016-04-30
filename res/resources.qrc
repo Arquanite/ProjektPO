@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>all.png</file>
+        <file>ball.png</file>
+        <file>fire.png</file>
+        <file>rope.png</file>
+    </qresource>
+</RCC>
