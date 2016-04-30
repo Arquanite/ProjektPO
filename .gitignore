@@ -1,0 +1,4 @@
+#ignore Qt Creator files
+*.pro.user
+*.pro.user.*
+*.autosave
