@@ -4,6 +4,10 @@ Osoba::Osoba(QString Imie, QString Nazwisko) : m_Imie(Imie), m_Nazwisko(Nazwisko
 
 }
 
+Osoba::~Osoba(){
+
+}
+
 QString Osoba::Imie() const {
     return m_Imie;
 }

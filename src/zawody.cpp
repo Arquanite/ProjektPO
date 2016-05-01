@@ -53,8 +53,17 @@ bool Zawody::UsunDruzyne(Druzyna DruzynaDoUsuniecia){
 }
 
 bool Zawody::UsunSedziego(Sedzia SedziaDoUsuniecia){
-    if(SedziaDoUsuniecia.Imie() == "lol") return true;
-    return true;
+    SedziaGlowny *SG = dynamic_cast<SedziaGlowny*>(&SedziaDoUsuniecia);
+    if(SG){
+        if(m_Sedziowie.ListaSiatkowkaPlazowaGlowny.removeOne(*SG)) return true;
+        if(m_Sedziowie.ListaPrzeciaganieLinyGlowny.removeOne(*SG)) return true;
+        if(m_Sedziowie.ListaDwaOgnieGlowny.removeOne(*SG)) return true;
+    }
+
+    SedziaPomocniczy *SP = dynamic_cast<SedziaPomocniczy*>(&SedziaDoUsuniecia);
+    if(SP) if(m_Sedziowie.ListaSiatkowkaPlazowaPomocniczy.removeOne(*SP)) return true;
+
+    return false;
 }
 
 ListaSedziow Zawody::Sedziowie() const {
@@ -77,5 +86,11 @@ void Zawody::ZaplanujSpotkania(){
 }
 
 void Zawody::RozegrajMecze(){
+    for(SiatkowkaPlazowa M : m_Spotkania.ListaSiatkowkaPlazowa) M.Rozegraj();
+    for(PrzeciaganieLiny M : m_Spotkania.ListaPrzeciaganieLiny) M.Rozegraj();
+    for(DwaOgnie M : m_Spotkania.ListaDwaOgnie) M.Rozegraj();
+}
+
+void Zawody::GenerujDruzyny(int ilosc){
 
 }

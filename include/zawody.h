@@ -27,6 +27,7 @@ public:
 
     void ZaplanujSpotkania();
     void RozegrajMecze();
+    void GenerujDruzyny(int ilosc);
 };
 
 #endif // ZAWODY_H
