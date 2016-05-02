@@ -6,6 +6,7 @@
 class Zawodnik : public Osoba {
 public:
     Zawodnik(QString Imie, QString Nazwisko);
+    Zawodnik(const Osoba &O);
 };
 
 #endif // ZAWODNIK_H

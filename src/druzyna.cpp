@@ -26,5 +26,5 @@ void Druzyna::Przegrana(){
 }
 
 bool Druzyna::operator == (const Druzyna &D) const{
-    return ( m_Nazwa == D.m_Nazwa || m_Zawodnicy == D.m_Zawodnicy );
+    return ( m_Nazwa == D.m_Nazwa && m_Zawodnicy == D.m_Zawodnicy );
 }

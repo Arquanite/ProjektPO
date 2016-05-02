@@ -32,7 +32,8 @@ SOURCES += src/main.cpp\
     src/listaspotkan.cpp \
     src/listasedziow.cpp \
     src/listadruzyn.cpp \
-    src/zawody.cpp
+    src/zawody.cpp \
+    generator.cpp
 
 HEADERS  += include/competitionmanager.h \
     include/osoba.h \
@@ -52,7 +53,8 @@ HEADERS  += include/competitionmanager.h \
     include/listaspotkan.h \
     include/listasedziow.h \
     include/listadruzyn.h \
-    include/zawody.h
+    include/zawody.h \
+    generator.h
 
 FORMS    += ui/competitionmanager.ui
 

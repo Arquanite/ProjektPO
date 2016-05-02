@@ -4,9 +4,11 @@
 #include "listaspotkan.h"
 #include "listasedziow.h"
 #include "listadruzyn.h"
+#include "generator.h"
 
 class Zawody{
 protected:
+    Generator m_Generator;
     ListaSpotkan m_Spotkania;
     ListaSedziow m_Sedziowie;
     ListaDruzyn m_Druzyny;
@@ -27,7 +29,7 @@ public:
 
     void ZaplanujSpotkania();
     void RozegrajMecze();
-    void GenerujDruzyny(int ilosc);
+    void GenerujDruzyny(int Ilosc, int LiczbaOsob);
 };
 
 #endif // ZAWODY_H

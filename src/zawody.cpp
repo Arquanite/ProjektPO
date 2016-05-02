@@ -82,7 +82,53 @@ ListaDruzyn Zawody::Zwyciezcy() const {
 }
 
 void Zawody::ZaplanujSpotkania(){
+    m_Spotkania.ListaSiatkowkaPlazowa.clear();
+    m_Spotkania.ListaPrzeciaganieLiny.clear();
+    m_Spotkania.ListaDwaOgnie.clear();
 
+    int LiczbaDruzyn, LiczbaSedziow, LiczbaSedziowPomocniczych;
+
+    LiczbaSedziow = m_Sedziowie.ListaSiatkowkaPlazowaGlowny.size();
+    LiczbaSedziowPomocniczych = m_Sedziowie.ListaSiatkowkaPlazowaPomocniczy.size();
+    LiczbaDruzyn = m_Druzyny.ListaSiatkowkaPlazowa.size();
+    for(int i=0; i<LiczbaDruzyn; i++){
+        Druzyna Gospodarz = m_Druzyny.ListaSiatkowkaPlazowa.at(i);
+        for(int j=i; j<LiczbaDruzyn; j++){
+            Druzyna Gosc = m_Druzyny.ListaSiatkowkaPlazowa.at(j);
+            SedziaGlowny SedziaG = m_Sedziowie.ListaSiatkowkaPlazowaGlowny.at(qrand()%LiczbaSedziow);
+            SedziaPomocniczy SedziaP1 = m_Sedziowie.ListaSiatkowkaPlazowaPomocniczy.at(qrand()%LiczbaSedziowPomocniczych);
+            SedziaPomocniczy SedziaP2 = m_Sedziowie.ListaSiatkowkaPlazowaPomocniczy.at(qrand()%LiczbaSedziowPomocniczych);
+
+            SiatkowkaPlazowa SP(Gospodarz, Gosc, SedziaG, SedziaP1, SedziaP2);
+            m_Spotkania.ListaSiatkowkaPlazowa.append(SP);
+        }
+    }
+
+    LiczbaSedziow = m_Sedziowie.ListaPrzeciaganieLinyGlowny.size();
+    LiczbaDruzyn = m_Druzyny.ListaPrzeciaganieLiny.size();
+    for(int i=0; i<LiczbaDruzyn; i++){
+        Druzyna Gospodarz = m_Druzyny.ListaPrzeciaganieLiny.at(i);
+        for(int j=i; j<LiczbaDruzyn; j++){
+            Druzyna Gosc = m_Druzyny.ListaPrzeciaganieLiny.at(j);
+            SedziaGlowny SedziaG = m_Sedziowie.ListaPrzeciaganieLinyGlowny.at(qrand()%LiczbaSedziow);
+
+            PrzeciaganieLiny PL(Gospodarz, Gosc, SedziaG);
+            m_Spotkania.ListaPrzeciaganieLiny.append(PL);
+        }
+    }
+
+    LiczbaSedziow = m_Sedziowie.ListaDwaOgnieGlowny.size();
+    LiczbaDruzyn = m_Druzyny.ListaDwaOgnie.size();
+    for(int i=0; i<LiczbaDruzyn; i++){
+        Druzyna Gospodarz = m_Druzyny.ListaDwaOgnie.at(i);
+        for(int j=i; j<LiczbaDruzyn; j++){
+            Druzyna Gosc = m_Druzyny.ListaDwaOgnie.at(j);
+            SedziaGlowny SedziaG = m_Sedziowie.ListaDwaOgnieGlowny.at(qrand()%LiczbaSedziow);
+
+            DwaOgnie DO(Gospodarz, Gosc, SedziaG);
+            m_Spotkania.ListaDwaOgnie.append(DO);
+        }
+    }
 }
 
 void Zawody::RozegrajMecze(){
@@ -91,6 +137,10 @@ void Zawody::RozegrajMecze(){
     for(DwaOgnie M : m_Spotkania.ListaDwaOgnie) M.Rozegraj();
 }
 
-void Zawody::GenerujDruzyny(int ilosc){
-
+void Zawody::GenerujDruzyny(int Ilosc, int LiczbaOsob){
+    while(Ilosc--){
+        m_Druzyny.ListaSiatkowkaPlazowa.append(m_Generator.GenerujDruzyne(LiczbaOsob));
+        m_Druzyny.ListaPrzeciaganieLiny.append(m_Generator.GenerujDruzyne(LiczbaOsob));
+        m_Druzyny.ListaDwaOgnie.append(m_Generator.GenerujDruzyne(LiczbaOsob));
+    }
 }

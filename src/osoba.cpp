@@ -4,6 +4,10 @@ Osoba::Osoba(QString Imie, QString Nazwisko) : m_Imie(Imie), m_Nazwisko(Nazwisko
 
 }
 
+Osoba::Osoba(const Osoba &O) : m_Imie(O.m_Imie), m_Nazwisko(O.m_Nazwisko){
+
+}
+
 Osoba::~Osoba(){
 
 }
@@ -25,5 +29,5 @@ void Osoba::ZmienNazwisko(const QString &Nazwisko){
 }
 
 bool Osoba::operator == (const Osoba &O) const{
-    return (m_Imie == O.m_Imie || m_Nazwisko == O.m_Nazwisko);
+    return (m_Imie == O.m_Imie && m_Nazwisko == O.m_Nazwisko);
 }

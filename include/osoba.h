@@ -9,6 +9,7 @@ protected:
     QString m_Nazwisko;
 public:
     Osoba(QString Imie, QString Nazwisko);
+    Osoba(const Osoba &O);
     virtual ~Osoba();
     QString Imie() const;
     void ZmienImie(const QString &Imie);

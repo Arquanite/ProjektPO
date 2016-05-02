@@ -6,6 +6,7 @@
 class Sedzia : public Osoba {
 public:
     Sedzia(QString Imie, QString Nazwisko);
+    Sedzia(const Osoba &O);
 };
 
 #endif // SEDZIA_H

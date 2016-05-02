@@ -6,4 +6,15 @@
         <file>rope.png</file>
         <file>cm_icon.png</file>
     </qresource>
+    <qresource prefix="/osoby">
+        <file>imiona_m</file>
+        <file>imiona_z</file>
+        <file>nazwiska_m</file>
+        <file>nazwiska_z</file>
+    </qresource>
+    <qresource prefix="/drużyny">
+        <file>przymiotniki</file>
+        <file>rzeczowniki</file>
+        <file>te_trzecie</file>
+    </qresource>
 </RCC>
