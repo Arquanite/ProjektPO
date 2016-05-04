@@ -138,11 +138,9 @@ void Zawody::ZaplanujSpotkania(){
 }
 
 void Zawody::RozegrajMecze(){
-    qDebug()<<"Trwa rozgrywanie";
-    for(SiatkowkaPlazowa M : m_Spotkania.ListaSiatkowkaPlazowa) M.Rozegraj();
-    for(PrzeciaganieLiny M : m_Spotkania.ListaPrzeciaganieLiny) M.Rozegraj();
-    for(DwaOgnie M : m_Spotkania.ListaDwaOgnie) M.Rozegraj();
-    qDebug()<<"rozegrano";
+    for(SiatkowkaPlazowa &M : m_Spotkania.ListaSiatkowkaPlazowa) M.Rozegraj();
+    for(PrzeciaganieLiny &M : m_Spotkania.ListaPrzeciaganieLiny) M.Rozegraj();
+    for(DwaOgnie &M : m_Spotkania.ListaDwaOgnie) M.Rozegraj();
 }
 
 void Zawody::GenerujDruzyny(int Ilosc, int LiczbaOsob){

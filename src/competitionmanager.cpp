@@ -6,12 +6,11 @@ CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), u
     ui->setupUi(this);
     qsrand(QTime::currentTime().msecsSinceStartOfDay());
 
-    m_Zawody.GenerujDruzyny(40,5);
+    m_Zawody.GenerujDruzyny(2,5);
     m_Zawody.GenerujSedziow(20);
     m_Zawody.ZaplanujSpotkania();
     m_Zawody.RozegrajMecze();
 
-    qDebug()<<"nadal działa";
     const ListaDruzyn* Druzyny = m_Zawody.Druzyny();
     m_TeamModel = new TeamModel(Druzyny);
     m_TeamProxyModel = new BetterProxyModel;
