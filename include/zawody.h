@@ -15,21 +15,23 @@ protected:
     ListaDruzyn m_Zwyciezcy;
     int m_LiczbaZwyciezcow = 4;
     bool m_Zakonczone = 0;
+
 public:
     bool ZarejestrujDruzyne(Druzyna NowaDruzyna, int Konkurencja);
-    bool ZarejestrujSedziegoGlownego(SedziaGlowny NowySedzia, int Konkurencja);
+    bool ZarejestrujSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy = false);
 
     bool UsunDruzyne(Druzyna DruzynaDoUsuniecia);
     bool UsunSedziego(Sedzia SedziaDoUsuniecia);
 
-    ListaSpotkan Spotkania() const;
-    ListaSedziow Sedziowie() const;
-    ListaDruzyn Druzyny() const;
-    ListaDruzyn Zwyciezcy() const;
+    const ListaSpotkan* Spotkania() const;
+    const ListaSedziow* Sedziowie() const;
+    const ListaDruzyn* Druzyny() const;
+    const ListaDruzyn* Zwyciezcy() const;
 
     void ZaplanujSpotkania();
     void RozegrajMecze();
     void GenerujDruzyny(int Ilosc, int LiczbaOsob);
+    void GenerujSedziow(int Ilosc);
 };
 
 #endif // ZAWODY_H

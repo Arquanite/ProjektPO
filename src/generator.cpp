@@ -1,48 +1,62 @@
 #include "generator.h"
 
 Generator::Generator(){
-    QFile *plik = NULL;
-    QTextStream in(plik);
+    QFile *plik;
+    QTextStream *in;
 
-    plik = new QFile("qrc://osoby/imiona_m");
+    plik = new QFile(":/osoby/imiona_m");
     plik->open(QIODevice::ReadOnly);
-    while(!in.atEnd()) ImionaM.append(in.readLine());
+    in = new QTextStream(plik);
+    while(!in->atEnd()) ImionaM.append(in->readLine());
+    delete in;
     plik->close();
     delete plik;
 
-    plik = new QFile("qrc://osoby/imiona_z");
+    plik = new QFile(":/osoby/imiona_z");
     plik->open(QIODevice::ReadOnly);
-    while(!in.atEnd()) ImionaZ.append(in.readLine());
+    in = new QTextStream(plik);
+    while(!in->atEnd()) ImionaZ.append(in->readLine());
+    delete in;
     plik->close();
     delete plik;
 
-    plik = new QFile("qrc://osoby/nazwiska_m");
+    plik = new QFile(":/osoby/nazwiska_m");
     plik->open(QIODevice::ReadOnly);
-    while(!in.atEnd()) NazwiskaM.append(in.readLine());
+    in = new QTextStream(plik);
+    while(!in->atEnd()) NazwiskaM.append(in->readLine());
+    delete in;
     plik->close();
     delete plik;
 
-    plik = new QFile("qrc://osoby/nazwiska_z");
+    plik = new QFile(":/osoby/nazwiska_z");
     plik->open(QIODevice::ReadOnly);
-    while(!in.atEnd()) NazwiskaZ.append(in.readLine());
+    in = new QTextStream(plik);
+    while(!in->atEnd()) NazwiskaZ.append(in->readLine());
+    delete in;
     plik->close();
     delete plik;
 
-    plik = new QFile("qrc://drużyny/przymiotniki");
+    plik = new QFile(":/drużyny/przymiotniki");
     plik->open(QIODevice::ReadOnly);
-    while(!in.atEnd()) Przymiotniki.append(in.readLine());
+    in = new QTextStream(plik);
+    while(!in->atEnd()) Przymiotniki.append(in->readLine());
+    delete in;
     plik->close();
     delete plik;
 
-    plik = new QFile("qrc://drużyny/rzeczowniki");
+    plik = new QFile(":/drużyny/rzeczowniki");
     plik->open(QIODevice::ReadOnly);
-    while(!in.atEnd()) Rzeczowniki.append(in.readLine());
+    in = new QTextStream(plik);
+    while(!in->atEnd()) Rzeczowniki.append(in->readLine());
+    delete in;
     plik->close();
     delete plik;
 
-    plik = new QFile("qrc://drużyny/te_trzecie");
+    plik = new QFile(":/drużyny/te_trzecie");
     plik->open(QIODevice::ReadOnly);
-    while(!in.atEnd()) TeTrzecie.append(in.readLine());
+    in = new QTextStream(plik);
+    while(!in->atEnd()) TeTrzecie.append(in->readLine());
+    delete in;
     plik->close();
     delete plik;
 }

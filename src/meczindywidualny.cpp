@@ -1,6 +1,6 @@
 #include "meczindywidualny.h"
 
-MeczIndywidualny::MeczIndywidualny(Zawodnik &Gospodarz, Zawodnik &Gosc, SedziaGlowny &Sedzia) : Mecz(Sedzia), m_Gospodarz(Gospodarz), m_Gosc(Gosc){
+MeczIndywidualny::MeczIndywidualny(Zawodnik Gospodarz, Zawodnik Gosc, SedziaGlowny Sedzia) : Mecz(Sedzia), m_Gospodarz(Gospodarz), m_Gosc(Gosc){
 
 }
 

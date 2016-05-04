@@ -9,7 +9,7 @@ protected:
     Zawodnik m_Gospodarz;
     Zawodnik m_Gosc;
 public:
-    MeczIndywidualny(Zawodnik &Gospodarz, Zawodnik &Gosc, SedziaGlowny &Sedzia);
+    MeczIndywidualny(Zawodnik Gospodarz, Zawodnik Gosc, SedziaGlowny Sedzia);
     Zawodnik Gospodarz() const;
     Zawodnik Gosc() const;
 };

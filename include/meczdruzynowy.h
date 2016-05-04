@@ -9,7 +9,7 @@ protected:
     Druzyna m_Gospodarz;
     Druzyna m_Gosc;
 public:
-    MeczDruzynowy(Druzyna &Gospodarz, Druzyna &Gosc, SedziaGlowny Sedzia);
+    MeczDruzynowy(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia);
     Druzyna Gospodarz() const;
     Druzyna Gosc() const;
 };
