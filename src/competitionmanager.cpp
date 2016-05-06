@@ -6,7 +6,7 @@ CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), u
     ui->setupUi(this);
     qsrand(QTime::currentTime().msecsSinceStartOfDay());
 
-    m_Zawody.GenerujDruzyny(2,5);
+    m_Zawody.GenerujDruzyny(40,5);
     m_Zawody.GenerujSedziow(20);
     m_Zawody.ZaplanujSpotkania();
     m_Zawody.RozegrajMecze();
@@ -21,7 +21,7 @@ CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), u
     ui->widokDruzyn->setModel(m_TeamProxyModel);
     ui->widokDruzyn->resizeColumnsToContents();
     ui->widokDruzyn->horizontalHeader()->setSectionsMovable(true);
-    ui->widokDruzyn->sortByColumn(1, Qt::AscendingOrder);
+    ui->widokDruzyn->sortByColumn(1, Qt::DescendingOrder);
 
     const ListaSedziow* Sedziowie = m_Zawody.Sedziowie();
     m_JudgeModel = new JudgeModel(Sedziowie);

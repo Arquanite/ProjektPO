@@ -138,9 +138,56 @@ void Zawody::ZaplanujSpotkania(){
 }
 
 void Zawody::RozegrajMecze(){
-    for(SiatkowkaPlazowa &M : m_Spotkania.ListaSiatkowkaPlazowa) M.Rozegraj();
-    for(PrzeciaganieLiny &M : m_Spotkania.ListaPrzeciaganieLiny) M.Rozegraj();
-    for(DwaOgnie &M : m_Spotkania.ListaDwaOgnie) M.Rozegraj();
+    for(SiatkowkaPlazowa &M : m_Spotkania.ListaSiatkowkaPlazowa){
+        if(M.Rozegraj()){
+            QList<Druzyna> *L = &m_Druzyny.ListaSiatkowkaPlazowa;
+            int index = L->indexOf(M.Gospodarz());
+            Druzyna D = L->at(index);
+            D.Wygrana();
+            L->replace(index, D);
+        }
+        else {
+            QList<Druzyna> *L = &m_Druzyny.ListaSiatkowkaPlazowa;
+            int index = L->indexOf(M.Gosc());
+            Druzyna D = L->at(index);
+            D.Wygrana();
+            L->replace(index, D);
+        }
+    }
+
+    for(PrzeciaganieLiny &M : m_Spotkania.ListaPrzeciaganieLiny){
+        if(M.Rozegraj()){
+            QList<Druzyna> *L = &m_Druzyny.ListaPrzeciaganieLiny;
+            int index = L->indexOf(M.Gospodarz());
+            Druzyna D = L->at(index);
+            D.Wygrana();
+            L->replace(index, D);
+        }
+        else {
+            QList<Druzyna> *L = &m_Druzyny.ListaPrzeciaganieLiny;
+            int index = L->indexOf(M.Gosc());
+            Druzyna D = L->at(index);
+            D.Wygrana();
+            L->replace(index, D);
+        }
+    }
+
+    for(DwaOgnie &M : m_Spotkania.ListaDwaOgnie){
+        if(M.Rozegraj()){
+            QList<Druzyna> *L = &m_Druzyny.ListaDwaOgnie;
+            int index = L->indexOf(M.Gospodarz());
+            Druzyna D = L->at(index);
+            D.Wygrana();
+            L->replace(index, D);
+        }
+        else {
+            QList<Druzyna> *L = &m_Druzyny.ListaDwaOgnie;
+            int index = L->indexOf(M.Gosc());
+            Druzyna D = L->at(index);
+            D.Wygrana();
+            L->replace(index, D);
+        }
+    }
 }
 
 void Zawody::GenerujDruzyny(int Ilosc, int LiczbaOsob){

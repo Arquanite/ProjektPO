@@ -18,7 +18,7 @@ int MatchModel::rowCount(const QModelIndex &parent) const {
 int MatchModel::columnCount(const QModelIndex &parent) const {
     if(parent.isValid()) return 0;
 
-    return 4;
+    return 7;
 }
 
 QVariant MatchModel::data(const QModelIndex &index, int role) const {
@@ -51,17 +51,44 @@ QVariant MatchModel::data(const QModelIndex &index, int role) const {
     if(index.column() == 0) return M->Gospodarz().Nazwa();
     else if(index.column() == 1) return M->Gosc().Nazwa();
     else if(index.column() == 2) return M->Wynik();
-    else return Konkurencja;
+    else if(index.column() == 3) return Konkurencja;
+    else if(index.column() == 4) return M->Sedzia().Nazwisko() + " " + M->Sedzia().Imie();
+    else if(const SiatkowkaPlazowa *S = dynamic_cast<const SiatkowkaPlazowa*>(M)){
+        if(index.column() == 5) return S->SedziaPomocniczy1().Nazwisko() + " " + S->SedziaPomocniczy1().Imie();
+        return S->SedziaPomocniczy2().Nazwisko() + " " + S->SedziaPomocniczy2().Imie();
+    }
+    return QVariant();
 }
 
 QVariant MatchModel::headerData(int section, Qt::Orientation orientation, int role) const {
     if(role != Qt::DisplayRole) return QVariant();
     if(orientation == Qt::Vertical) return section+1;
     if(orientation == Qt::Horizontal){
-        if(section == 0) return tr("Drużyna Gospodarza");
-        else if(section == 1) return tr("Drużyna Gościa");
-        else if(section == 2) return tr("Wynik");
-        else return tr("Konkurencja");
+        switch (section) {
+        case 0:
+            return tr("Drużyna Gospodarza");
+            break;
+        case 1:
+            return tr("Drużyna Gościa");
+            break;
+        case 2:
+            return tr("Wynik");
+            break;
+        case 3:
+            return tr("Konkurencja");
+            break;
+        case 4:
+            return tr("Sędzia Główny");
+            break;
+        case 5:
+            return tr("Sędzia Pomocniczy 1");
+            break;
+        case 6:
+            return tr("Sędzia Pomocniczy 2");
+            break;
+        default:
+            break;
+        }
     }
     return QVariant();
 }

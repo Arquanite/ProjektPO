@@ -34,11 +34,11 @@ SOURCES += src/main.cpp\
     src/listadruzyn.cpp \
     src/zawody.cpp \
     src/generator.cpp \
-    teammodel.cpp \
-    exitdialog.cpp \
-    betterproxymodel.cpp \
-    judgemodel.cpp \
-    matchmodel.cpp
+    src/teammodel.cpp \
+    src/exitdialog.cpp \
+    src/betterproxymodel.cpp \
+    src/judgemodel.cpp \
+    src/matchmodel.cpp
 
 HEADERS  += include/competitionmanager.h \
     include/osoba.h \
@@ -60,15 +60,15 @@ HEADERS  += include/competitionmanager.h \
     include/listadruzyn.h \
     include/zawody.h \
     include/generator.h \
-    teammodel.h \
-    exitdialog.h \
-    betterproxymodel.h \
-    judgemodel.h \
-    konkurencja.h \
-    matchmodel.h
+    include/teammodel.h \
+    include/exitdialog.h \
+    include/betterproxymodel.h \
+    include/judgemodel.h \
+    include/konkurencja.h \
+    include/matchmodel.h
 
 FORMS    += ui/competitionmanager.ui \
-    exitdialog.ui
+    ui/exitdialog.ui
 
 RESOURCES += res/resources.qrc
 
