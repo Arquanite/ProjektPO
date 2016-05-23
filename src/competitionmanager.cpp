@@ -1,13 +1,15 @@
 #include "competitionmanager.h"
 #include "ui_competitionmanager.h"
 #include <QTime>
+#include <QProgressBar>
+#include <QLabel>
 
 CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), ui(new Ui::CompetitionManager) {
     ui->setupUi(this);
     qsrand(QTime::currentTime().msecsSinceStartOfDay());
 
-    m_Zawody.GenerujDruzyny(40,5);
-    m_Zawody.GenerujSedziow(20);
+    m_Zawody.GenerujDruzyny(10,5);
+    m_Zawody.GenerujSedziow(5);
     m_Zawody.ZaplanujSpotkania();
     m_Zawody.RozegrajMecze();
 
@@ -46,11 +48,18 @@ CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), u
     ui->widokSpotkan->resizeColumnsToContents();
     ui->widokSpotkan->horizontalHeader()->setSectionsMovable(true);
     ui->widokSpotkan->sortByColumn(2, Qt::AscendingOrder);
+
+    //ui->statusBar->addPermanentWidget(new QLabel("lolxd"));
+    //ui->statusBar->addPermanentWidget(new QProgressBar());
 }
 
 CompetitionManager::~CompetitionManager(){
     delete m_TeamModel;
     delete m_TeamProxyModel;
+    delete m_JudgeModel;
+    delete m_JudgeProxyModel;
+    delete m_MatchModel;
+    delete m_MatchProxyModel;
     delete ui;
 }
 

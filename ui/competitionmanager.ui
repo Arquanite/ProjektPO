@@ -371,6 +371,9 @@ QTabBar::tab:!selected{
            </property>
            <item>
             <widget class="QTableView" name="widokSpotkan">
+             <property name="alternatingRowColors">
+              <bool>true</bool>
+             </property>
              <property name="selectionMode">
               <enum>QAbstractItemView::SingleSelection</enum>
              </property>
@@ -403,7 +406,7 @@ QTabBar::tab:!selected{
      <x>0</x>
      <y>0</y>
      <width>912</width>
-     <height>29</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -483,7 +486,15 @@ QMenu {
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="styleSheet">
-    <string notr="true">background-color: #404040; color: white;</string>
+    <string notr="true">QStatusBar{
+	background-color: #404040;
+	color: white;
+}
+
+QStatusBar::item{
+	border: none;
+}
+</string>
    </property>
   </widget>
   <action name="actionDodaj_dru_yn">

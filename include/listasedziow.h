@@ -8,10 +8,10 @@
 
 class ListaSedziow{
 public:
-    QList<Sedzia> ListaSiatkowkaPlazowaGlowny;
-    QList<Sedzia> ListaSiatkowkaPlazowaPomocniczy;
-    QList<Sedzia> ListaPrzeciaganieLinyGlowny;
-    QList<Sedzia> ListaDwaOgnieGlowny;
+    QList<SedziaGlowny> ListaSiatkowkaPlazowaGlowny;
+    QList<SedziaPomocniczy> ListaSiatkowkaPlazowaPomocniczy;
+    QList<SedziaGlowny> ListaPrzeciaganieLinyGlowny;
+    QList<SedziaGlowny> ListaDwaOgnieGlowny;
 };
 
 #endif // LISTASEDZIOW_H
