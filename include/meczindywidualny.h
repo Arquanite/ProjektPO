@@ -6,12 +6,12 @@
 
 class MeczIndywidualny : public Mecz {
 protected:
-    Zawodnik m_Gospodarz;
-    Zawodnik m_Gosc;
+    QString m_Gospodarz;
+    QString m_Gosc;
 public:
-    MeczIndywidualny(Zawodnik Gospodarz, Zawodnik Gosc, SedziaGlowny Sedzia);
-    Zawodnik Gospodarz() const;
-    Zawodnik Gosc() const;
+    MeczIndywidualny(QString Gospodarz, QString Gosc, QString Sedzia);
+    QString Gospodarz() const;
+    QString Gosc() const;
 };
 
 #endif // MECZINDYWIDUALNY_H

@@ -31,11 +31,13 @@ QVariant JudgeModel::data(const QModelIndex &index, int role) const {
     C = m_Sedziowie->ListaPrzeciaganieLinyGlowny.size() + B;
 
     QString Konkurencja, Typ;
-    const Sedzia *S;
+    Sedzia S("X","X");
+    QList<QString> L;
     int row = index.row();
 
     if(index.row() < A){
-        S = &m_Sedziowie->ListaSiatkowkaPlazowaGlowny.at(row);
+        L = m_Sedziowie->ListaSiatkowkaPlazowaGlowny.keys();
+        S = m_Sedziowie->ListaSiatkowkaPlazowaGlowny.value(L.value(row));
         Konkurencja = "Siatkówka Plażowa";
         Typ = "Sędzia Główny";
     }
@@ -60,10 +62,10 @@ QVariant JudgeModel::data(const QModelIndex &index, int role) const {
 
     switch (index.column()) {
     case 0:
-        return S->Nazwisko();
+        return S.Nazwisko();
         break;
     case 1:
-        return S->Imie();
+        return S.Imie();
         break;
     case 2:
         return Konkurencja;

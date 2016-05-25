@@ -20,8 +20,8 @@ public:
     bool ZarejestrujDruzyne(Druzyna NowaDruzyna, int Konkurencja);
     bool ZarejestrujSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy = false);
 
-    bool UsunDruzyne(Druzyna DruzynaDoUsuniecia);
-    bool UsunSedziego(Sedzia SedziaDoUsuniecia);
+    bool UsunDruzyne(QString DruzynaDoUsuniecia);
+    bool UsunSedziego(QString SedziaDoUsuniecia);
 
     const ListaSpotkan* Spotkania() const;
     const ListaSedziow* Sedziowie() const;

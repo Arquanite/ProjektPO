@@ -5,8 +5,8 @@
 
 class PrzeciaganieLiny : public MeczDruzynowy {
 public:
-    PrzeciaganieLiny(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia);
-    virtual bool Rozegraj();
+    PrzeciaganieLiny(QString Gospodarz, QString Gosc, QString Sedzia);
+    virtual QString Rozegraj() override;
 };
 
 #endif // PRZECIAGANIELINY_H

@@ -1,13 +1,13 @@
 #include "meczindywidualny.h"
 
-MeczIndywidualny::MeczIndywidualny(Zawodnik Gospodarz, Zawodnik Gosc, SedziaGlowny Sedzia) : Mecz(Sedzia), m_Gospodarz(Gospodarz), m_Gosc(Gosc){
+MeczIndywidualny::MeczIndywidualny(QString Gospodarz, QString Gosc, QString Sedzia) : Mecz(Sedzia), m_Gospodarz(Gospodarz), m_Gosc(Gosc){
 
 }
 
-Zawodnik MeczIndywidualny::Gospodarz() const {
+QString MeczIndywidualny::Gospodarz() const {
     return m_Gospodarz;
 }
 
-Zawodnik MeczIndywidualny::Gosc() const {
+QString MeczIndywidualny::Gosc() const {
     return m_Gosc;
 }

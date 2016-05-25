@@ -1,17 +1,19 @@
 #ifndef MECZDRUZYNOWY_H
 #define MECZDRUZYNOWY_H
 
+#include <QMap>
+
 #include "mecz.h"
 #include "druzyna.h"
 
 class MeczDruzynowy : public Mecz {
 protected:
-    Druzyna m_Gospodarz;
-    Druzyna m_Gosc;
+    QString m_Gospodarz;
+    QString m_Gosc;
 public:
-    MeczDruzynowy(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia);
-    Druzyna Gospodarz() const;
-    Druzyna Gosc() const;
+    MeczDruzynowy(QString Gospodarz, QString Gosc, QString Sedzia);
+    QString Gospodarz() const;
+    QString Gosc() const;
 };
 
 #endif // MECZDRUZYNOWY_H
