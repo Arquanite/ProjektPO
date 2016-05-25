@@ -9,16 +9,16 @@ class Mecz {
 protected:
     int m_PunktyGospodarza = 0;
     int m_PunktyGoscia = 0;
-    QString m_Sedzia;
+    SedziaGlowny m_Sedzia;
 public:
     virtual ~Mecz();
-    Mecz(QString Sedzia);
+    Mecz(SedziaGlowny Sedzia);
     int PunktyGospodarza() const;
     int PunktyGoscia() const;
-    virtual QString Rozegraj() = 0;
+    virtual bool Rozegraj() = 0;
     QString Wynik() const;
     void WpiszWynik(int PunktyGospodarza, int PunktyGoscia);
-    QString Sedzia() const;
+    SedziaGlowny Sedzia() const;
 };
 
 #endif // MECZ_H

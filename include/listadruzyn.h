@@ -1,15 +1,15 @@
 #ifndef LISTADRUZYN_H
 #define LISTADRUZYN_H
 
-#include <QMap>
+#include <QList>
 
 #include "druzyna.h"
 
 class ListaDruzyn{
 public:
-    QMap<QString,Druzyna> ListaSiatkowkaPlazowa;
-    QMap<QString,Druzyna> ListaPrzeciaganieLiny;
-    QMap<QString,Druzyna> ListaDwaOgnie;
+    QList<Druzyna> ListaSiatkowkaPlazowa;
+    QList<Druzyna> ListaPrzeciaganieLiny;
+    QList<Druzyna> ListaDwaOgnie;
 };
 
 #endif // LISTADRUZYN_H

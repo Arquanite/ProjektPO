@@ -1,20 +1,22 @@
 #include "dwaognie.h"
 
-DwaOgnie::DwaOgnie(QString Gospodarz, QString Gosc, QString Sedzia) : Pilka(Gospodarz, Gosc, Sedzia){
+DwaOgnie::DwaOgnie(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia) : Pilka(Gospodarz, Gosc, Sedzia){
 
 }
 
-QString DwaOgnie::Rozegraj(){
-    /*! FIXME PLZ int LiczbaGraczy = m_Gospodarz.Zawodnicy().size();
+bool DwaOgnie::Rozegraj(){
+    int LiczbaGraczy = m_Gospodarz.Zawodnicy().size();
 
     while (m_PunktyGospodarza < LiczbaGraczy && m_PunktyGoscia < LiczbaGraczy){
         qrand()%2 ? m_PunktyGospodarza++ : m_PunktyGoscia++;
-    }*/
+    }
 
     if(m_PunktyGospodarza > m_PunktyGoscia){
-        return m_Gospodarz;
+        m_Gospodarz.Wygrana();
+        return true;
     }
     else {
-        return m_Gosc;
+        m_Gosc.Wygrana();
+        return false;
     }
 }

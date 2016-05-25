@@ -1,11 +1,11 @@
 #include "siatkowkaplazowa.h"
 
-SiatkowkaPlazowa::SiatkowkaPlazowa(QString Gospodarz, QString Gosc, QString Sedzia, QString SedziaPomocniczy1, QString SedziaPomocniczy2)
+SiatkowkaPlazowa::SiatkowkaPlazowa(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia, SedziaPomocniczy SedziaPomocniczy1, SedziaPomocniczy SedziaPomocniczy2)
     : Siatkowka(Gospodarz, Gosc, Sedzia, SedziaPomocniczy1, SedziaPomocniczy2){
 
 }
 
-QString SiatkowkaPlazowa::Rozegraj(){
+bool SiatkowkaPlazowa::Rozegraj(){
     if(qrand()%100 < 20){
         int Punkty = qrand()%20;
         if(qrand()%2){
@@ -30,9 +30,11 @@ QString SiatkowkaPlazowa::Rozegraj(){
     }
 
     if(m_PunktyGospodarza > m_PunktyGoscia){
-        return m_Gospodarz;
+        m_Gospodarz.Wygrana();
+        return true;
     }
     else {
-        return m_Gosc;
+        m_Gosc.Wygrana();
+        return false;
     }
 }

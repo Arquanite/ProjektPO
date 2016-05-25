@@ -1,13 +1,13 @@
 #include "meczdruzynowy.h"
 
-MeczDruzynowy::MeczDruzynowy(QString Gospodarz, QString Gosc, QString Sedzia) : Mecz(Sedzia), m_Gospodarz(Gospodarz), m_Gosc(Gosc){
+MeczDruzynowy::MeczDruzynowy(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia) : Mecz(Sedzia), m_Gospodarz(Gospodarz), m_Gosc(Gosc){
 
 }
 
-QString MeczDruzynowy::Gospodarz() const {
+Druzyna MeczDruzynowy::Gospodarz() const {
     return m_Gospodarz;
 }
 
-QString MeczDruzynowy::Gosc() const {
+Druzyna MeczDruzynowy::Gosc() const {
     return m_Gosc;
 }

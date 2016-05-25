@@ -4,7 +4,7 @@ Mecz::~Mecz(){
 
 }
 
-Mecz::Mecz(QString Sedzia) : m_Sedzia(Sedzia){
+Mecz::Mecz(SedziaGlowny Sedzia) : m_Sedzia(Sedzia){
 
 }
 
@@ -12,7 +12,8 @@ int Mecz::PunktyGoscia() const {
     return m_PunktyGoscia;
 }
 
-QString Mecz::Sedzia() const {
+SedziaGlowny Mecz::Sedzia() const
+{
     return m_Sedzia;
 }
 

@@ -5,7 +5,7 @@
 
 class Pilka : public MeczDruzynowy {
 public:
-    Pilka(QString Gospodarz, QString Gosc, QString Sedzia);
+    Pilka(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia);
 };
 
 #endif // PILKA_H

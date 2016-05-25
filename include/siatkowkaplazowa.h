@@ -5,8 +5,8 @@
 
 class SiatkowkaPlazowa : public Siatkowka {
 public:
-    SiatkowkaPlazowa(QString Gospodarz, QString Gosc, QString Sedzia, QString SedziaPomocniczy1, QString SedziaPomocniczy2);
-    virtual QString Rozegraj() override;
+    SiatkowkaPlazowa(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia, SedziaPomocniczy SedziaPomocniczy1, SedziaPomocniczy SedziaPomocniczy2);
+    virtual bool Rozegraj();
 };
 
 #endif // SIATKOWKAPLAZOWA_H

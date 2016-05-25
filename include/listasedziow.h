@@ -1,17 +1,17 @@
 #ifndef LISTASEDZIOW_H
 #define LISTASEDZIOW_H
 
-#include <QMap>
+#include <QList>
 
 #include "sedziaglowny.h"
 #include "sedziapomocniczy.h"
 
 class ListaSedziow{
 public:
-    QMap<QString,SedziaGlowny> ListaSiatkowkaPlazowaGlowny;
-    QMap<QString,SedziaPomocniczy> ListaSiatkowkaPlazowaPomocniczy;
-    QMap<QString,SedziaGlowny> ListaPrzeciaganieLinyGlowny;
-    QMap<QString,SedziaGlowny> ListaDwaOgnieGlowny;
+    QList<SedziaGlowny> ListaSiatkowkaPlazowaGlowny;
+    QList<SedziaPomocniczy> ListaSiatkowkaPlazowaPomocniczy;
+    QList<SedziaGlowny> ListaPrzeciaganieLinyGlowny;
+    QList<SedziaGlowny> ListaDwaOgnieGlowny;
 };
 
 #endif // LISTASEDZIOW_H

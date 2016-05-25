@@ -1,10 +1,10 @@
 #include "przeciaganieliny.h"
 
-PrzeciaganieLiny::PrzeciaganieLiny(QString Gospodarz, QString Gosc, QString Sedzia) : MeczDruzynowy(Gospodarz, Gosc, Sedzia){
+PrzeciaganieLiny::PrzeciaganieLiny(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia) : MeczDruzynowy(Gospodarz, Gosc, Sedzia){
 
 }
 
-QString PrzeciaganieLiny::Rozegraj(){
+bool PrzeciaganieLiny::Rozegraj(){
     //Rozgrywka w 5 rundach
     qrand()%2 ? m_PunktyGospodarza++ : m_PunktyGoscia++;
     qrand()%2 ? m_PunktyGospodarza++ : m_PunktyGoscia++;
@@ -13,9 +13,11 @@ QString PrzeciaganieLiny::Rozegraj(){
     qrand()%2 ? m_PunktyGospodarza++ : m_PunktyGoscia++;
 
     if(m_PunktyGospodarza > m_PunktyGoscia){
-        return m_Gospodarz;
+        m_Gospodarz.Wygrana();
+        return true;
     }
     else {
-        return m_Gosc;
+        m_Gosc.Wygrana();
+        return false;
     }
 }
