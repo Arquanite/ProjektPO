@@ -7,3 +7,7 @@ SedziaGlowny::SedziaGlowny(QString Imie, QString Nazwisko) : Sedzia(Imie, Nazwis
 SedziaGlowny::SedziaGlowny(const Osoba &O) : Sedzia(O){
 
 }
+
+SedziaGlowny::SedziaGlowny(){
+
+}

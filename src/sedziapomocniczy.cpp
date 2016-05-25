@@ -7,3 +7,7 @@ SedziaPomocniczy::SedziaPomocniczy(QString Imie, QString Nazwisko) : Sedzia(Imie
 SedziaPomocniczy::SedziaPomocniczy(const Osoba &O) : Sedzia(O){
 
 }
+
+SedziaPomocniczy::SedziaPomocniczy(){
+
+}

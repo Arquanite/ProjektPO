@@ -33,19 +33,19 @@ bool Zawody::ZarejestrujSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocn
     for(SedziaGlowny S : m_Sedziowie.ListaDwaOgnieGlowny) if(NowySedzia == S) return false;
 
     if(Konkurencja == 0 && Pomocniczy == false){
-        m_Sedziowie.ListaSiatkowkaPlazowaGlowny.insert(NowySedzia.Imie()+NowySedzia.Nazwisko(), NowySedzia);
+        m_Sedziowie.ListaSiatkowkaPlazowaGlowny.insert(NowySedzia.Nazwisko() + " " + NowySedzia.Imie(), NowySedzia);
         return true;
     }
     if(Konkurencja == 0 && Pomocniczy == true){
-        m_Sedziowie.ListaSiatkowkaPlazowaPomocniczy.insert(NowySedzia.Imie()+NowySedzia.Nazwisko(), NowySedzia);
+        m_Sedziowie.ListaSiatkowkaPlazowaPomocniczy.insert(NowySedzia.Nazwisko() + " " + NowySedzia.Imie(), NowySedzia);
         return true;
     }
     if(Konkurencja == 1 && Pomocniczy == false){
-        m_Sedziowie.ListaPrzeciaganieLinyGlowny.insert(NowySedzia.Imie()+NowySedzia.Nazwisko(), NowySedzia);
+        m_Sedziowie.ListaPrzeciaganieLinyGlowny.insert(NowySedzia.Nazwisko() + " " + NowySedzia.Imie(), NowySedzia);
         return true;
     }
     if(Konkurencja == 2 && Pomocniczy == false){
-        m_Sedziowie.ListaDwaOgnieGlowny.insert(NowySedzia.Imie()+NowySedzia.Nazwisko(), NowySedzia);
+        m_Sedziowie.ListaDwaOgnieGlowny.insert(NowySedzia.Nazwisko() + " " + NowySedzia.Imie(), NowySedzia);
         return true;
     }
 
@@ -87,14 +87,51 @@ void Zawody::ZaplanujSpotkania(){
     m_Spotkania.ListaSiatkowkaPlazowa.clear();
     m_Spotkania.ListaPrzeciaganieLiny.clear();
     m_Spotkania.ListaDwaOgnie.clear();
-    //! TODO Planowanie spotkań
+    
+    QList<QString> D, S, SP;
+    
+    D = m_Druzyny.ListaSiatkowkaPlazowa.keys();
+    S = m_Sedziowie.ListaSiatkowkaPlazowaGlowny.keys();
+    SP = m_Sedziowie.ListaSiatkowkaPlazowaPomocniczy.keys();
+    for(int i=0; i<D.size(); i++){
+        for(int j=i+1; j<D.size(); j++){
+            QString S1, S2;
+            S1 = S.at(rand()%S.size());
+            S2 = S.at(rand()%S.size());
+            while(S1==S2) S2 = S.at(rand()%S.size());
+            m_Spotkania.ListaSiatkowkaPlazowa.append(SiatkowkaPlazowa(D.at(i), D.at(j), S.at(rand()%S.size()), S1, S2));
+        }
+    }
+
+    D = m_Druzyny.ListaPrzeciaganieLiny.keys();
+    S = m_Sedziowie.ListaPrzeciaganieLinyGlowny.keys();
+    for(int i=0; i<D.size(); i++){
+        for(int j=i+1; j<D.size(); j++){
+            m_Spotkania.ListaPrzeciaganieLiny.append(PrzeciaganieLiny(D.at(i), D.at(j), S.at(rand()%S.size())));
+        }
+    }
+
+    D = m_Druzyny.ListaDwaOgnie.keys();
+    S = m_Sedziowie.ListaDwaOgnieGlowny.keys();
+    for(int i=0; i<D.size(); i++){
+        for(int j=i+1; j<D.size(); j++){
+            m_Spotkania.ListaDwaOgnie.append(DwaOgnie(D.at(i), D.at(j), S.at(rand()%S.size())));
+        }
+    }
 }
 
 void Zawody::RozegrajMecze(){
-    for(auto &A : m_Druzyny.ListaDwaOgnie){
-        qDebug()<<A.Nazwa();
+    for(auto &M : m_Spotkania.ListaSiatkowkaPlazowa){
+        m_Druzyny.ListaSiatkowkaPlazowa[M.Rozegraj()].Wygrana();
     }
-    //! TODO Rozgrywanie meczy
+
+    for(auto &M : m_Spotkania.ListaPrzeciaganieLiny){
+        m_Druzyny.ListaPrzeciaganieLiny[M.Rozegraj()].Wygrana();
+    }
+
+    for(auto &M : m_Spotkania.ListaDwaOgnie){
+        m_Druzyny.ListaDwaOgnie[M.Rozegraj()].Wygrana();
+    }
 }
 
 void Zawody::GenerujDruzyny(int Ilosc, int LiczbaOsob){

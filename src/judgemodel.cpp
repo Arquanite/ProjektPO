@@ -43,19 +43,22 @@ QVariant JudgeModel::data(const QModelIndex &index, int role) const {
     }
     else if(index.row() >= A && index.row() < B){
         row = index.row() - A;
-        S = &m_Sedziowie->ListaSiatkowkaPlazowaPomocniczy.at(row);
+        L = m_Sedziowie->ListaSiatkowkaPlazowaPomocniczy.keys();
+        S = m_Sedziowie->ListaSiatkowkaPlazowaPomocniczy.value(L.value(row));
         Konkurencja = "Siatkówka Plażowa";
         Typ = "Sędzia Pomocniczy";
     }
     else if(index.row() >= B && index.row() < C){
         row = index.row() - B;
-        S = &m_Sedziowie->ListaPrzeciaganieLinyGlowny.at(row);
+        L = m_Sedziowie->ListaPrzeciaganieLinyGlowny.keys();
+        S = m_Sedziowie->ListaPrzeciaganieLinyGlowny.value(L.value(row));
         Konkurencja = "Przeciąganie Liny";
         Typ = "Sędzia Główny";
     }
     else if(index.row() >= B){
         row = index.row() - C;
-        S = &m_Sedziowie->ListaDwaOgnieGlowny.at(row);
+        L = m_Sedziowie->ListaDwaOgnieGlowny.keys();
+        S = m_Sedziowie->ListaDwaOgnieGlowny.value(L.value(row));
         Konkurencja = "Dwa Ognie";
         Typ = "Sędzia Główny";
     }

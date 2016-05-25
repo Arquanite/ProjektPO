@@ -3,6 +3,7 @@
 
 #include <QAbstractItemModel>
 #include "listaspotkan.h"
+#include "listadruzyn.h"
 
 class MatchModel : public QAbstractTableModel {
     Q_OBJECT

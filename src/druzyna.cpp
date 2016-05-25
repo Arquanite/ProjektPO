@@ -8,7 +8,7 @@ Druzyna::Druzyna(const Druzyna &D) : m_Nazwa(D.Nazwa()), m_Zawodnicy(D.Zawodnicy
 
 }
 
-Druzyna::Druzyna() : m_Nazwa(">>BŁĄD<<"){
+Druzyna::Druzyna() : m_Nazwa(">>BRAK NAZWY<<"){
 
 }
 

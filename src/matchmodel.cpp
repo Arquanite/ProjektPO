@@ -48,14 +48,14 @@ QVariant MatchModel::data(const QModelIndex &index, int role) const {
         Konkurencja = "Dwa Ognie";
     }
 
-    if(index.column() == 0) return M->Gospodarz().Nazwa();
-    else if(index.column() == 1) return M->Gosc().Nazwa();
+    if(index.column() == 0) return M->Gospodarz();
+    else if(index.column() == 1) return M->Gosc();
     else if(index.column() == 2) return M->Wynik();
     else if(index.column() == 3) return Konkurencja;
-    else if(index.column() == 4) return M->Sedzia().Nazwisko() + " " + M->Sedzia().Imie();
+    else if(index.column() == 4) return M->Sedzia();
     else if(const SiatkowkaPlazowa *S = dynamic_cast<const SiatkowkaPlazowa*>(M)){
-        if(index.column() == 5) return S->SedziaPomocniczy1().Nazwisko() + " " + S->SedziaPomocniczy1().Imie();
-        return S->SedziaPomocniczy2().Nazwisko() + " " + S->SedziaPomocniczy2().Imie();
+        if(index.column() == 5) return S->SedziaPomocniczy1();
+        return S->SedziaPomocniczy2();
     }
     return QVariant();
 }
