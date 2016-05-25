@@ -12,7 +12,9 @@ private:
     QList<Zawodnik> m_Zawodnicy;
     int m_Punkty = 0;
 public:
+    Druzyna();
     Druzyna(QString Nazwa, QList<Zawodnik> Zawodnicy);
+    Druzyna(const Druzyna &D);
     QString Nazwa() const;
     QList<Zawodnik> Zawodnicy() const;
     int Punkty() const;

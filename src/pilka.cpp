@@ -1,5 +1,5 @@
 #include "pilka.h"
 
-Pilka::Pilka(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia) : MeczDruzynowy(Gospodarz, Gosc, Sedzia){
+Pilka::Pilka(QString Gospodarz, QString Gosc, QString Sedzia) : MeczDruzynowy(Gospodarz, Gosc, Sedzia){
 
 }

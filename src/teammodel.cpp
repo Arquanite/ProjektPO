@@ -1,7 +1,5 @@
 #include "teammodel.h"
 
-#include <QDebug>
-
 TeamModel::TeamModel(const ListaDruzyn *Druzyny, QObject *parent) : QAbstractTableModel(parent), m_Druzyny(Druzyny){
 
 }
@@ -20,7 +18,7 @@ int TeamModel::rowCount(const QModelIndex &parent) const {
 int TeamModel::columnCount(const QModelIndex &parent) const {
     if(parent.isValid()) return 0;
 
-    if(!m_Druzyny->ListaDwaOgnie.empty()) return m_Druzyny->ListaDwaOgnie.at(0).Zawodnicy().size()+3;
+    if(!m_Druzyny->ListaDwaOgnie.empty()) return m_Druzyny->ListaDwaOgnie.first().Zawodnicy().size()+3;
     else return 0;
 }
 
@@ -33,29 +31,33 @@ QVariant TeamModel::data(const QModelIndex &index, int role) const {
     B = m_Druzyny->ListaPrzeciaganieLiny.size() + A;
 
     QString Konkurencja;
-    const Druzyna *D;
+    Druzyna D;
+    QList<QString> L;
     int row = index.row();
 
     if(index.row() < A){
-        D = &m_Druzyny->ListaSiatkowkaPlazowa.at(row);
+        L = m_Druzyny->ListaSiatkowkaPlazowa.keys();
+        D = m_Druzyny->ListaSiatkowkaPlazowa.value(L.value(row));
         Konkurencja = "Siatkówka Plażowa";
     }
     else if(index.row() >= A && index.row() < B){
         row = index.row() - A;
-        D = &m_Druzyny->ListaPrzeciaganieLiny.at(row);
+        L = m_Druzyny->ListaPrzeciaganieLiny.keys();
+        D = m_Druzyny->ListaPrzeciaganieLiny.value(L.value(row));
         Konkurencja = "Przeciąganie Liny";
     }
     else if(index.row() >= B){
         row = index.row() - B;
-        D = &m_Druzyny->ListaDwaOgnie.at(row);
+        L = m_Druzyny->ListaDwaOgnie.keys();
+        D = m_Druzyny->ListaDwaOgnie.value(L.value(row));
         Konkurencja = "Dwa Ognie";
     }
 
-    if(index.column() == 0) return D->Nazwa();
-    else if(index.column() == 1) return D->Punkty();
+    if(index.column() == 0) return D.Nazwa();
+    else if(index.column() == 1) return D.Punkty();
     else if(index.column() == 2) return Konkurencja;
     else {
-        Zawodnik Z = D->Zawodnicy().at(index.column()-3);
+        Zawodnik Z = D.Zawodnicy().at(index.column()-3);
         return Z.Nazwisko() + " " + Z.Imie();
     }
 }

@@ -1,19 +1,19 @@
 #include "siatkowka.h"
 
-Siatkowka::Siatkowka(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia, SedziaPomocniczy SedziaPomocniczy1, SedziaPomocniczy SedziaPomocniczy2)
+Siatkowka::Siatkowka(QString Gospodarz, QString Gosc, QString Sedzia, QString SedziaPomocniczy1, QString SedziaPomocniczy2)
     : Pilka(Gospodarz, Gosc, Sedzia), m_SedziaPomocniczy1(SedziaPomocniczy1), m_SedziaPomocniczy2(SedziaPomocniczy2) {
 
 }
 
-SedziaPomocniczy Siatkowka::SedziaPomocniczy1() const {
+QString Siatkowka::SedziaPomocniczy1() const {
     return m_SedziaPomocniczy1;
 }
 
-SedziaPomocniczy Siatkowka::SedziaPomocniczy2() const {
+QString Siatkowka::SedziaPomocniczy2() const {
     return m_SedziaPomocniczy2;
 }
 
-bool Siatkowka::Rozegraj(){
+QString Siatkowka::Rozegraj(){
     if(qrand()%100 < 20){
         int Punkty = qrand()%24;
         if(qrand()%2){
@@ -38,11 +38,9 @@ bool Siatkowka::Rozegraj(){
     }
 
     if(m_PunktyGospodarza > m_PunktyGoscia){
-        m_Gospodarz.Wygrana();
-        return true;
+        return m_Gospodarz;
     }
     else {
-        m_Gosc.Wygrana();
-        return false;
+        return m_Gosc;
     }
 }

@@ -5,8 +5,8 @@
 
 class DwaOgnie : public Pilka {
 public:
-    DwaOgnie(Druzyna Gospodarz, Druzyna Gosc, SedziaGlowny Sedzia);
-    virtual bool Rozegraj();
+    DwaOgnie(QString Gospodarz, QString Gosc, QString Sedzia);
+    virtual QString Rozegraj() override;
 };
 
 #endif // DWAOGNIE_H
