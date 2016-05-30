@@ -113,9 +113,10 @@ void Zawody::ZaplanujSpotkania(){
 
     D = m_Druzyny.ListaDwaOgnie.keys();
     S = m_Sedziowie.ListaDwaOgnieGlowny.keys();
+    int C = m_Druzyny.ListaDwaOgnie.first().Zawodnicy().size();
     for(int i=0; i<D.size(); i++){
         for(int j=i+1; j<D.size(); j++){
-            m_Spotkania.ListaDwaOgnie.append(DwaOgnie(D.at(i), D.at(j), S.at(rand()%S.size())));
+            m_Spotkania.ListaDwaOgnie.append(DwaOgnie(D.at(i), D.at(j), S.at(rand()%S.size()), C));
         }
     }
 }
@@ -140,6 +141,7 @@ void Zawody::GenerujDruzyny(int Ilosc, int LiczbaOsob){
         ZarejestrujDruzyne(m_Generator.GenerujDruzyne(LiczbaOsob), 1);
         ZarejestrujDruzyne(m_Generator.GenerujDruzyne(LiczbaOsob), 2);
     }
+    m_Druzyny.ListaDwaOgnie.first().Wygrana();
 }
 
 void Zawody::GenerujSedziow(int Ilosc){

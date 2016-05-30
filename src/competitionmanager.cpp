@@ -4,14 +4,16 @@
 #include <QProgressBar>
 #include <QLabel>
 
+#include <QDebug>
+
 CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), ui(new Ui::CompetitionManager) {
     ui->setupUi(this);
     qsrand(QTime::currentTime().msecsSinceStartOfDay());
 
-    m_Zawody.GenerujDruzyny(10,5);
+    /*! TODO ??? m_Zawody.GenerujDruzyny(10,5);
     m_Zawody.GenerujSedziow(5);
     m_Zawody.ZaplanujSpotkania();
-    m_Zawody.RozegrajMecze();
+    m_Zawody.RozegrajMecze();*/
 
     const ListaDruzyn* Druzyny = m_Zawody.Druzyny();
     m_TeamModel = new TeamModel(Druzyny);

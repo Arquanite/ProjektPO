@@ -38,7 +38,8 @@ SOURCES += src/main.cpp\
     src/exitdialog.cpp \
     src/betterproxymodel.cpp \
     src/judgemodel.cpp \
-    src/matchmodel.cpp
+    src/matchmodel.cpp \
+    addteamdialog.cpp
 
 HEADERS  += include/competitionmanager.h \
     include/osoba.h \
@@ -65,10 +66,12 @@ HEADERS  += include/competitionmanager.h \
     include/betterproxymodel.h \
     include/judgemodel.h \
     include/konkurencja.h \
-    include/matchmodel.h
+    include/matchmodel.h \
+    addteamdialog.h
 
 FORMS    += ui/competitionmanager.ui \
-    ui/exitdialog.ui
+    ui/exitdialog.ui \
+    addteamdialog.ui
 
 RESOURCES += res/resources.qrc
 

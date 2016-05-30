@@ -4,7 +4,7 @@ Druzyna::Druzyna(QString Nazwa, QList<Zawodnik> Zawodnicy) : m_Nazwa(Nazwa), m_Z
 
 }
 
-Druzyna::Druzyna(const Druzyna &D) : m_Nazwa(D.Nazwa()), m_Zawodnicy(D.Zawodnicy()){
+Druzyna::Druzyna(const Druzyna &D) : m_Nazwa(D.Nazwa()), m_Zawodnicy(D.Zawodnicy()), m_Punkty(D.Punkty()){
 
 }
 
