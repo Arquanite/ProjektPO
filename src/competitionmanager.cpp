@@ -25,11 +25,11 @@ CompetitionManager::~CompetitionManager(){
 }
 
 void CompetitionManager::UtworzZawody(){
-    m_Zawody = new Zawody(2);
-    m_Zawody->GenerujDruzyny(19);
-    //m_Zawody.GenerujSedziow(5);
-    //m_Zawody.ZaplanujSpotkania();
-    //m_Zawody.RozegrajMecze();
+    m_Zawody = new Zawody(5);
+    m_Zawody->GenerujDruzyny(28);
+    m_Zawody->GenerujSedziow(13);
+    m_Zawody->ZaplanujSpotkania();
+    m_Zawody->RozegrajMecze();
 
     const ListaDruzyn* Druzyny = m_Zawody->Druzyny();
     m_TeamModel = new TeamModel(Druzyny, m_Zawody->LiczbaOsob());
