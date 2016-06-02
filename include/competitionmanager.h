@@ -23,7 +23,7 @@ class CompetitionManager;
 class CompetitionManager : public QMainWindow {
     Q_OBJECT
 private:
-    Zawody m_Zawody;
+    Zawody *m_Zawody;
 
     TeamModel *m_TeamModel;
     JudgeModel *m_JudgeModel;
@@ -40,11 +40,21 @@ public:
     explicit CompetitionManager(QWidget *parent = 0);
     ~CompetitionManager();
 
+    void UtworzZawody();
+
 private slots:
     void on_Wszystkie_clicked(bool checked);
     void on_SiatkowkaPlazowa_clicked(bool checked);
     void on_PrzeciaganieLiny_clicked(bool checked);
     void on_DwaOgnie_clicked(bool checked);
+
+    void on_actionDodaj_druzyne_triggered();
+
+public slots:
+    void DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja);
+
+signals:
+    void UtworzonoDruzyne(bool);
 
 private:
     Ui::CompetitionManager *ui;

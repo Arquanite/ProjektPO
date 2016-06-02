@@ -253,7 +253,7 @@ QTabBar::tab:!selected{
 }</string>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <property name="movable">
           <bool>true</bool>
@@ -280,9 +280,6 @@ QTabBar::tab:!selected{
            </property>
            <item>
             <widget class="QTableView" name="widokDruzyn">
-             <property name="sizeAdjustPolicy">
-              <enum>QAbstractScrollArea::AdjustToContents</enum>
-             </property>
              <property name="alternatingRowColors">
               <bool>true</bool>
              </property>
@@ -406,7 +403,7 @@ QTabBar::tab:!selected{
      <x>0</x>
      <y>0</y>
      <width>912</width>
-     <height>25</height>
+     <height>29</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -440,29 +437,29 @@ QMenu {
     <property name="title">
      <string>Plik</string>
     </property>
-    <addaction name="actionNowa_baza"/>
-    <addaction name="actionWczytaj_baz_z_pliku"/>
+    <addaction name="actionNowy"/>
+    <addaction name="actionWczytaj"/>
     <addaction name="separator"/>
-    <addaction name="actionZapisz_baz"/>
+    <addaction name="actionZapisz"/>
     <addaction name="actionZapisz_jako"/>
     <addaction name="separator"/>
     <addaction name="actionZamknij"/>
    </widget>
-   <widget class="QMenu" name="menuDru_yny">
+   <widget class="QMenu" name="menuDruzyny">
     <property name="title">
      <string>Drużyny</string>
     </property>
-    <addaction name="actionDodaj_dru_yn"/>
-    <addaction name="actionEdytuj_dru_yn"/>
-    <addaction name="actionUsu_dru_yn"/>
+    <addaction name="actionDodaj_druzyne"/>
+    <addaction name="actionEdytuj_druzyne"/>
+    <addaction name="actionUsun_druzyne"/>
    </widget>
-   <widget class="QMenu" name="menuS_dziowie">
+   <widget class="QMenu" name="menuSedziowie">
     <property name="title">
      <string>Sędziowie</string>
     </property>
-    <addaction name="actionDodaj_s_dziego"/>
-    <addaction name="actionEdytuj_dane_s_dziego"/>
-    <addaction name="actionUsu_s_dziego"/>
+    <addaction name="actionDodaj_sedziego"/>
+    <addaction name="actionEdytuj_dane_sedziego"/>
+    <addaction name="actionUsun_sedziego"/>
    </widget>
    <widget class="QMenu" name="menuPomoc">
     <property name="title">
@@ -473,14 +470,14 @@ QMenu {
     <property name="title">
      <string>Automat</string>
     </property>
-    <addaction name="actionWygeneruj_S_dzi_w"/>
+    <addaction name="actionWygeneruj_Druzyny"/>
     <addaction name="separator"/>
-    <addaction name="actionWygeneruj_S_dzi_w_2"/>
+    <addaction name="actionWygeneruj_Sedziow"/>
     <addaction name="actionRozegraj_Mecze"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuDru_yny"/>
-   <addaction name="menuS_dziowie"/>
+   <addaction name="menuDruzyny"/>
+   <addaction name="menuSedziowie"/>
    <addaction name="menuAutomat"/>
    <addaction name="menuPomoc"/>
   </widget>
@@ -497,47 +494,47 @@ QStatusBar::item{
 </string>
    </property>
   </widget>
-  <action name="actionDodaj_dru_yn">
+  <action name="actionDodaj_druzyne">
    <property name="text">
     <string>Dodaj drużynę</string>
    </property>
   </action>
-  <action name="actionEdytuj_dru_yn">
+  <action name="actionEdytuj_druzyne">
    <property name="text">
     <string>Edytuj drużynę</string>
    </property>
   </action>
-  <action name="actionUsu_dru_yn">
+  <action name="actionUsun_druzyne">
    <property name="text">
     <string>Usuń drużynę</string>
    </property>
   </action>
-  <action name="actionDodaj_s_dziego">
+  <action name="actionDodaj_sedziego">
    <property name="text">
     <string>Dodaj sędziego</string>
    </property>
   </action>
-  <action name="actionEdytuj_dane_s_dziego">
+  <action name="actionEdytuj_dane_sedziego">
    <property name="text">
     <string>Edytuj dane sędziego</string>
    </property>
   </action>
-  <action name="actionUsu_s_dziego">
+  <action name="actionUsun_sedziego">
    <property name="text">
     <string>Usuń sędziego</string>
    </property>
   </action>
-  <action name="actionNowa_baza">
+  <action name="actionNowy">
    <property name="text">
     <string>Nowa baza</string>
    </property>
   </action>
-  <action name="actionWczytaj_baz_z_pliku">
+  <action name="actionWczytaj">
    <property name="text">
     <string>Wczytaj bazę z pliku</string>
    </property>
   </action>
-  <action name="actionZapisz_baz">
+  <action name="actionZapisz">
    <property name="text">
     <string>Zapisz</string>
    </property>
@@ -552,12 +549,12 @@ QStatusBar::item{
     <string>Zamknij</string>
    </property>
   </action>
-  <action name="actionWygeneruj_S_dzi_w">
+  <action name="actionWygeneruj_Druzyny">
    <property name="text">
     <string>Wygeneruj Drużyny</string>
    </property>
   </action>
-  <action name="actionWygeneruj_S_dzi_w_2">
+  <action name="actionWygeneruj_Sedziow">
    <property name="text">
     <string>Wygeneruj Sędziów</string>
    </property>

@@ -3,20 +3,39 @@
 #include <QTime>
 #include <QProgressBar>
 #include <QLabel>
-
+#include "addteamdialog.h"
 #include <QDebug>
 
 CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), ui(new Ui::CompetitionManager) {
     ui->setupUi(this);
     qsrand(QTime::currentTime().msecsSinceStartOfDay());
 
-    /*! TODO ??? m_Zawody.GenerujDruzyny(10,5);
-    m_Zawody.GenerujSedziow(5);
-    m_Zawody.ZaplanujSpotkania();
-    m_Zawody.RozegrajMecze();*/
+    UtworzZawody();
 
-    const ListaDruzyn* Druzyny = m_Zawody.Druzyny();
-    m_TeamModel = new TeamModel(Druzyny);
+    //ui->statusBar->addPermanentWidget(new QLabel("lolxd"));
+    //ui->statusBar->addPermanentWidget(new QProgressBar());
+
+}
+
+CompetitionManager::~CompetitionManager(){
+    delete m_TeamModel;
+    delete m_TeamProxyModel;
+    delete m_JudgeModel;
+    delete m_JudgeProxyModel;
+    delete m_MatchModel;
+    delete m_MatchProxyModel;
+    delete ui;
+}
+
+void CompetitionManager::UtworzZawody(){
+    m_Zawody = new Zawody(2);
+    m_Zawody->GenerujDruzyny(3);
+    //m_Zawody.GenerujSedziow(5);
+    //m_Zawody.ZaplanujSpotkania();
+    //m_Zawody.RozegrajMecze();
+
+    const ListaDruzyn* Druzyny = m_Zawody->Druzyny();
+    m_TeamModel = new TeamModel(Druzyny, m_Zawody->LiczbaOsob());
     m_TeamProxyModel = new BetterProxyModel;
 
     m_TeamProxyModel->setSourceModel(m_TeamModel);
@@ -27,7 +46,7 @@ CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), u
     ui->widokDruzyn->horizontalHeader()->setSectionsMovable(true);
     ui->widokDruzyn->sortByColumn(1, Qt::DescendingOrder);
 
-    const ListaSedziow* Sedziowie = m_Zawody.Sedziowie();
+    const ListaSedziow* Sedziowie = m_Zawody->Sedziowie();
     m_JudgeModel = new JudgeModel(Sedziowie);
     m_JudgeProxyModel = new BetterProxyModel;
 
@@ -39,7 +58,7 @@ CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), u
     ui->widokSedziow->horizontalHeader()->setSectionsMovable(true);
     ui->widokSedziow->sortByColumn(0, Qt::AscendingOrder);
 
-    const ListaSpotkan* Spotkania = m_Zawody.Spotkania();
+    const ListaSpotkan* Spotkania = m_Zawody->Spotkania();
     m_MatchModel = new MatchModel(Spotkania);
     m_MatchProxyModel = new BetterProxyModel;
 
@@ -50,19 +69,6 @@ CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), u
     ui->widokSpotkan->resizeColumnsToContents();
     ui->widokSpotkan->horizontalHeader()->setSectionsMovable(true);
     ui->widokSpotkan->sortByColumn(2, Qt::AscendingOrder);
-
-    //ui->statusBar->addPermanentWidget(new QLabel("lolxd"));
-    //ui->statusBar->addPermanentWidget(new QProgressBar());
-}
-
-CompetitionManager::~CompetitionManager(){
-    delete m_TeamModel;
-    delete m_TeamProxyModel;
-    delete m_JudgeModel;
-    delete m_JudgeProxyModel;
-    delete m_MatchModel;
-    delete m_MatchProxyModel;
-    delete ui;
 }
 
 void CompetitionManager::closeEvent(QCloseEvent *event){
@@ -114,5 +120,23 @@ void CompetitionManager::on_DwaOgnie_clicked(bool checked){
         m_TeamProxyModel->setFilterFixedString(Filtr);
         m_JudgeProxyModel->setFilterFixedString(Filtr);
         m_MatchProxyModel->setFilterFixedString(Filtr);
+    }
+}
+
+void CompetitionManager::on_actionDodaj_druzyne_triggered(){
+    AddTeamDialog Dialog(this, m_Zawody->LiczbaOsob());
+    connect(&Dialog, SIGNAL(Dodaj(Druzyna,int)), this, SLOT(DodajDruzyne(Druzyna,int)));
+    connect(this, SIGNAL(UtworzonoDruzyne(bool)), &Dialog, SLOT(UdaoSiem(bool)));
+    Dialog.exec();
+}
+
+void CompetitionManager::DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja){
+    if(m_Zawody->ZarejestrujDruzyne(NowaDruzyna, Konkurencja)){
+        m_TeamModel->AddRow();
+        qDebug()<<m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.size();
+        emit UtworzonoDruzyne(true);
+    }
+    else{
+        emit UtworzonoDruzyne(false);
     }
 }

@@ -13,10 +13,12 @@ protected:
     ListaSedziow m_Sedziowie;
     ListaDruzyn m_Druzyny;
     ListaDruzyn m_Zwyciezcy;
+    const int m_LiczbaOsob;
     int m_LiczbaZwyciezcow = 4;
     bool m_Zakonczone = 0;
 
 public:
+    Zawody(int IleOsobWDruzynie);
     bool ZarejestrujDruzyne(Druzyna NowaDruzyna, int Konkurencja);
     bool ZarejestrujSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy = false);
 
@@ -30,8 +32,9 @@ public:
 
     void ZaplanujSpotkania();
     void RozegrajMecze();
-    void GenerujDruzyny(int Ilosc, int LiczbaOsob);
+    void GenerujDruzyny(int Ilosc);
     void GenerujSedziow(int Ilosc);
+    int  LiczbaOsob() const;
 };
 
 #endif // ZAWODY_H

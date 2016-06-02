@@ -2,6 +2,10 @@
 
 #include <QDebug>
 
+Zawody::Zawody(int IleOsobWDruzynie) : m_LiczbaOsob(IleOsobWDruzynie){
+
+}
+
 bool Zawody::ZarejestrujDruzyne(Druzyna NowaDruzyna, int Konkurencja){
 
     for(Druzyna D : m_Druzyny.ListaSiatkowkaPlazowa) if(NowaDruzyna.Nazwa() == D.Nazwa()) return false;
@@ -135,13 +139,12 @@ void Zawody::RozegrajMecze(){
     }
 }
 
-void Zawody::GenerujDruzyny(int Ilosc, int LiczbaOsob){
+void Zawody::GenerujDruzyny(int Ilosc){
     while(Ilosc--){
-        ZarejestrujDruzyne(m_Generator.GenerujDruzyne(LiczbaOsob), 0);
-        ZarejestrujDruzyne(m_Generator.GenerujDruzyne(LiczbaOsob), 1);
-        ZarejestrujDruzyne(m_Generator.GenerujDruzyne(LiczbaOsob), 2);
+        ZarejestrujDruzyne(m_Generator.GenerujDruzyne(m_LiczbaOsob), 0);
+        ZarejestrujDruzyne(m_Generator.GenerujDruzyne(m_LiczbaOsob), 1);
+        ZarejestrujDruzyne(m_Generator.GenerujDruzyne(m_LiczbaOsob), 2);
     }
-    m_Druzyny.ListaDwaOgnie.first().Wygrana();
 }
 
 void Zawody::GenerujSedziow(int Ilosc){
@@ -151,4 +154,8 @@ void Zawody::GenerujSedziow(int Ilosc){
         while(ZarejestrujSedziego(m_Generator.GenerujOsobe(), 1) == false);
         while(ZarejestrujSedziego(m_Generator.GenerujOsobe(), 2) == false);
     }
+}
+
+int Zawody::LiczbaOsob() const{
+    return m_LiczbaOsob;
 }

@@ -1,6 +1,7 @@
 #include "teammodel.h"
 
-TeamModel::TeamModel(const ListaDruzyn *Druzyny, QObject *parent) : QAbstractTableModel(parent), m_Druzyny(Druzyny){
+TeamModel::TeamModel(const ListaDruzyn *Druzyny, int LiczbaOsobWDruzynie, QObject *parent)
+    : QAbstractTableModel(parent), m_Druzyny(Druzyny), m_LiczbaZawodnikow(LiczbaOsobWDruzynie){
 
 }
 
@@ -17,9 +18,12 @@ int TeamModel::rowCount(const QModelIndex &parent) const {
 
 int TeamModel::columnCount(const QModelIndex &parent) const {
     if(parent.isValid()) return 0;
+    return m_LiczbaZawodnikow + 3;
+}
 
-    if(!m_Druzyny->ListaDwaOgnie.empty()) return m_Druzyny->ListaDwaOgnie.first().Zawodnicy().size()+3;
-    else return 0;
+void TeamModel::AddRow(){
+    beginInsertRows(QModelIndex(), 0, 0);
+    endInsertRows();
 }
 
 QVariant TeamModel::data(const QModelIndex &index, int role) const {
