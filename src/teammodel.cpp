@@ -26,6 +26,11 @@ void TeamModel::AddRow(){
     endInsertRows();
 }
 
+void TeamModel::DeleteRow(int index){
+    beginRemoveRows(QModelIndex(), index, index);
+    endRemoveRows();
+}
+
 QVariant TeamModel::data(const QModelIndex &index, int role) const {
     if(!index.isValid()) return QVariant();
     if(role != Qt::DisplayRole) return QVariant();

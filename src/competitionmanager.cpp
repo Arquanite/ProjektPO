@@ -1,9 +1,6 @@
 #include "competitionmanager.h"
 #include "ui_competitionmanager.h"
-#include <QTime>
-#include <QProgressBar>
-#include <QLabel>
-#include "addteamdialog.h"
+
 #include <QDebug>
 
 CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), ui(new Ui::CompetitionManager) {
@@ -29,7 +26,7 @@ CompetitionManager::~CompetitionManager(){
 
 void CompetitionManager::UtworzZawody(){
     m_Zawody = new Zawody(2);
-    m_Zawody->GenerujDruzyny(3);
+    m_Zawody->GenerujDruzyny(19);
     //m_Zawody.GenerujSedziow(5);
     //m_Zawody.ZaplanujSpotkania();
     //m_Zawody.RozegrajMecze();
@@ -138,5 +135,32 @@ void CompetitionManager::DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja){
     }
     else{
         emit UtworzonoDruzyne(false);
+    }
+}
+
+void CompetitionManager::on_actionUsun_druzyne_triggered(){
+    QList<QString> Druzyny;
+    Druzyny.append(m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.keys());
+    Druzyny.append(m_Zawody->Druzyny()->ListaPrzeciaganieLiny.keys());
+    Druzyny.append(m_Zawody->Druzyny()->ListaDwaOgnie.keys());
+    qSort(Druzyny);
+    DeleteTeamDialog Dialog(Druzyny, this);
+    connect(&Dialog, SIGNAL(UsunDruzyne(QString)), this, SLOT(UsunDruzyne(QString)));
+    connect(this, SIGNAL(UsunietoDruzyne(bool)), &Dialog, SLOT(UdaoSiem(bool)));
+    Dialog.exec();
+}
+
+void CompetitionManager::UsunDruzyne(QString Nazwa){
+    QList<QString> Druzyny;
+    Druzyny.append(m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.keys());
+    Druzyny.append(m_Zawody->Druzyny()->ListaPrzeciaganieLiny.keys());
+    Druzyny.append(m_Zawody->Druzyny()->ListaDwaOgnie.keys());
+    int index = Druzyny.indexOf(Nazwa);
+    if(m_Zawody->UsunDruzyne(Nazwa)){
+        m_TeamModel->DeleteRow(index);
+        emit UsunietoDruzyne(true);
+    }
+    else {
+        emit UsunietoDruzyne(false);
     }
 }

@@ -4,8 +4,12 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QTime>
+#include <QLabel>
 
 #include "betterproxymodel.h"
+#include "deleteteamdialog.h"
+#include "addteamdialog.h"
 #include "judgemodel.h"
 #include "matchmodel.h"
 #include "teammodel.h"
@@ -50,11 +54,15 @@ private slots:
 
     void on_actionDodaj_druzyne_triggered();
 
+    void on_actionUsun_druzyne_triggered();
+
 public slots:
     void DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja);
+    void UsunDruzyne(QString Nazwa);
 
 signals:
     void UtworzonoDruzyne(bool);
+    void UsunietoDruzyne(bool);
 
 private:
     Ui::CompetitionManager *ui;
