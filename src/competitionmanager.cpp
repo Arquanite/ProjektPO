@@ -26,8 +26,8 @@ CompetitionManager::~CompetitionManager(){
 
 void CompetitionManager::UtworzZawody(){
     m_Zawody = new Zawody(5);
-    m_Zawody->GenerujDruzyny(28);
-    m_Zawody->GenerujSedziow(13);
+    m_Zawody->GenerujDruzyny(1);
+    m_Zawody->GenerujSedziow(5);
     m_Zawody->ZaplanujSpotkania();
     m_Zawody->RozegrajMecze();
 
@@ -130,7 +130,6 @@ void CompetitionManager::on_actionDodaj_druzyne_triggered(){
 void CompetitionManager::DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja){
     if(m_Zawody->ZarejestrujDruzyne(NowaDruzyna, Konkurencja)){
         m_TeamModel->AddRow();
-        qDebug()<<m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.size();
         emit UtworzonoDruzyne(true);
     }
     else{
@@ -162,5 +161,22 @@ void CompetitionManager::UsunDruzyne(QString Nazwa){
     }
     else {
         emit UsunietoDruzyne(false);
+    }
+}
+
+void CompetitionManager::on_actionDodaj_sedziego_triggered(){
+    AddJudgeDialog Dialog;
+    connect(&Dialog, SIGNAL(DodajSedziego(Sedzia,int,bool)), this, SLOT(DodajSedziego(Sedzia,int,bool)));
+    connect(this, SIGNAL(DodanoSedziego(bool)), &Dialog, SLOT(UdaoSiem(bool)));
+    Dialog.exec();
+}
+
+void CompetitionManager::DodajSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy){
+    if(m_Zawody->ZarejestrujSedziego(NowySedzia, Konkurencja, Pomocniczy)){
+        m_JudgeModel->AddRow();
+        emit DodanoSedziego(true);
+    }
+    else {
+        emit DodanoSedziego(false);
     }
 }

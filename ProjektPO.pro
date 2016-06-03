@@ -40,7 +40,8 @@ SOURCES += src/main.cpp\
     src/judgemodel.cpp \
     src/matchmodel.cpp \
     src/addteamdialog.cpp \
-    src/deleteteamdialog.cpp
+    src/deleteteamdialog.cpp \
+    src/addjudgedialog.cpp
 
 HEADERS  += include/competitionmanager.h \
     include/osoba.h \
@@ -69,12 +70,14 @@ HEADERS  += include/competitionmanager.h \
     include/konkurencja.h \
     include/matchmodel.h \
     include/addteamdialog.h \
-    include/deleteteamdialog.h
+    include/deleteteamdialog.h \
+    include/addjudgedialog.h
 
 FORMS    += ui/competitionmanager.ui \
     ui/exitdialog.ui \
     ui/addteamdialog.ui \
-    ui/deleteteamdialog.ui
+    ui/deleteteamdialog.ui \
+    ui/addjudgedialog.ui
 
 RESOURCES += res/resources.qrc
 

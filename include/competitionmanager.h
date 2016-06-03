@@ -9,6 +9,7 @@
 
 #include "betterproxymodel.h"
 #include "deleteteamdialog.h"
+#include "addjudgedialog.h"
 #include "addteamdialog.h"
 #include "judgemodel.h"
 #include "matchmodel.h"
@@ -56,13 +57,19 @@ private slots:
 
     void on_actionUsun_druzyne_triggered();
 
+    void on_actionDodaj_sedziego_triggered();
+
 public slots:
     void DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja);
     void UsunDruzyne(QString Nazwa);
 
+    void DodajSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy);
+
 signals:
     void UtworzonoDruzyne(bool);
     void UsunietoDruzyne(bool);
+
+    void DodanoSedziego(bool);
 
 private:
     Ui::CompetitionManager *ui;

@@ -21,6 +21,11 @@ int JudgeModel::columnCount(const QModelIndex &parent) const {
     return 4;
 }
 
+void JudgeModel::AddRow(){
+    beginInsertRows(QModelIndex(), 0, 0);
+    endInsertRows();
+}
+
 QVariant JudgeModel::data(const QModelIndex &index, int role) const {
     if(!index.isValid()) return QVariant();
     if(role != Qt::DisplayRole) return QVariant();
