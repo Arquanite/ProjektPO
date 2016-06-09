@@ -7,17 +7,21 @@
 #include <QTime>
 #include <QLabel>
 
+#include "generatematchscores.h"
+#include "generatejugdedialog.h"
+#include "generateteamsdialog.h"
+#include "deletejudgedialog.h"
+#include "planmatchesdialog.h"
 #include "betterproxymodel.h"
 #include "deleteteamdialog.h"
 #include "addjudgedialog.h"
 #include "addteamdialog.h"
 #include "judgemodel.h"
 #include "matchmodel.h"
-#include "teammodel.h"
-
 #include "exitdialog.h"
-
+#include "teammodel.h"
 #include "zawody.h"
+#include "state.h"
 
 #include <QDebug>
 
@@ -54,22 +58,39 @@ private slots:
     void on_DwaOgnie_clicked(bool checked);
 
     void on_actionDodaj_druzyne_triggered();
-
     void on_actionUsun_druzyne_triggered();
 
     void on_actionDodaj_sedziego_triggered();
+    void on_actionUsun_sedziego_triggered();
+
+    void on_actionWygeneruj_Druzyny_triggered();
+    void on_actionWygeneruj_Sedziow_triggered();
+
+    void on_actionStan_triggered();
+
+    void on_actionRozegraj_Mecze_triggered();
+
+    void on_actionZaplanuj_spotkania_triggered();
 
 public slots:
     void DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja);
     void UsunDruzyne(QString Nazwa);
 
     void DodajSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy);
+    void UsunSedziego(QString Nazwa);
+
+    void GenerujSedziow(int Ilosc, int Konkurencje);
+    void GenerujDruzyny(int Ilosc, int Konkurencje);
 
 signals:
     void UtworzonoDruzyne(bool);
     void UsunietoDruzyne(bool);
 
     void DodanoSedziego(bool);
+    void UsunietoSedziego(bool);
+
+    void WygenerowanoSedziow(bool);
+    void WygenerowanoDruzyny(bool);
 
 private:
     Ui::CompetitionManager *ui;

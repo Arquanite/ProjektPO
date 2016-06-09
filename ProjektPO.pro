@@ -41,7 +41,15 @@ SOURCES += src/main.cpp\
     src/matchmodel.cpp \
     src/addteamdialog.cpp \
     src/deleteteamdialog.cpp \
-    src/addjudgedialog.cpp
+    src/addjudgedialog.cpp \
+    src/deletejudgedialog.cpp \
+    src/generateteamsdialog.cpp \
+    src/generatejugdedialog.cpp \
+    src/progresscircle.cpp \
+    src/state.cpp \
+    src/generatematchscores.cpp \
+    src/planmatchesdialog.cpp \
+    include/editteamdialog.cpp
 
 HEADERS  += include/competitionmanager.h \
     include/osoba.h \
@@ -71,13 +79,28 @@ HEADERS  += include/competitionmanager.h \
     include/matchmodel.h \
     include/addteamdialog.h \
     include/deleteteamdialog.h \
-    include/addjudgedialog.h
+    include/addjudgedialog.h \
+    include/deletejudgedialog.h \
+    include/generateteamsdialog.h \
+    include/generatejugdedialog.h \
+    include/progresscircle.h \
+    include/state.h \
+    include/generatematchscores.h \
+    include/planmatchesdialog.h \
+    include/editteamdialog.h
 
 FORMS    += ui/competitionmanager.ui \
     ui/exitdialog.ui \
     ui/addteamdialog.ui \
     ui/deleteteamdialog.ui \
-    ui/addjudgedialog.ui
+    ui/addjudgedialog.ui \
+    ui/deletejudgedialog.ui \
+    ui/generateteamsdialog.ui \
+    ui/generatejugdedialog.ui \
+    ui/state.ui \
+    ui/generatematchscores.ui \
+    ui/planmatchesdialog.ui \
+    include/editteamdialog.ui
 
 RESOURCES += res/resources.qrc
 

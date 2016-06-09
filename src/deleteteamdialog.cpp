@@ -17,7 +17,7 @@ DeleteTeamDialog::~DeleteTeamDialog(){
 
 void DeleteTeamDialog::UdaoSiem(bool Odpowiedz){
     if(Odpowiedz) accept();
-    else{
+    else {
         QMessageBox::warning(this, "Błąd", "Wystąpił błąd, spróbuj jeszcze raz!");
     }
 }

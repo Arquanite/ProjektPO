@@ -11,7 +11,6 @@ CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), u
 
     //ui->statusBar->addPermanentWidget(new QLabel("lolxd"));
     //ui->statusBar->addPermanentWidget(new QProgressBar());
-
 }
 
 CompetitionManager::~CompetitionManager(){
@@ -21,15 +20,12 @@ CompetitionManager::~CompetitionManager(){
     delete m_JudgeProxyModel;
     delete m_MatchModel;
     delete m_MatchProxyModel;
+    delete m_Zawody;
     delete ui;
 }
 
 void CompetitionManager::UtworzZawody(){
     m_Zawody = new Zawody(5);
-    m_Zawody->GenerujDruzyny(1);
-    m_Zawody->GenerujSedziow(5);
-    m_Zawody->ZaplanujSpotkania();
-    m_Zawody->RozegrajMecze();
 
     const ListaDruzyn* Druzyny = m_Zawody->Druzyny();
     m_TeamModel = new TeamModel(Druzyny, m_Zawody->LiczbaOsob());
@@ -179,4 +175,105 @@ void CompetitionManager::DodajSedziego(Sedzia NowySedzia, int Konkurencja, bool 
     else {
         emit DodanoSedziego(false);
     }
+}
+
+
+void CompetitionManager::on_actionUsun_sedziego_triggered(){
+    QList<QString> Sedziowie;
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaGlowny.keys());
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaPomocniczy.keys());
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaPrzeciaganieLinyGlowny.keys());
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaDwaOgnieGlowny.keys());
+    qSort(Sedziowie);
+    DeleteJudgeDialog Dialog(Sedziowie, this);
+    connect(&Dialog, SIGNAL(UsunSedziego(QString)), this, SLOT(UsunSedziego(QString)));
+    connect(this, SIGNAL(UsunietoSedziego(bool)), &Dialog, SLOT(UdaoSiem(bool)));
+    Dialog.exec();
+}
+
+void CompetitionManager::UsunSedziego(QString Nazwa){
+    QList<QString> Sedziowie;
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaGlowny.keys());
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaPomocniczy.keys());
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaPrzeciaganieLinyGlowny.keys());
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaDwaOgnieGlowny.keys());
+    int index = Sedziowie.indexOf(Nazwa);
+    if(m_Zawody->UsunSedziego(Nazwa)){
+        m_JudgeModel->DeleteRow(index);
+        emit UsunietoSedziego(true);
+    }
+    else {
+        emit UsunietoSedziego(false);
+    }
+}
+
+void CompetitionManager::on_actionWygeneruj_Druzyny_triggered(){
+    GenerateTeamsDialog Dialog(this);
+    connect(&Dialog, SIGNAL(GenerujDruzyny(int,int)), this, SLOT(GenerujDruzyny(int,int)));
+    connect(this, SIGNAL(WygenerowanoDruzyny(bool)), &Dialog, SLOT(UdaoSiem(bool)));
+    Dialog.exec();
+}
+
+void CompetitionManager::GenerujDruzyny(int Ilosc, int Konkurencje){
+    int Liczba;
+    Liczba = Ilosc;
+    if(Konkurencje & 0x01){
+        m_Zawody->GenerujDruzyny(Ilosc, 0);
+        while(Liczba--) m_TeamModel->AddRow();
+    }
+    Liczba = Ilosc;
+    if(Konkurencje & 0x02){
+        m_Zawody->GenerujDruzyny(Ilosc, 1);
+        while(Liczba--) m_TeamModel->AddRow();
+    }
+    Liczba = Ilosc;
+    if(Konkurencje & 0x04){
+        m_Zawody->GenerujDruzyny(Ilosc, 2);
+        while(Liczba--) m_TeamModel->AddRow();
+    }
+    emit WygenerowanoDruzyny(true);
+}
+
+void CompetitionManager::on_actionWygeneruj_Sedziow_triggered(){
+    GenerateJugdeDialog Dialog(this);
+    connect(&Dialog, SIGNAL(GenerujSedziow(int,int)), this, SLOT(GenerujSedziow(int,int)));
+    connect(this, SIGNAL(WygenerowanoSedziow(bool)), &Dialog, SLOT(UdaoSiem(bool)));
+    Dialog.exec();
+}
+
+void CompetitionManager::GenerujSedziow(int Ilosc, int Konkurencje){
+    int Liczba;
+    Liczba = Ilosc;
+    if(Konkurencje & 0x01){
+        if(m_Zawody->GenerujSedziow(Ilosc, 0)) while(Liczba--) m_JudgeModel->AddRow();
+    }
+    Liczba = Ilosc;
+    if(Konkurencje & 0x02){
+        if(m_Zawody->GenerujSedziow(Ilosc, 0, true)) while(Liczba--) m_JudgeModel->AddRow();
+    }
+    Liczba = Ilosc;
+    if(Konkurencje & 0x04){
+        if(m_Zawody->GenerujSedziow(Ilosc, 1)) while(Liczba--) m_JudgeModel->AddRow();
+    }
+    Liczba = Ilosc;
+    if(Konkurencje & 0x08){
+        if(m_Zawody->GenerujSedziow(Ilosc, 2)) while(Liczba--) m_JudgeModel->AddRow();
+    }
+    emit WygenerowanoSedziow(true);
+}
+
+void CompetitionManager::on_actionStan_triggered(){
+    State Dialog;
+    Dialog.exec();
+}
+
+void CompetitionManager::on_actionRozegraj_Mecze_triggered(){
+    GenerateMatchScores Dialog;
+    if(Dialog.exec()) m_Zawody->RozegrajMecze();
+}
+
+void CompetitionManager::on_actionZaplanuj_spotkania_triggered(){
+    PlanMatchesDialog Dialog;
+    if(Dialog.exec()) m_Zawody->ZaplanujSpotkania();
+    m_MatchModel->Init();
 }

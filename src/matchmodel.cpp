@@ -92,3 +92,12 @@ QVariant MatchModel::headerData(int section, Qt::Orientation orientation, int ro
     }
     return QVariant();
 }
+
+void MatchModel::Init(){
+    int rozmiar = 0;
+    rozmiar += m_Spotkania->ListaSiatkowkaPlazowa.size();
+    rozmiar += m_Spotkania->ListaPrzeciaganieLiny.size();
+    rozmiar += m_Spotkania->ListaDwaOgnie.size();
+    beginInsertRows(QModelIndex(), 0, rozmiar-1);
+    endInsertRows();
+}

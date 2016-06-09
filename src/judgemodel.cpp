@@ -26,6 +26,11 @@ void JudgeModel::AddRow(){
     endInsertRows();
 }
 
+void JudgeModel::DeleteRow(int index){
+    beginRemoveRows(QModelIndex(), index, index);
+    endRemoveRows();
+}
+
 QVariant JudgeModel::data(const QModelIndex &index, int role) const {
     if(!index.isValid()) return QVariant();
     if(role != Qt::DisplayRole) return QVariant();
@@ -36,7 +41,7 @@ QVariant JudgeModel::data(const QModelIndex &index, int role) const {
     C = m_Sedziowie->ListaPrzeciaganieLinyGlowny.size() + B;
 
     QString Konkurencja, Typ;
-    Sedzia S("X","X");
+    Sedzia S;
     QList<QString> L;
     int row = index.row();
 

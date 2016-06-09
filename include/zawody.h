@@ -6,8 +6,18 @@
 #include "listadruzyn.h"
 #include "generator.h"
 
+enum {
+    Rejestracja = 0,
+    RozgrywkiPodstawowe = 1,
+    DogrywkiPodstawowe = 2,
+    Polfinal = 3,
+    DogrywkiPolfinalowe = 4,
+    Final = 5
+};
+
 class Zawody{
 protected:
+    int m_Etap = Rejestracja;
     Generator m_Generator;
     ListaSpotkan m_Spotkania;
     ListaSedziow m_Sedziowie;
@@ -32,9 +42,10 @@ public:
 
     void ZaplanujSpotkania();
     void RozegrajMecze();
-    void GenerujDruzyny(int Ilosc);
-    void GenerujSedziow(int Ilosc);
+    bool GenerujDruzyny(int Ilosc, int Konkurencja);
+    bool GenerujSedziow(int Ilosc, int Konkurencja, bool Pomocniczy = false);
     int  LiczbaOsob() const;
+    int  Etap() const;
 };
 
 #endif // ZAWODY_H

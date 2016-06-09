@@ -2,11 +2,17 @@
 
 #include <QDebug>
 
+int Zawody::Etap() const
+{
+    return m_Etap;
+}
+
 Zawody::Zawody(int IleOsobWDruzynie) : m_LiczbaOsob(IleOsobWDruzynie){
 
 }
 
 bool Zawody::ZarejestrujDruzyne(Druzyna NowaDruzyna, int Konkurencja){
+    if(m_Etap != Rejestracja) return false;
 
     for(Druzyna D : m_Druzyny.ListaSiatkowkaPlazowa) if(NowaDruzyna.Nazwa() == D.Nazwa()) return false;
     for(Druzyna D : m_Druzyny.ListaPrzeciaganieLiny) if(NowaDruzyna.Nazwa() == D.Nazwa()) return false;
@@ -31,6 +37,8 @@ bool Zawody::ZarejestrujDruzyne(Druzyna NowaDruzyna, int Konkurencja){
 }
 
 bool Zawody::ZarejestrujSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy){
+    if(m_Etap != Rejestracja) return false;
+
     for(SedziaGlowny S : m_Sedziowie.ListaSiatkowkaPlazowaGlowny) if(NowySedzia == S) return false;
     for(SedziaGlowny S : m_Sedziowie.ListaSiatkowkaPlazowaPomocniczy) if(NowySedzia == S) return false;
     for(SedziaGlowny S : m_Sedziowie.ListaPrzeciaganieLinyGlowny) if(NowySedzia == S) return false;
@@ -88,6 +96,9 @@ const ListaDruzyn *Zawody::Zwyciezcy() const {
 }
 
 void Zawody::ZaplanujSpotkania(){
+    if(m_Etap != Rejestracja) return;
+    m_Etap = RozgrywkiPodstawowe;
+
     m_Spotkania.ListaSiatkowkaPlazowa.clear();
     m_Spotkania.ListaPrzeciaganieLiny.clear();
     m_Spotkania.ListaDwaOgnie.clear();
@@ -126,6 +137,7 @@ void Zawody::ZaplanujSpotkania(){
 }
 
 void Zawody::RozegrajMecze(){
+    if(m_Etap != RozgrywkiPodstawowe) return;
     for(auto &M : m_Spotkania.ListaSiatkowkaPlazowa){
         m_Druzyny.ListaSiatkowkaPlazowa[M.Rozegraj()].Wygrana();
     }
@@ -139,21 +151,23 @@ void Zawody::RozegrajMecze(){
     }
 }
 
-void Zawody::GenerujDruzyny(int Ilosc){
+bool Zawody::GenerujDruzyny(int Ilosc, int Konkurencja){
+    if(m_Etap != Rejestracja) return false;
+    if(Ilosc < 0 || Konkurencja < 0 || Konkurencja > 2) return false;
     while(Ilosc--){
-        ZarejestrujDruzyne(m_Generator.GenerujDruzyne(m_LiczbaOsob), 0);
-        ZarejestrujDruzyne(m_Generator.GenerujDruzyne(m_LiczbaOsob), 1);
-        ZarejestrujDruzyne(m_Generator.GenerujDruzyne(m_LiczbaOsob), 2);
+        while(ZarejestrujDruzyne(m_Generator.GenerujDruzyne(m_LiczbaOsob), Konkurencja) == false);
     }
+    return true;
 }
 
-void Zawody::GenerujSedziow(int Ilosc){
+bool Zawody::GenerujSedziow(int Ilosc, int Konkurencja, bool Pomocniczy){
+    if(m_Etap != Rejestracja) return false;
+    if(Ilosc < 0 || Konkurencja < 0 || Konkurencja > 2) return false;
+    if(Konkurencja > 0 && Pomocniczy == true) return false;
     while(Ilosc--){
-        while(ZarejestrujSedziego(m_Generator.GenerujOsobe(), 0) == false);
-        while(ZarejestrujSedziego(m_Generator.GenerujOsobe(), 0, true) == false);
-        while(ZarejestrujSedziego(m_Generator.GenerujOsobe(), 1) == false);
-        while(ZarejestrujSedziego(m_Generator.GenerujOsobe(), 2) == false);
+        while(ZarejestrujSedziego(m_Generator.GenerujOsobe(), Konkurencja, Pomocniczy) == false);
     }
+    return true;
 }
 
 int Zawody::LiczbaOsob() const{
