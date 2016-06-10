@@ -1,6 +1,7 @@
 #ifndef COMPETITIONMANAGER_H
 #define COMPETITIONMANAGER_H
 
+#include <QFileDialog>
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -44,7 +45,7 @@ private:
     BetterProxyModel *m_JudgeProxyModel;
     BetterProxyModel *m_MatchProxyModel;
 
-    QString m_Nazwa;
+    QString m_NazwaPliku;
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -72,11 +73,10 @@ private slots:
     void on_actionWygeneruj_Sedziow_triggered();
 
     void on_actionStan_triggered();
-
     void on_actionRozegraj_Mecze_triggered();
     void on_actionZaplanuj_spotkania_triggered();
-
     void on_widokDruzyn_doubleClicked(const QModelIndex &index);
+
 
 public slots:
     void DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja);
@@ -92,6 +92,9 @@ public slots:
     int  Konkurencja(Druzyna D);
 
     bool Zapisz();
+    bool ZapiszJako();
+
+    bool Otworz();
 
 signals:
     void UtworzonoDruzyne(bool);

@@ -11,6 +11,10 @@ CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), u
 
     //ui->statusBar->addPermanentWidget(new QLabel("lolxd"));
     //ui->statusBar->addPermanentWidget(new QProgressBar());
+
+    connect(ui->actionZapisz, SIGNAL(triggered(bool)), this, SLOT(Zapisz()));
+    connect(ui->actionZapisz_jako, SIGNAL(triggered(bool)), this, SLOT(ZapiszJako()));
+    connect(ui->actionWczytaj, SIGNAL(triggered(bool)), this, SLOT(Otworz()));
 }
 
 CompetitionManager::~CompetitionManager(){
@@ -320,11 +324,37 @@ void CompetitionManager::on_widokDruzyn_doubleClicked(const QModelIndex &index){
 
 
 bool CompetitionManager::Zapisz(){
-    QFile Plik("Lolnia.xd");
+    if(m_NazwaPliku.isEmpty()) ZapiszJako();
+    QFile Plik(m_NazwaPliku);
     Plik.open(QIODevice::WriteOnly);
     QDataStream out(&Plik);
     out<<*m_Zawody;
     Plik.flush();
     Plik.close();
     return true;
+}
+
+bool CompetitionManager::ZapiszJako(){
+    m_NazwaPliku = QFileDialog::getSaveFileName();
+}
+
+bool CompetitionManager::Otworz(){
+    m_NazwaPliku = QFileDialog::getOpenFileName();
+    QFile Plik(m_NazwaPliku);
+    Plik.open(QIODevice::ReadOnly);
+    QDataStream in(&Plik);
+    in>>*m_Zawody;
+    Plik.close();
+
+    delete m_TeamModel;
+    m_TeamModel = new TeamModel(m_Zawody->Druzyny(), m_Zawody->LiczbaOsob());
+    m_TeamProxyModel->setSourceModel(m_TeamModel);
+
+    delete m_JudgeModel;
+    m_JudgeModel = new JudgeModel(m_Zawody->Sedziowie());
+    m_JudgeProxyModel->setSourceModel(m_JudgeModel);
+
+    delete m_MatchModel;
+    m_MatchModel = new MatchModel(m_Zawody->Spotkania());
+    m_MatchProxyModel->setSourceModel(m_MatchModel);
 }

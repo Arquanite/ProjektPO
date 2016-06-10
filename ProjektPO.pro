@@ -48,7 +48,7 @@ SOURCES += src/main.cpp\
     src/state.cpp \
     src/generatematchscores.cpp \
     src/planmatchesdialog.cpp \
-    include/editteamdialog.cpp
+    src/editteamdialog.cpp
 
 HEADERS  += include/competitionmanager.h \
     include/osoba.h \
@@ -98,7 +98,7 @@ FORMS    += ui/competitionmanager.ui \
     ui/state.ui \
     ui/generatematchscores.ui \
     ui/planmatchesdialog.ui \
-    include/editteamdialog.ui
+    ui/editteamdialog.ui
 
 RESOURCES += res/resources.qrc
 
