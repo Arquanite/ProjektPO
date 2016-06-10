@@ -1,6 +1,8 @@
 #ifndef ZAWODY_H
 #define ZAWODY_H
 
+#include <QDataStream>
+
 #include "listaspotkan.h"
 #include "listasedziow.h"
 #include "listadruzyn.h"
@@ -23,12 +25,13 @@ protected:
     ListaSedziow m_Sedziowie;
     ListaDruzyn m_Druzyny;
     ListaDruzyn m_Zwyciezcy;
-    const int m_LiczbaOsob;
+    int m_LiczbaOsob;
     int m_LiczbaZwyciezcow = 4;
     bool m_Zakonczone = 0;
 
 public:
     Zawody(int IleOsobWDruzynie);
+
     bool ZarejestrujDruzyne(Druzyna NowaDruzyna, int Konkurencja);
     bool ZarejestrujSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy = false);
 
@@ -46,6 +49,10 @@ public:
     bool GenerujSedziow(int Ilosc, int Konkurencja, bool Pomocniczy = false);
     int  LiczbaOsob() const;
     int  Etap() const;
+
+    friend QDataStream &operator<<(QDataStream &out, const Zawody &Z);
+    friend QDataStream &operator>>(QDataStream &in, Zawody &Z);
 };
+
 
 #endif // ZAWODY_H

@@ -36,3 +36,13 @@ void Druzyna::Przegrana(){
 bool Druzyna::operator == (const Druzyna &D) const{
     return ( m_Nazwa == D.m_Nazwa && m_Zawodnicy == D.m_Zawodnicy );
 }
+
+QDataStream &operator<<(QDataStream &out, const Druzyna &D){
+    out<<D.m_Nazwa<<D.m_Punkty<<D.m_Zawodnicy;
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, Druzyna &D){
+    in>>D.m_Nazwa>>D.m_Punkty>>D.m_Zawodnicy;
+    return in;
+}

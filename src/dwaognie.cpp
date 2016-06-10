@@ -1,5 +1,9 @@
 #include "dwaognie.h"
 
+DwaOgnie::DwaOgnie(){
+
+}
+
 DwaOgnie::DwaOgnie(QString Gospodarz, QString Gosc, QString Sedzia, int LiczbaGraczy) : Pilka(Gospodarz, Gosc, Sedzia), m_LiczbaGraczy(LiczbaGraczy){
 
 }
@@ -15,4 +19,14 @@ QString DwaOgnie::Rozegraj(){
     else {
         return m_Gosc;
     }
+}
+
+QDataStream &operator<<(QDataStream &out, const DwaOgnie &D){
+    out<<D.m_Gosc<<D.m_Gospodarz<<D.m_LiczbaGraczy<<D.m_PunktyGoscia<<D.m_PunktyGospodarza<<D.m_Sedzia;
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, DwaOgnie &D){
+    in>>D.m_Gosc>>D.m_Gospodarz>>D.m_LiczbaGraczy>>D.m_PunktyGoscia>>D.m_PunktyGospodarza>>D.m_Sedzia;
+    return in;
 }

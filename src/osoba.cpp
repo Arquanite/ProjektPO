@@ -8,6 +8,10 @@ Osoba::Osoba(const Osoba &O) : m_Imie(O.m_Imie), m_Nazwisko(O.m_Nazwisko){
 
 }
 
+Osoba::Osoba(){
+
+}
+
 Osoba::~Osoba(){
 
 }

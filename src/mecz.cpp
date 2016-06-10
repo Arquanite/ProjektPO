@@ -4,6 +4,10 @@ Mecz::~Mecz(){
 
 }
 
+Mecz::Mecz(){
+
+}
+
 Mecz::Mecz(QString Sedzia) : m_Sedzia(Sedzia){
 
 }

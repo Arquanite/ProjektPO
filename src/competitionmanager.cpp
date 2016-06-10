@@ -234,6 +234,14 @@ void CompetitionManager::GenerujDruzyny(int Ilosc, int Konkurencje){
     emit WygenerowanoDruzyny(true);
 }
 
+int CompetitionManager::Konkurencja(Druzyna D){
+    int Konkurencja;
+    if(m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.count(D.Nazwa())) Konkurencja = 0;
+    if(m_Zawody->Druzyny()->ListaPrzeciaganieLiny.count(D.Nazwa())) Konkurencja = 1;
+    if(m_Zawody->Druzyny()->ListaDwaOgnie.count(D.Nazwa())) Konkurencja = 2;
+    return Konkurencja;
+}
+
 void CompetitionManager::on_actionWygeneruj_Sedziow_triggered(){
     GenerateJugdeDialog Dialog(this);
     connect(&Dialog, SIGNAL(GenerujSedziow(int,int)), this, SLOT(GenerujSedziow(int,int)));
@@ -276,4 +284,47 @@ void CompetitionManager::on_actionZaplanuj_spotkania_triggered(){
     PlanMatchesDialog Dialog;
     if(Dialog.exec()) m_Zawody->ZaplanujSpotkania();
     m_MatchModel->Init();
+}
+
+void CompetitionManager::on_actionEdytuj_druzyne_triggered(){
+
+}
+
+void CompetitionManager::EdytujDruzyne(Druzyna StaraDruzyna, Druzyna NowaDruzyna, int Konkurencja){
+    if(StaraDruzyna.Nazwa() == NowaDruzyna.Nazwa()){
+        m_Zawody->UsunDruzyne(StaraDruzyna.Nazwa());
+        m_Zawody->ZarejestrujDruzyne(NowaDruzyna, Konkurencja);
+    }
+    else {
+        if(m_Zawody->ZarejestrujDruzyne(NowaDruzyna, Konkurencja)){
+            m_Zawody->UsunDruzyne(StaraDruzyna.Nazwa());
+        }
+        else{
+            emit EdytowanoDruzyne(false);
+            return;
+        }
+    }
+    emit EdytowanoDruzyne(true);
+}
+void CompetitionManager::on_widokDruzyn_doubleClicked(const QModelIndex &index){
+    QString Nazwa = m_TeamProxyModel->data(m_TeamProxyModel->index(index.row(), 0)).toString();
+    Druzyna D;
+    if(m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.count(Nazwa)) D = m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.value(Nazwa);
+    if(m_Zawody->Druzyny()->ListaPrzeciaganieLiny.count(Nazwa)) D = m_Zawody->Druzyny()->ListaPrzeciaganieLiny.value(Nazwa);
+    if(m_Zawody->Druzyny()->ListaDwaOgnie.count(Nazwa)) D = m_Zawody->Druzyny()->ListaDwaOgnie.value(Nazwa);
+    EditTeamDialog Dialog(this, D, Konkurencja(D));
+    connect(&Dialog, SIGNAL(Edytuj(Druzyna,Druzyna,int)), this, SLOT(EdytujDruzyne(Druzyna,Druzyna,int)));
+    connect(this, SIGNAL(EdytowanoDruzyne(bool)), &Dialog, SLOT(UdaoSiem(bool)));
+    Dialog.exec();
+}
+
+
+bool CompetitionManager::Zapisz(){
+    QFile Plik("Lolnia.xd");
+    Plik.open(QIODevice::WriteOnly);
+    QDataStream out(&Plik);
+    out<<*m_Zawody;
+    Plik.flush();
+    Plik.close();
+    return true;
 }

@@ -45,7 +45,6 @@ SOURCES += src/main.cpp\
     src/deletejudgedialog.cpp \
     src/generateteamsdialog.cpp \
     src/generatejugdedialog.cpp \
-    src/progresscircle.cpp \
     src/state.cpp \
     src/generatematchscores.cpp \
     src/planmatchesdialog.cpp \
@@ -83,7 +82,6 @@ HEADERS  += include/competitionmanager.h \
     include/deletejudgedialog.h \
     include/generateteamsdialog.h \
     include/generatejugdedialog.h \
-    include/progresscircle.h \
     include/state.h \
     include/generatematchscores.h \
     include/planmatchesdialog.h \

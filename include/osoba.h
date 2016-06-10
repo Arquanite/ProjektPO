@@ -10,6 +10,7 @@ protected:
 public:
     Osoba(QString Imie, QString Nazwisko);
     Osoba(const Osoba &O);
+    Osoba();
     virtual ~Osoba();
     QString Imie() const;
     void ZmienImie(const QString &Imie);

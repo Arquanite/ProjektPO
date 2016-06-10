@@ -3,6 +3,7 @@
 
 #include <QList>
 #include <QString>
+#include <QDataStream>
 
 #include"zawodnik.h"
 
@@ -21,6 +22,9 @@ public:
     void Wygrana();
     void Przegrana();
     bool operator == (const Druzyna &D) const;
+
+    friend QDataStream &operator<<(QDataStream &out, const Druzyna &D);
+    friend QDataStream &operator>>(QDataStream &in, Druzyna &D);
 };
 
 #endif // DRUZYNA_H

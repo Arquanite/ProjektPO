@@ -11,8 +11,9 @@ protected:
     int m_PunktyGoscia = 0;
     QString m_Sedzia;
 public:
-    virtual ~Mecz();
+    Mecz();
     Mecz(QString Sedzia);
+    virtual ~Mecz();
     int PunktyGospodarza() const;
     int PunktyGoscia() const;
     virtual QString Rozegraj() = 0;

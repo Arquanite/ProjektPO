@@ -5,6 +5,7 @@
 
 class Pilka : public MeczDruzynowy {
 public:
+    Pilka();
     Pilka(QString Gospodarz, QString Gosc, QString Sedzia);
 };
 

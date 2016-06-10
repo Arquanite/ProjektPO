@@ -4,8 +4,9 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QDataStream>
 #include <QTime>
-#include <QLabel>
+#include <QFile>
 
 #include "generatematchscores.h"
 #include "generatejugdedialog.h"
@@ -15,6 +16,7 @@
 #include "betterproxymodel.h"
 #include "deleteteamdialog.h"
 #include "addjudgedialog.h"
+#include "editteamdialog.h"
 #include "addteamdialog.h"
 #include "judgemodel.h"
 #include "matchmodel.h"
@@ -42,6 +44,8 @@ private:
     BetterProxyModel *m_JudgeProxyModel;
     BetterProxyModel *m_MatchProxyModel;
 
+    QString m_Nazwa;
+
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -59,6 +63,7 @@ private slots:
 
     void on_actionDodaj_druzyne_triggered();
     void on_actionUsun_druzyne_triggered();
+    void on_actionEdytuj_druzyne_triggered();
 
     void on_actionDodaj_sedziego_triggered();
     void on_actionUsun_sedziego_triggered();
@@ -69,12 +74,14 @@ private slots:
     void on_actionStan_triggered();
 
     void on_actionRozegraj_Mecze_triggered();
-
     void on_actionZaplanuj_spotkania_triggered();
+
+    void on_widokDruzyn_doubleClicked(const QModelIndex &index);
 
 public slots:
     void DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja);
     void UsunDruzyne(QString Nazwa);
+    void EdytujDruzyne(Druzyna StaraDruzyna, Druzyna NowaDruzyna, int Konkurencja);
 
     void DodajSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy);
     void UsunSedziego(QString Nazwa);
@@ -82,9 +89,14 @@ public slots:
     void GenerujSedziow(int Ilosc, int Konkurencje);
     void GenerujDruzyny(int Ilosc, int Konkurencje);
 
+    int  Konkurencja(Druzyna D);
+
+    bool Zapisz();
+
 signals:
     void UtworzonoDruzyne(bool);
     void UsunietoDruzyne(bool);
+    void EdytowanoDruzyne(bool);
 
     void DodanoSedziego(bool);
     void UsunietoSedziego(bool);

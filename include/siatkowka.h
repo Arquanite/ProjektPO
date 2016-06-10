@@ -5,10 +5,11 @@
 #include "sedziapomocniczy.h"
 
 class Siatkowka : public Pilka {
-private:
+protected:
     QString m_SedziaPomocniczy1;
     QString m_SedziaPomocniczy2;
 public:
+    Siatkowka();
     Siatkowka(QString Gospodarz, QString Gosc, QString Sedzia, QString SedziaPomocniczy1, QString SedziaPomocniczy2);
     QString SedziaPomocniczy1() const;
     QString SedziaPomocniczy2() const;

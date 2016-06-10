@@ -1,5 +1,9 @@
 #include "meczdruzynowy.h"
 
+MeczDruzynowy::MeczDruzynowy(){
+
+}
+
 MeczDruzynowy::MeczDruzynowy(QString Gospodarz, QString Gosc, QString Sedzia) : Mecz(Sedzia), m_Gospodarz(Gospodarz), m_Gosc(Gosc){
 
 }

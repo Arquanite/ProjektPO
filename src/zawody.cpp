@@ -2,14 +2,23 @@
 
 #include <QDebug>
 
-int Zawody::Etap() const
-{
+int Zawody::Etap() const {
     return m_Etap;
 }
 
 Zawody::Zawody(int IleOsobWDruzynie) : m_LiczbaOsob(IleOsobWDruzynie){
 
 }
+
+/*Zawody::Zawody(const Zawody &Z) : m_LiczbaOsob(Z.m_LiczbaOsob){
+    m_Etap = Z.m_Etap;
+    m_Spotkania = Z.m_Spotkania;
+    m_Sedziowie = Z.m_Sedziowie;
+    m_Druzyny = Z.m_Druzyny;
+    m_Zwyciezcy = Z.m_Zwyciezcy;
+    m_LiczbaZwyciezcow = Z.m_LiczbaZwyciezcow;
+    m_Zakonczone = Z.m_Zakonczone;
+}*/
 
 bool Zawody::ZarejestrujDruzyne(Druzyna NowaDruzyna, int Konkurencja){
     if(m_Etap != Rejestracja) return false;
@@ -172,4 +181,14 @@ bool Zawody::GenerujSedziow(int Ilosc, int Konkurencja, bool Pomocniczy){
 
 int Zawody::LiczbaOsob() const{
     return m_LiczbaOsob;
+}
+
+QDataStream &operator<<(QDataStream &out, const Zawody &Z){
+    out<<Z.m_Etap<<Z.m_Spotkania<<Z.m_Sedziowie<<Z.m_Druzyny<<Z.m_Zwyciezcy<<Z.m_LiczbaOsob<<Z.m_LiczbaZwyciezcow<<Z.m_Zakonczone;
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, Zawody &Z){
+    in>>Z.m_Etap>>Z.m_Spotkania>>Z.m_Sedziowie>>Z.m_Druzyny>>Z.m_Zwyciezcy>>Z.m_LiczbaOsob>>Z.m_LiczbaZwyciezcow>>Z.m_Zakonczone;
+    return in;
 }
