@@ -393,6 +393,26 @@ QTabBar::tab:!selected{
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Dogrywki</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_2">
+          <attribute name="title">
+           <string>Półfinały</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_3">
+          <attribute name="title">
+           <string>Dogrywki finałowe</string>
+          </attribute>
+         </widget>
+         <widget class="QWidget" name="tab_4">
+          <attribute name="title">
+           <string>Finał</string>
+          </attribute>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -509,6 +529,9 @@ QStatusBar::item{
   <action name="actionDodaj_druzyne">
    <property name="text">
     <string>Dodaj drużynę</string>
+   </property>
+   <property name="statusTip">
+    <string>Dodaje drużyne do zawodów</string>
    </property>
   </action>
   <action name="actionEdytuj_druzyne">

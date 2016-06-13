@@ -6,6 +6,17 @@ int Zawody::Etap() const {
     return m_Etap;
 }
 
+QString Zawody::EtapToString() const{
+    switch(m_Etap){
+        case Rejestracja: return "Rejestracja";
+        case RozgrywkiPodstawowe: return "Rozgrywki podstawowe";
+        case DogrywkiPodstawowe: return "Dogrywki do półfinału";
+        case Polfinal: return "Półfinał";
+        case DogrywkiPolfinalowe: return "Dogrywki do finału";
+        case Final: return "Finał";
+    }
+}
+
 Zawody::Zawody(int IleOsobWDruzynie) : m_LiczbaOsob(IleOsobWDruzynie){
 
 }
@@ -117,30 +128,36 @@ void Zawody::ZaplanujSpotkania(){
     D = m_Druzyny.ListaSiatkowkaPlazowa.keys();
     S = m_Sedziowie.ListaSiatkowkaPlazowaGlowny.keys();
     SP = m_Sedziowie.ListaSiatkowkaPlazowaPomocniczy.keys();
-    for(int i=0; i<D.size(); i++){
-        for(int j=i+1; j<D.size(); j++){
-            QString S1, S2;
-            S1 = S.at(rand()%S.size());
-            S2 = S.at(rand()%S.size());
-            while(S1==S2) S2 = S.at(rand()%S.size());
-            m_Spotkania.ListaSiatkowkaPlazowa.append(SiatkowkaPlazowa(D.at(i), D.at(j), S.at(rand()%S.size()), S1, S2));
+    if(D.size() != 0){
+        for(int i=0; i<D.size(); i++){
+            for(int j=i+1; j<D.size(); j++){
+                QString S1, S2;
+                S1 = SP.at(rand()%S.size());
+                S2 = SP.at(rand()%S.size());
+                while(S1==S2) S2 = S.at(rand()%S.size());
+                m_Spotkania.ListaSiatkowkaPlazowa.append(SiatkowkaPlazowa(D.at(i), D.at(j), S.at(rand()%S.size()), S1, S2));
+            }
         }
     }
 
     D = m_Druzyny.ListaPrzeciaganieLiny.keys();
     S = m_Sedziowie.ListaPrzeciaganieLinyGlowny.keys();
-    for(int i=0; i<D.size(); i++){
-        for(int j=i+1; j<D.size(); j++){
-            m_Spotkania.ListaPrzeciaganieLiny.append(PrzeciaganieLiny(D.at(i), D.at(j), S.at(rand()%S.size())));
+    if(D.size() != 0){
+        for(int i=0; i<D.size(); i++){
+            for(int j=i+1; j<D.size(); j++){
+                m_Spotkania.ListaPrzeciaganieLiny.append(PrzeciaganieLiny(D.at(i), D.at(j), S.at(rand()%S.size())));
+            }
         }
     }
 
     D = m_Druzyny.ListaDwaOgnie.keys();
     S = m_Sedziowie.ListaDwaOgnieGlowny.keys();
-    int C = m_Druzyny.ListaDwaOgnie.first().Zawodnicy().size();
-    for(int i=0; i<D.size(); i++){
-        for(int j=i+1; j<D.size(); j++){
-            m_Spotkania.ListaDwaOgnie.append(DwaOgnie(D.at(i), D.at(j), S.at(rand()%S.size()), C));
+    if(D.size() != 0){
+        int C = m_Druzyny.ListaDwaOgnie.first().Zawodnicy().size();
+        for(int i=0; i<D.size(); i++){
+            for(int j=i+1; j<D.size(); j++){
+                m_Spotkania.ListaDwaOgnie.append(DwaOgnie(D.at(i), D.at(j), S.at(rand()%S.size()), C));
+            }
         }
     }
 }

@@ -24,7 +24,7 @@
    <item>
     <widget class="QLabel" name="Tekst_2">
      <property name="text">
-      <string>W pliku %nazwapliku% są niezapisane zmiany, zakończenie pracy spowoduje ich utracenie.</string>
+      <string>W pliku nienazwany są niezapisane zmiany, zakończenie pracy spowoduje ich utracenie.</string>
      </property>
      <property name="scaledContents">
       <bool>false</bool>

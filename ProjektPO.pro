@@ -48,7 +48,8 @@ SOURCES += src/main.cpp\
     src/state.cpp \
     src/generatematchscores.cpp \
     src/planmatchesdialog.cpp \
-    src/editteamdialog.cpp
+    src/editteamdialog.cpp \
+    include/selectteamdialog.cpp
 
 HEADERS  += include/competitionmanager.h \
     include/osoba.h \
@@ -85,7 +86,8 @@ HEADERS  += include/competitionmanager.h \
     include/state.h \
     include/generatematchscores.h \
     include/planmatchesdialog.h \
-    include/editteamdialog.h
+    include/editteamdialog.h \
+    include/selectteamdialog.h
 
 FORMS    += ui/competitionmanager.ui \
     ui/exitdialog.ui \
@@ -98,7 +100,8 @@ FORMS    += ui/competitionmanager.ui \
     ui/state.ui \
     ui/generatematchscores.ui \
     ui/planmatchesdialog.ui \
-    ui/editteamdialog.ui
+    ui/editteamdialog.ui \
+    include/selectteamdialog.ui
 
 RESOURCES += res/resources.qrc
 

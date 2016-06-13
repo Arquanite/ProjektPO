@@ -3,7 +3,7 @@
 
 ExitDialog::ExitDialog(QString NazwaPliku, QWidget *parent) : QDialog(parent), ui(new Ui::ExitDialog){
     ui->setupUi(this);
-    ui->Tekst_2->setText(tr("W pliku %1 są niezapisane zmiany, zakończenie pracy spowoduje ich utracenie.").arg(NazwaPliku));
+    if(!NazwaPliku.isEmpty()) ui->Tekst_2->setText(tr("W pliku %1 są niezapisane zmiany, zakończenie pracy spowoduje ich utracenie.").arg(NazwaPliku));
     connect(ui->Wyjdz, SIGNAL(clicked(bool)), this, SLOT(Wyjdz()));
     connect(ui->Anuluj, SIGNAL(clicked(bool)), this, SLOT(Anuluj()));
     connect(ui->Zapisz, SIGNAL(clicked(bool)), this, SLOT(Zapisz()));

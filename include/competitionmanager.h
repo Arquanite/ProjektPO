@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QDataStream>
+#include <QLabel>
 #include <QTime>
 #include <QFile>
 
@@ -16,6 +17,7 @@
 #include "planmatchesdialog.h"
 #include "betterproxymodel.h"
 #include "deleteteamdialog.h"
+#include "selectteamdialog.h"
 #include "addjudgedialog.h"
 #include "editteamdialog.h"
 #include "addteamdialog.h"
@@ -26,7 +28,6 @@
 #include "zawody.h"
 #include "state.h"
 
-#include <QDebug>
 
 namespace Ui {
 class CompetitionManager;
@@ -46,6 +47,8 @@ private:
     BetterProxyModel *m_MatchProxyModel;
 
     QString m_NazwaPliku;
+    QString EtapText = "Aktualny etap: %1";
+    QLabel* m_StatusBarEtap;
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -82,6 +85,7 @@ public slots:
     void DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja);
     void UsunDruzyne(QString Nazwa);
     void EdytujDruzyne(Druzyna StaraDruzyna, Druzyna NowaDruzyna, int Konkurencja);
+    void WybranoDruzyneDoEdycji(QString Nazwa);
 
     void DodajSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy);
     void UsunSedziego(QString Nazwa);

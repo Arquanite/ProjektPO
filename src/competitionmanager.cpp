@@ -9,7 +9,10 @@ CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), u
 
     UtworzZawody();
 
-    //ui->statusBar->addPermanentWidget(new QLabel("lolxd"));
+    ui->statusBar->showMessage("Jak widać, działa :D");
+    m_StatusBarEtap = new QLabel("Aktualny etap: " + m_Zawody->EtapToString());
+    m_StatusBarEtap->setStyleSheet("color: white");
+    ui->statusBar->addPermanentWidget(m_StatusBarEtap);
     //ui->statusBar->addPermanentWidget(new QProgressBar());
 
     connect(ui->actionZapisz, SIGNAL(triggered(bool)), this, SLOT(Zapisz()));
@@ -25,6 +28,7 @@ CompetitionManager::~CompetitionManager(){
     delete m_MatchModel;
     delete m_MatchProxyModel;
     delete m_Zawody;
+    delete m_StatusBarEtap;
     delete ui;
 }
 
@@ -69,7 +73,7 @@ void CompetitionManager::UtworzZawody(){
 }
 
 void CompetitionManager::closeEvent(QCloseEvent *event){
-    ExitDialog Dialog("nienazwany", this);
+    ExitDialog Dialog(m_NazwaPliku, this);
     int x = Dialog.exec();
     switch (x) {
     case -1:
@@ -121,6 +125,10 @@ void CompetitionManager::on_DwaOgnie_clicked(bool checked){
 }
 
 void CompetitionManager::on_actionDodaj_druzyne_triggered(){
+    if(m_Zawody->Etap() != Rejestracja){
+        QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
+        return;
+    }
     AddTeamDialog Dialog(this, m_Zawody->LiczbaOsob());
     connect(&Dialog, SIGNAL(Dodaj(Druzyna,int)), this, SLOT(DodajDruzyne(Druzyna,int)));
     connect(this, SIGNAL(UtworzonoDruzyne(bool)), &Dialog, SLOT(UdaoSiem(bool)));
@@ -138,6 +146,10 @@ void CompetitionManager::DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja){
 }
 
 void CompetitionManager::on_actionUsun_druzyne_triggered(){
+    if(m_Zawody->Etap() != Rejestracja){
+        QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
+        return;
+    }
     QList<QString> Druzyny;
     Druzyny.append(m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.keys());
     Druzyny.append(m_Zawody->Druzyny()->ListaPrzeciaganieLiny.keys());
@@ -165,6 +177,10 @@ void CompetitionManager::UsunDruzyne(QString Nazwa){
 }
 
 void CompetitionManager::on_actionDodaj_sedziego_triggered(){
+    if(m_Zawody->Etap() != Rejestracja){
+        QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
+        return;
+    }
     AddJudgeDialog Dialog;
     connect(&Dialog, SIGNAL(DodajSedziego(Sedzia,int,bool)), this, SLOT(DodajSedziego(Sedzia,int,bool)));
     connect(this, SIGNAL(DodanoSedziego(bool)), &Dialog, SLOT(UdaoSiem(bool)));
@@ -183,6 +199,10 @@ void CompetitionManager::DodajSedziego(Sedzia NowySedzia, int Konkurencja, bool 
 
 
 void CompetitionManager::on_actionUsun_sedziego_triggered(){
+    if(m_Zawody->Etap() != Rejestracja){
+        QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
+        return;
+    }
     QList<QString> Sedziowie;
     Sedziowie.append(m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaGlowny.keys());
     Sedziowie.append(m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaPomocniczy.keys());
@@ -212,6 +232,10 @@ void CompetitionManager::UsunSedziego(QString Nazwa){
 }
 
 void CompetitionManager::on_actionWygeneruj_Druzyny_triggered(){
+    if(m_Zawody->Etap() != Rejestracja){
+        QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
+        return;
+    }
     GenerateTeamsDialog Dialog(this);
     connect(&Dialog, SIGNAL(GenerujDruzyny(int,int)), this, SLOT(GenerujDruzyny(int,int)));
     connect(this, SIGNAL(WygenerowanoDruzyny(bool)), &Dialog, SLOT(UdaoSiem(bool)));
@@ -247,6 +271,10 @@ int CompetitionManager::Konkurencja(Druzyna D){
 }
 
 void CompetitionManager::on_actionWygeneruj_Sedziow_triggered(){
+    if(m_Zawody->Etap() != Rejestracja){
+        QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
+        return;
+    }
     GenerateJugdeDialog Dialog(this);
     connect(&Dialog, SIGNAL(GenerujSedziow(int,int)), this, SLOT(GenerujSedziow(int,int)));
     connect(this, SIGNAL(WygenerowanoSedziow(bool)), &Dialog, SLOT(UdaoSiem(bool)));
@@ -285,13 +313,63 @@ void CompetitionManager::on_actionRozegraj_Mecze_triggered(){
 }
 
 void CompetitionManager::on_actionZaplanuj_spotkania_triggered(){
+    const ListaSpotkan *L = m_Zawody->Spotkania();
+    if(L->ListaSiatkowkaPlazowa.size() > 0 || L->ListaPrzeciaganieLiny.size() > 0 || L->ListaDwaOgnie.size() > 0){
+        QMessageBox::warning(this, "Błąd", "Spotkania zostały już zaplanowane!");
+        return;
+    }
     PlanMatchesDialog Dialog;
-    if(Dialog.exec()) m_Zawody->ZaplanujSpotkania();
-    m_MatchModel->Init();
+    if(Dialog.exec()){
+        const ListaDruzyn *L = m_Zawody->Druzyny();
+        if(L->ListaSiatkowkaPlazowa.size() == 0 && L->ListaPrzeciaganieLiny.size() == 0 && L->ListaDwaOgnie.size() == 0){
+            QMessageBox::warning(this, "Błąd", "Brak drużyn!");
+            return;
+        }
+        if(L->ListaSiatkowkaPlazowa.size() == 1){
+            QMessageBox::warning(this, "Błąd", "W siatkówce plażowej jest tylko jedna drużyna!");
+            return;
+        }
+        if(L->ListaPrzeciaganieLiny.size() == 1){
+            QMessageBox::warning(this, "Błąd", "W przeciąganiu liny jest tylko jedna drużyna!");
+            return;
+        }
+        if(L->ListaDwaOgnie.size() == 1){
+            QMessageBox::warning(this, "Błąd", "W dwóch ogniach jest tylko jedna drużyna!");
+            return;
+        }
+
+        const ListaSedziow *S = m_Zawody->Sedziowie();
+        if(L->ListaSiatkowkaPlazowa.size() > 1 && (S->ListaSiatkowkaPlazowaGlowny.size() < 1 || S->ListaSiatkowkaPlazowaPomocniczy.size() < 2)){
+            QMessageBox::warning(this, "Błąd", "Niewystarczająca liczba sędziów w siatkówce plażowej!");
+            return;
+        }
+        if(L->ListaPrzeciaganieLiny.size() > 1 && S->ListaPrzeciaganieLinyGlowny.size() < 1){
+            QMessageBox::warning(this, "Błąd", "Niewystarczająca liczba sędziów w przeciąganiu liny!");
+            return;
+        }
+        if(L->ListaDwaOgnie.size() > 1 && S->ListaDwaOgnieGlowny.size() < 1){
+            QMessageBox::warning(this, "Błąd", "Niewystarczająca liczba sędziów w dwóch ogniach!");
+            return;
+        }
+        m_Zawody->ZaplanujSpotkania();
+        m_MatchModel->Init();
+        m_StatusBarEtap->setText(EtapText.arg(m_Zawody->EtapToString()));
+    }
 }
 
 void CompetitionManager::on_actionEdytuj_druzyne_triggered(){
-
+    if(m_Zawody->Etap() != Rejestracja){
+        QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
+        return;
+    }
+    QList<QString> Druzyny;
+    Druzyny.append(m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.keys());
+    Druzyny.append(m_Zawody->Druzyny()->ListaPrzeciaganieLiny.keys());
+    Druzyny.append(m_Zawody->Druzyny()->ListaDwaOgnie.keys());
+    qSort(Druzyny);
+    SelectTeamDialog Dialog(Druzyny, this);
+    connect(&Dialog, SIGNAL(WybierzDruzyne(QString)), this, SLOT(WybranoDruzyneDoEdycji(QString)));
+    Dialog.exec();
 }
 
 void CompetitionManager::EdytujDruzyne(Druzyna StaraDruzyna, Druzyna NowaDruzyna, int Konkurencja){
@@ -310,8 +388,8 @@ void CompetitionManager::EdytujDruzyne(Druzyna StaraDruzyna, Druzyna NowaDruzyna
     }
     emit EdytowanoDruzyne(true);
 }
-void CompetitionManager::on_widokDruzyn_doubleClicked(const QModelIndex &index){
-    QString Nazwa = m_TeamProxyModel->data(m_TeamProxyModel->index(index.row(), 0)).toString();
+
+void CompetitionManager::WybranoDruzyneDoEdycji(QString Nazwa){
     Druzyna D;
     if(m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.count(Nazwa)) D = m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.value(Nazwa);
     if(m_Zawody->Druzyny()->ListaPrzeciaganieLiny.count(Nazwa)) D = m_Zawody->Druzyny()->ListaPrzeciaganieLiny.value(Nazwa);
@@ -322,6 +400,14 @@ void CompetitionManager::on_widokDruzyn_doubleClicked(const QModelIndex &index){
     Dialog.exec();
 }
 
+void CompetitionManager::on_widokDruzyn_doubleClicked(const QModelIndex &index){
+    if(m_Zawody->Etap() != Rejestracja){
+        QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
+        return;
+    }
+    QString Nazwa = m_TeamProxyModel->data(m_TeamProxyModel->index(index.row(), 0)).toString();
+    WybranoDruzyneDoEdycji(Nazwa);
+}
 
 bool CompetitionManager::Zapisz(){
     if(m_NazwaPliku.isEmpty()) ZapiszJako();
@@ -335,7 +421,10 @@ bool CompetitionManager::Zapisz(){
 }
 
 bool CompetitionManager::ZapiszJako(){
-    m_NazwaPliku = QFileDialog::getSaveFileName();
+    m_NazwaPliku = QFileDialog::getSaveFileName(this, "Zapisz plik", 0, "Pliki zawodów (*.cm)");
+    if(m_NazwaPliku.isEmpty()) return false;
+    if(m_NazwaPliku.right(3) != ".cm") m_NazwaPliku += ".cm";
+    return true;
 }
 
 bool CompetitionManager::Otworz(){
@@ -357,4 +446,6 @@ bool CompetitionManager::Otworz(){
     delete m_MatchModel;
     m_MatchModel = new MatchModel(m_Zawody->Spotkania());
     m_MatchProxyModel->setSourceModel(m_MatchModel);
+
+    return true;
 }

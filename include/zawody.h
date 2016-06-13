@@ -49,6 +49,7 @@ public:
     bool GenerujSedziow(int Ilosc, int Konkurencja, bool Pomocniczy = false);
     int  LiczbaOsob() const;
     int  Etap() const;
+    QString EtapToString() const;
 
     friend QDataStream &operator<<(QDataStream &out, const Zawody &Z);
     friend QDataStream &operator>>(QDataStream &in, Zawody &Z);
