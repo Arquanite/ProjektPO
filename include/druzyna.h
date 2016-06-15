@@ -21,7 +21,9 @@ public:
     int Punkty() const;
     void Wygrana();
     void Przegrana();
+
     bool operator == (const Druzyna &D) const;
+    bool operator < (const Druzyna &D) const;
 
     friend QDataStream &operator<<(QDataStream &out, const Druzyna &D);
     friend QDataStream &operator>>(QDataStream &in, Druzyna &D);

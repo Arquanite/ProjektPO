@@ -11,9 +11,9 @@
 enum {
     Rejestracja = 0,
     RozgrywkiPodstawowe = 1,
-    DogrywkiPodstawowe = 2,
+    //DogrywkiPodstawowe = 2,
     Polfinal = 3,
-    DogrywkiPolfinalowe = 4,
+    //DogrywkiPolfinalowe = 4,
     Final = 5
 };
 
@@ -24,7 +24,11 @@ protected:
     ListaSpotkan m_Spotkania;
     ListaSedziow m_Sedziowie;
     ListaDruzyn m_Druzyny;
+
     ListaDruzyn m_Zwyciezcy;
+
+    int m_LiczbaMeczy = 0;
+    int m_RozegraneMecze = 0;
     int m_LiczbaOsob;
     int m_LiczbaZwyciezcow = 4;
     bool m_Zakonczone = 0;
@@ -45,6 +49,7 @@ public:
 
     void ZaplanujSpotkania();
     void RozegrajMecze();
+    void RozegrajMecz(Mecz *M);
     bool GenerujDruzyny(int Ilosc, int Konkurencja);
     bool GenerujSedziow(int Ilosc, int Konkurencja, bool Pomocniczy = false);
     int  LiczbaOsob() const;

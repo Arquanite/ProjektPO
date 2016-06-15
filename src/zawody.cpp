@@ -10,11 +10,12 @@ QString Zawody::EtapToString() const{
     switch(m_Etap){
         case Rejestracja: return "Rejestracja";
         case RozgrywkiPodstawowe: return "Rozgrywki podstawowe";
-        case DogrywkiPodstawowe: return "Dogrywki do półfinału";
+        //case DogrywkiPodstawowe: return "Dogrywki do półfinału";
         case Polfinal: return "Półfinał";
-        case DogrywkiPolfinalowe: return "Dogrywki do finału";
+        //case DogrywkiPolfinalowe: return "Dogrywki do finału";
         case Final: return "Finał";
     }
+    return QString();
 }
 
 Zawody::Zawody(int IleOsobWDruzynie) : m_LiczbaOsob(IleOsobWDruzynie){
@@ -132,10 +133,11 @@ void Zawody::ZaplanujSpotkania(){
         for(int i=0; i<D.size(); i++){
             for(int j=i+1; j<D.size(); j++){
                 QString S1, S2;
-                S1 = SP.at(rand()%S.size());
-                S2 = SP.at(rand()%S.size());
-                while(S1==S2) S2 = S.at(rand()%S.size());
-                m_Spotkania.ListaSiatkowkaPlazowa.append(SiatkowkaPlazowa(D.at(i), D.at(j), S.at(rand()%S.size()), S1, S2));
+                S1 = SP.at(qrand()%SP.size());
+                S2 = SP.at(qrand()%SP.size());
+                while(S1==S2) S2 = SP.at(qrand()%SP.size());
+                m_Spotkania.ListaSiatkowkaPlazowa.append(SiatkowkaPlazowa(D.at(i), D.at(j), S.at(qrand()%S.size()), S1, S2));
+                m_LiczbaMeczy++;
             }
         }
     }
@@ -145,7 +147,8 @@ void Zawody::ZaplanujSpotkania(){
     if(D.size() != 0){
         for(int i=0; i<D.size(); i++){
             for(int j=i+1; j<D.size(); j++){
-                m_Spotkania.ListaPrzeciaganieLiny.append(PrzeciaganieLiny(D.at(i), D.at(j), S.at(rand()%S.size())));
+                m_Spotkania.ListaPrzeciaganieLiny.append(PrzeciaganieLiny(D.at(i), D.at(j), S.at(qrand()%S.size())));
+                m_LiczbaMeczy++;
             }
         }
     }
@@ -156,7 +159,8 @@ void Zawody::ZaplanujSpotkania(){
         int C = m_Druzyny.ListaDwaOgnie.first().Zawodnicy().size();
         for(int i=0; i<D.size(); i++){
             for(int j=i+1; j<D.size(); j++){
-                m_Spotkania.ListaDwaOgnie.append(DwaOgnie(D.at(i), D.at(j), S.at(rand()%S.size()), C));
+                m_Spotkania.ListaDwaOgnie.append(DwaOgnie(D.at(i), D.at(j), S.at(qrand()%S.size()), C));
+                m_LiczbaMeczy++;
             }
         }
     }
@@ -165,15 +169,187 @@ void Zawody::ZaplanujSpotkania(){
 void Zawody::RozegrajMecze(){
     if(m_Etap != RozgrywkiPodstawowe) return;
     for(auto &M : m_Spotkania.ListaSiatkowkaPlazowa){
-        m_Druzyny.ListaSiatkowkaPlazowa[M.Rozegraj()].Wygrana();
+        //m_Druzyny.ListaSiatkowkaPlazowa[M.Rozegraj()].Wygrana();
+        RozegrajMecz(&M);
     }
 
     for(auto &M : m_Spotkania.ListaPrzeciaganieLiny){
-        m_Druzyny.ListaPrzeciaganieLiny[M.Rozegraj()].Wygrana();
+        //m_Druzyny.ListaPrzeciaganieLiny[M.Rozegraj()].Wygrana();
+        RozegrajMecz(&M);
     }
 
     for(auto &M : m_Spotkania.ListaDwaOgnie){
-        m_Druzyny.ListaDwaOgnie[M.Rozegraj()].Wygrana();
+        //m_Druzyny.ListaDwaOgnie[M.Rozegraj()].Wygrana();
+        RozegrajMecz(&M);
+    }
+}
+
+void Zawody::RozegrajMecz(Mecz *M){
+    QString Nazwa = M->Rozegraj();
+
+    if(m_Druzyny.ListaSiatkowkaPlazowa.contains(Nazwa)){
+        m_Druzyny.ListaSiatkowkaPlazowa[Nazwa].Wygrana();
+        m_RozegraneMecze++;
+    }
+    if(m_Druzyny.ListaPrzeciaganieLiny.contains(Nazwa)){
+        m_Druzyny.ListaPrzeciaganieLiny[Nazwa].Wygrana();
+        m_RozegraneMecze++;
+    }
+    if(m_Druzyny.ListaDwaOgnie.contains(Nazwa)){
+        m_Druzyny.ListaDwaOgnie[Nazwa].Wygrana();
+        m_RozegraneMecze++;
+    }
+
+    if(m_RozegraneMecze == m_LiczbaMeczy){
+        QList<Druzyna> Druzyny, Zwyciezcy, Dogrywki;
+
+        //Siata
+        for(QString Nazwa : m_Druzyny.ListaSiatkowkaPlazowa.keys()) Druzyny.append(m_Druzyny.ListaSiatkowkaPlazowa.value(Nazwa));
+        qSort(Druzyny);
+
+        for(Druzyna D : Druzyny){
+            if(D.Punkty() > Druzyny.at(4).Punkty()) Zwyciezcy.append(D);
+            else break;
+        }
+
+        for(Druzyna D : Druzyny){
+            if(D.Punkty() == Druzyny.at(3).Punkty()) Dogrywki.append(D);
+            if(D.Punkty() < Druzyny.at(3).Punkty()) break;
+        }
+        if(Dogrywki.size() == 1) Dogrywki.clear();
+
+        for(auto &a : m_Spotkania.ListaSiatkowkaPlazowa){
+            for(Druzyna D : Dogrywki){
+                if(D.Nazwa() == a.Gospodarz()){
+                    for(Druzyna F : Dogrywki){
+                        if(F.Nazwa() == a.Gosc()){
+                            if(a.PunktyGoscia() > a.PunktyGospodarza()){
+                                m_Druzyny.ListaSiatkowkaPlazowa[F.Nazwa()].Wygrana();
+                            }
+                            else {
+                                m_Druzyny.ListaSiatkowkaPlazowa[D.Nazwa()].Wygrana();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for(Druzyna &D : Dogrywki) D = m_Druzyny.ListaSiatkowkaPlazowa.value(D.Nazwa());
+        qSort(Dogrywki);
+        if(Dogrywki.size()>0){
+            for(Druzyna D : Zwyciezcy){
+                for(int i=D.Punkty(); i<= Dogrywki.first().Punkty()+2; i++) m_Druzyny.ListaSiatkowkaPlazowa[D.Nazwa()].Wygrana();
+            }
+            int P = m_LiczbaZwyciezcow-Zwyciezcy.size();
+            for(int i=0; i<P; i++){
+                m_Druzyny.ListaSiatkowkaPlazowa[Dogrywki.at(i).Nazwa()].Wygrana();
+                Zwyciezcy.append(Dogrywki.at(i));
+            }
+        }
+
+        for(Druzyna D : Zwyciezcy) m_Zwyciezcy.ListaSiatkowkaPlazowa.insert(D.Nazwa(), D);
+
+        Druzyny.clear();
+        Zwyciezcy.clear();
+        Dogrywki.clear();
+
+        //Przeciaganie Liny
+        for(QString Nazwa : m_Druzyny.ListaPrzeciaganieLiny.keys()) Druzyny.append(m_Druzyny.ListaPrzeciaganieLiny.value(Nazwa));
+        qSort(Druzyny);
+
+        for(Druzyna D : Druzyny){
+            if(D.Punkty() > Druzyny.at(4).Punkty()) Zwyciezcy.append(D);
+            else break;
+        }
+
+        for(Druzyna D : Druzyny){
+            if(D.Punkty() == Druzyny.at(3).Punkty()) Dogrywki.append(D);
+            if(D.Punkty() < Druzyny.at(3).Punkty()) break;
+        }
+        if(Dogrywki.size() == 1) Dogrywki.clear();
+
+        for(auto &a : m_Spotkania.ListaPrzeciaganieLiny){
+            for(Druzyna D : Dogrywki){
+                if(D.Nazwa() == a.Gospodarz()){
+                    for(Druzyna F : Dogrywki){
+                        if(F.Nazwa() == a.Gosc()){
+                            if(a.PunktyGoscia() > a.PunktyGospodarza()){
+                                m_Druzyny.ListaPrzeciaganieLiny[F.Nazwa()].Wygrana();
+                            }
+                            else {
+                                m_Druzyny.ListaPrzeciaganieLiny[D.Nazwa()].Wygrana();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for(Druzyna &D : Dogrywki) D = m_Druzyny.ListaPrzeciaganieLiny.value(D.Nazwa());
+        qSort(Dogrywki);
+        if(Dogrywki.size()>0){
+            for(Druzyna D : Zwyciezcy){
+                for(int i=D.Punkty(); i<= Dogrywki.first().Punkty()+2; i++) m_Druzyny.ListaPrzeciaganieLiny[D.Nazwa()].Wygrana();
+            }
+            int P = m_LiczbaZwyciezcow-Zwyciezcy.size();
+            for(int i=0; i<P; i++){
+                m_Druzyny.ListaPrzeciaganieLiny[Dogrywki.at(i).Nazwa()].Wygrana();
+                Zwyciezcy.append(Dogrywki.at(i));
+            }
+        }
+
+        for(Druzyna D : Zwyciezcy) m_Zwyciezcy.ListaPrzeciaganieLiny.insert(D.Nazwa(), D);
+
+        Druzyny.clear();
+        Zwyciezcy.clear();
+        Dogrywki.clear();
+
+        //Dwa Ognie
+        for(QString Nazwa : m_Druzyny.ListaDwaOgnie.keys()) Druzyny.append(m_Druzyny.ListaDwaOgnie.value(Nazwa));
+        qSort(Druzyny);
+
+        for(Druzyna D : Druzyny){
+            if(D.Punkty() > Druzyny.at(4).Punkty()) Zwyciezcy.append(D);
+            else break;
+        }
+
+        for(Druzyna D : Druzyny){
+            if(D.Punkty() == Druzyny.at(3).Punkty()) Dogrywki.append(D);
+            if(D.Punkty() < Druzyny.at(3).Punkty()) break;
+        }
+        if(Dogrywki.size() == 1) Dogrywki.clear();
+
+        for(auto &a : m_Spotkania.ListaDwaOgnie){
+            for(Druzyna D : Dogrywki){
+                if(D.Nazwa() == a.Gospodarz()){
+                    for(Druzyna F : Dogrywki){
+                        if(F.Nazwa() == a.Gosc()){
+                            if(a.PunktyGoscia() > a.PunktyGospodarza()){
+                                m_Druzyny.ListaDwaOgnie[F.Nazwa()].Wygrana();
+                            }
+                            else {
+                                m_Druzyny.ListaDwaOgnie[D.Nazwa()].Wygrana();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for(Druzyna &D : Dogrywki) D = m_Druzyny.ListaDwaOgnie.value(D.Nazwa());
+        qSort(Dogrywki);
+        if(Dogrywki.size()>0){
+            for(Druzyna D : Zwyciezcy){
+                for(int i=D.Punkty(); i<= Dogrywki.first().Punkty()+2; i++) m_Druzyny.ListaDwaOgnie[D.Nazwa()].Wygrana();
+            }
+            int P = m_LiczbaZwyciezcow-Zwyciezcy.size();
+            for(int i=0; i<P; i++){
+                m_Druzyny.ListaDwaOgnie[Dogrywki.at(i).Nazwa()].Wygrana();
+                Zwyciezcy.append(Dogrywki.at(i));
+            }
+        }
+        for(Druzyna D : Zwyciezcy) m_Zwyciezcy.ListaDwaOgnie.insert(D.Nazwa(), D);
     }
 }
 

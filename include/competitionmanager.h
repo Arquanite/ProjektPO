@@ -48,7 +48,7 @@ private:
 
     QString m_NazwaPliku;
     QString EtapText = "Aktualny etap: %1";
-    QLabel* m_StatusBarEtap;
+    QLabel* m_StatusBarEtap;    
 
 protected:
     void closeEvent(QCloseEvent *event);
