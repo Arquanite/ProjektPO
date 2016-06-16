@@ -112,7 +112,7 @@ const ListaSpotkan *Zawody::Spotkania() const {
     return &m_Spotkania;
 }
 
-const ListaDruzyn *Zawody::Zwyciezcy() const {
+const ListaDruzyn *Zawody::Zwyciezcy() const{
     return &m_Zwyciezcy;
 }
 

@@ -6,18 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>391</width>
-    <height>82</height>
+    <width>585</width>
+    <height>102</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Zaplanować spotkania?</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Czy chcesz automatycznie zaplanować spotkania?</string>
+      <string>Czy chcesz automatycznie zaplanować spotkania? Spowoduje to zamknięcie 
+rejestracji - dodawanie, usuwanie i edycja nie będą dłużej dostępne.</string>
      </property>
     </widget>
    </item>

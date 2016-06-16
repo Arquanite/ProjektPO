@@ -14,7 +14,7 @@
    <string>CompetitionManager</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../res/resources.qrc">
+   <iconset>
     <normaloff>:/icons/cm_icon.png</normaloff>:/icons/cm_icon.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -80,7 +80,7 @@ QToolButton:checked{
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../res/resources.qrc">
+          <iconset>
            <normaloff>:/icons/all.png</normaloff>:/icons/all.png</iconset>
          </property>
          <property name="checkable">
@@ -116,7 +116,7 @@ QToolButton:checked{
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../res/resources.qrc">
+          <iconset>
            <normaloff>:/icons/ball.png</normaloff>:/icons/ball.png</iconset>
          </property>
          <property name="checkable">
@@ -149,7 +149,7 @@ QToolButton:checked{
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../res/resources.qrc">
+          <iconset>
            <normaloff>:/icons/rope.png</normaloff>:/icons/rope.png</iconset>
          </property>
          <property name="checkable">
@@ -182,7 +182,7 @@ QToolButton:checked{
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../res/resources.qrc">
+          <iconset>
            <normaloff>:/icons/fire.png</normaloff>:/icons/fire.png</iconset>
          </property>
          <property name="checkable">
@@ -256,7 +256,7 @@ QTabBar::tab:!selected{
 }</string>
          </property>
          <property name="currentIndex">
-          <number>4</number>
+          <number>1</number>
          </property>
          <property name="movable">
           <bool>true</bool>
@@ -371,94 +371,6 @@ QTabBar::tab:!selected{
            </property>
            <item>
             <widget class="QTableView" name="widokSpotkan">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <property name="selectionMode">
-              <enum>QAbstractItemView::SingleSelection</enum>
-             </property>
-             <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-             <property name="horizontalScrollMode">
-              <enum>QAbstractItemView::ScrollPerPixel</enum>
-             </property>
-             <property name="sortingEnabled">
-              <bool>true</bool>
-             </property>
-             <attribute name="horizontalHeaderStretchLastSection">
-              <bool>true</bool>
-             </attribute>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="kartaPolfinal">
-          <attribute name="title">
-           <string>Półfinał</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QTableView" name="widokPolfinalu">
-             <property name="alternatingRowColors">
-              <bool>true</bool>
-             </property>
-             <property name="selectionMode">
-              <enum>QAbstractItemView::SingleSelection</enum>
-             </property>
-             <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-             <property name="horizontalScrollMode">
-              <enum>QAbstractItemView::ScrollPerPixel</enum>
-             </property>
-             <property name="sortingEnabled">
-              <bool>true</bool>
-             </property>
-             <attribute name="horizontalHeaderStretchLastSection">
-              <bool>true</bool>
-             </attribute>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="kartaFinal">
-          <attribute name="title">
-           <string>Finał</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QTableView" name="widokFinalu">
              <property name="alternatingRowColors">
               <bool>true</bool>
              </property>
@@ -684,8 +596,6 @@ QStatusBar::item{
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="../res/resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

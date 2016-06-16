@@ -1,20 +1,20 @@
-#ifndef ADDJUDGEDIALOG_H
-#define ADDJUDGEDIALOG_H
+#ifndef ADDUMPIREDIALOG_H
+#define ADDUMPIREDIALOG_H
 
 #include <QDialog>
 #include <QMessageBox>
 #include "sedzia.h"
 
 namespace Ui {
-class AddJudgeDialog;
+class AddUmpireDialog;
 }
 
-class AddJudgeDialog : public QDialog {
+class AddUmpireDialog : public QDialog {
     Q_OBJECT
 
 public:
-    explicit AddJudgeDialog(QWidget *parent = 0);
-    ~AddJudgeDialog();
+    explicit AddUmpireDialog(QWidget *parent = 0);
+    ~AddUmpireDialog();
 
 public slots:
     void Sprawdz();
@@ -24,7 +24,7 @@ signals:
     void DodajSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy);
 
 private:
-    Ui::AddJudgeDialog *ui;
+    Ui::AddUmpireDialog *ui;
 };
 
-#endif // ADDJUDGEDIALOG_H
+#endif // ADDUMPIREDIALOG_H

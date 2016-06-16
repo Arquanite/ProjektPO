@@ -11,10 +11,8 @@
 enum {
     Rejestracja = 0,
     RozgrywkiPodstawowe = 1,
-    //DogrywkiPodstawowe = 2,
-    Polfinal = 3,
-    //DogrywkiPolfinalowe = 4,
-    Final = 5
+    Polfinal = 2,
+    Final = 3
 };
 
 class Zawody{
@@ -26,6 +24,7 @@ protected:
     ListaDruzyn m_Druzyny;
 
     ListaDruzyn m_Zwyciezcy;
+    ListaSpotkan m_Polfinal;
 
     int m_LiczbaMeczy = 0;
     int m_RozegraneMecze = 0;
@@ -58,6 +57,7 @@ public:
 
     friend QDataStream &operator<<(QDataStream &out, const Zawody &Z);
     friend QDataStream &operator>>(QDataStream &in, Zawody &Z);
+
 };
 
 

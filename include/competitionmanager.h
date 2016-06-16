@@ -13,12 +13,14 @@
 #include "generatematchscores.h"
 #include "generatejugdedialog.h"
 #include "generateteamsdialog.h"
+#include "selectumpiredialog.h"
 #include "deletejudgedialog.h"
 #include "planmatchesdialog.h"
 #include "betterproxymodel.h"
 #include "deleteteamdialog.h"
+#include "editumpiredialog.h"
 #include "selectteamdialog.h"
-#include "addjudgedialog.h"
+#include "addumpiredialog.h"
 #include "editteamdialog.h"
 #include "addteamdialog.h"
 #include "judgemodel.h"
@@ -26,7 +28,6 @@
 #include "exitdialog.h"
 #include "teammodel.h"
 #include "zawody.h"
-#include "state.h"
 
 
 namespace Ui {
@@ -37,14 +38,20 @@ class CompetitionManager : public QMainWindow {
     Q_OBJECT
 private:
     Zawody *m_Zawody;
+    Zawody *m_Polfinal;
+    Zawody *m_Final;
 
     TeamModel *m_TeamModel;
     JudgeModel *m_JudgeModel;
     MatchModel *m_MatchModel;
+    MatchModel *m_HalfFinalModel;
+    MatchModel *m_FinalModel;
 
     BetterProxyModel *m_TeamProxyModel;
     BetterProxyModel *m_JudgeProxyModel;
     BetterProxyModel *m_MatchProxyModel;
+    BetterProxyModel *m_HalfFinalProxyModel;
+    BetterProxyModel *m_FinalProxyModel;
 
     QString m_NazwaPliku;
     QString EtapText = "Aktualny etap: %1";
@@ -71,6 +78,7 @@ private slots:
 
     void on_actionDodaj_sedziego_triggered();
     void on_actionUsun_sedziego_triggered();
+    void on_actionEdytuj_dane_sedziego_triggered();
 
     void on_actionWygeneruj_Druzyny_triggered();
     void on_actionWygeneruj_Sedziow_triggered();
@@ -78,8 +86,9 @@ private slots:
     void on_actionStan_triggered();
     void on_actionRozegraj_Mecze_triggered();
     void on_actionZaplanuj_spotkania_triggered();
-    void on_widokDruzyn_doubleClicked(const QModelIndex &index);
 
+    void on_widokDruzyn_doubleClicked(const QModelIndex &index);
+    void on_widokSedziow_doubleClicked(const QModelIndex &index);
 
 public slots:
     void DodajDruzyne(Druzyna NowaDruzyna, int Konkurencja);
@@ -89,6 +98,8 @@ public slots:
 
     void DodajSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy);
     void UsunSedziego(QString Nazwa);
+    void EdytujSedziego(Sedzia StarySedzia, Sedzia NowySedzia, int Konkurencja, bool Pomocniczy = false);
+    void WybranoSedziegoDoEdycji(QString Nazwa);
 
     void GenerujSedziow(int Ilosc, int Konkurencje);
     void GenerujDruzyny(int Ilosc, int Konkurencje);
@@ -107,6 +118,7 @@ signals:
 
     void DodanoSedziego(bool);
     void UsunietoSedziego(bool);
+    void EdytowanoSedziego(bool);
 
     void WygenerowanoSedziow(bool);
     void WygenerowanoDruzyny(bool);

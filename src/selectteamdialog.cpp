@@ -17,7 +17,7 @@ SelectTeamDialog::~SelectTeamDialog(){
 
 void SelectTeamDialog::Sprawdz(){
     if(m_Zaznaczenie == -1) QMessageBox::warning(this, "Błąd", "Musisz wybrać drużynę!");
-    else{
+    else {
         emit WybierzDruzyne(m_TeamModel->stringList().at(m_Zaznaczenie));
         accept();
     }

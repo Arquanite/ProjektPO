@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DeleteJudgeDialog</class>
- <widget class="QDialog" name="DeleteJudgeDialog">
+ <class>SelectTeamDialog</class>
+ <widget class="QDialog" name="SelectTeamDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,18 +11,18 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Usuń Sędziego</string>
+   <string>Wybierz drużynę do edycji</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Wybierz sędziego do usunięcia:</string>
+      <string>Wybierz drużynę do edycji:</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QListView" name="WidokSedziow">
+    <widget class="QListView" name="WidokDruzyn">
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
      </property>

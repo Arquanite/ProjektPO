@@ -83,7 +83,8 @@ void CompetitionManager::closeEvent(QCloseEvent *event){
         event->ignore();
         break;
     case 1:
-        event->accept();
+        if(Zapisz()) event->accept();
+        else event->ignore();
         break;
     }
 }
@@ -181,7 +182,7 @@ void CompetitionManager::on_actionDodaj_sedziego_triggered(){
         QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
         return;
     }
-    AddJudgeDialog Dialog;
+    AddUmpireDialog Dialog;
     connect(&Dialog, SIGNAL(DodajSedziego(Sedzia,int,bool)), this, SLOT(DodajSedziego(Sedzia,int,bool)));
     connect(this, SIGNAL(DodanoSedziego(bool)), &Dialog, SLOT(UdaoSiem(bool)));
     Dialog.exec();
@@ -229,6 +230,66 @@ void CompetitionManager::UsunSedziego(QString Nazwa){
     else {
         emit UsunietoSedziego(false);
     }
+}
+
+void CompetitionManager::on_actionEdytuj_dane_sedziego_triggered(){
+    if(m_Zawody->Etap() != Rejestracja){
+        QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
+        return;
+    }
+    QList<QString> Sedziowie;
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaGlowny.keys());
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaPomocniczy.keys());
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaPrzeciaganieLinyGlowny.keys());
+    Sedziowie.append(m_Zawody->Sedziowie()->ListaDwaOgnieGlowny.keys());
+    qSort(Sedziowie);
+    SelectUmpireDialog Dialog(Sedziowie, this);
+    connect(&Dialog, SIGNAL(WybierzSedziego(QString)), this, SLOT(WybranoSedziegoDoEdycji(QString)));
+    Dialog.exec();
+}
+
+void CompetitionManager::EdytujSedziego(Sedzia StarySedzia, Sedzia NowySedzia, int Konkurencja, bool Pomocniczy){
+    if((StarySedzia.Nazwisko() + " " + StarySedzia.Imie()) == (NowySedzia.Nazwisko() + " " + NowySedzia.Imie())){
+        m_Zawody->UsunSedziego(StarySedzia.Nazwisko() + " " + StarySedzia.Imie());
+        m_Zawody->ZarejestrujSedziego(NowySedzia, Konkurencja, Pomocniczy);
+    }
+    else {
+        if(m_Zawody->ZarejestrujSedziego(NowySedzia, Konkurencja, Pomocniczy)){
+            m_Zawody->UsunSedziego(StarySedzia.Nazwisko() + " " + StarySedzia.Imie());
+        }
+        else{
+            emit EdytowanoSedziego(false);
+            return;
+        }
+    }
+    emit EdytowanoSedziego(true);
+}
+
+void CompetitionManager::WybranoSedziegoDoEdycji(QString Nazwa){
+    Sedzia S;
+    int Konkurencja;
+    bool Pomocniczy = false;
+    if(m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaGlowny.count(Nazwa)){
+        S = m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaGlowny.value(Nazwa);
+        Konkurencja = 0;
+    }
+    if(m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaPomocniczy.count(Nazwa)){
+        S = m_Zawody->Sedziowie()->ListaSiatkowkaPlazowaPomocniczy.value(Nazwa);
+        Konkurencja = 0;
+        Pomocniczy = true;
+    }
+    if(m_Zawody->Sedziowie()->ListaPrzeciaganieLinyGlowny.count(Nazwa)){
+        S = m_Zawody->Sedziowie()->ListaPrzeciaganieLinyGlowny.value(Nazwa);
+        Konkurencja = 1;
+    }
+    if(m_Zawody->Sedziowie()->ListaDwaOgnieGlowny.count(Nazwa)){
+        S = m_Zawody->Sedziowie()->ListaDwaOgnieGlowny.value(Nazwa);
+        Konkurencja = 2;
+    }
+    EditUmpireDialog Dialog(this, S, Konkurencja, Pomocniczy);
+    connect(&Dialog, SIGNAL(EdytujSedziego(Sedzia,Sedzia,int,bool)), this, SLOT(EdytujSedziego(Sedzia,Sedzia,int,bool)));
+    connect(this, SIGNAL(EdytowanoSedziego(bool)), &Dialog, SLOT(UdaoSiem(bool)));
+    Dialog.exec();
 }
 
 void CompetitionManager::on_actionWygeneruj_Druzyny_triggered(){
@@ -303,13 +364,17 @@ void CompetitionManager::GenerujSedziow(int Ilosc, int Konkurencje){
 }
 
 void CompetitionManager::on_actionStan_triggered(){
-    State Dialog;
-    Dialog.exec();
+
 }
 
 void CompetitionManager::on_actionRozegraj_Mecze_triggered(){
+    if(m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.isEmpty() && m_Zawody->Druzyny()->ListaPrzeciaganieLiny.isEmpty() && m_Zawody->Druzyny()->ListaDwaOgnie.isEmpty()){
+        QMessageBox::warning(this, "Błąd", "Brak drużyn!");
+        return;
+    }
     GenerateMatchScores Dialog;
     if(Dialog.exec()) m_Zawody->RozegrajMecze();
+
 }
 
 void CompetitionManager::on_actionZaplanuj_spotkania_triggered(){
@@ -409,8 +474,19 @@ void CompetitionManager::on_widokDruzyn_doubleClicked(const QModelIndex &index){
     WybranoDruzyneDoEdycji(Nazwa);
 }
 
+void CompetitionManager::on_widokSedziow_doubleClicked(const QModelIndex &index){
+    if(m_Zawody->Etap() != Rejestracja){
+        QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
+        return;
+    }
+    QString Nazwa = m_JudgeProxyModel->data(m_JudgeProxyModel->index(index.row(), 0)).toString();
+    Nazwa += " ";
+    Nazwa += m_JudgeProxyModel->data(m_JudgeProxyModel->index(index.row(), 1)).toString();
+    WybranoSedziegoDoEdycji(Nazwa);
+}
+
 bool CompetitionManager::Zapisz(){
-    if(m_NazwaPliku.isEmpty()) ZapiszJako();
+    if(m_NazwaPliku.isEmpty()) if(!ZapiszJako()) return false;
     QFile Plik(m_NazwaPliku);
     Plik.open(QIODevice::WriteOnly);
     QDataStream out(&Plik);

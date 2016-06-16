@@ -1,39 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EditTeamDialog</class>
- <widget class="QDialog" name="EditTeamDialog">
+ <class>AddUmpireDialog</class>
+ <widget class="QDialog" name="AddUmpireDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>350</height>
+    <width>400</width>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Edytuj Drużynę</string>
+   <string>Dodaj Sędziego</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="0">
+     <item row="0" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Konkurencja:</string>
+        <string>Imię:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QLineEdit" name="NazwaDruzyny"/>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="Nazwisko"/>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_Nazwa">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Podaj nazwę:</string>
+        <string>Nazwisko:</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item row="3" column="1">
+      <widget class="QCheckBox" name="Pomocniczy">
+       <property name="text">
+        <string>Pomocniczy</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="Imie"/>
+     </item>
+     <item row="2" column="1">
       <widget class="QComboBox" name="Konkurencja">
        <item>
         <property name="text">
@@ -53,50 +63,26 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QLabel" name="label_Zawodnicy">
-         <property name="text">
-          <string>Zawodnicy:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item row="2" column="2">
-      <widget class="QTableWidget" name="Zawodnicy">
-       <property name="sizeAdjustPolicy">
-        <enum>QAbstractScrollArea::AdjustIgnored</enum>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Konkurencja:</string>
        </property>
-       <attribute name="horizontalHeaderStretchLastSection">
-        <bool>true</bool>
-       </attribute>
-       <column>
-        <property name="text">
-         <string>Nazwisko</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Imię</string>
-        </property>
-       </column>
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
