@@ -336,7 +336,7 @@ void CompetitionManager::on_actionWygeneruj_Sedziow_triggered(){
         QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
         return;
     }
-    GenerateJugdeDialog Dialog(this);
+    GenerateUmpireDialog Dialog(this);
     connect(&Dialog, SIGNAL(GenerujSedziow(int,int)), this, SLOT(GenerujSedziow(int,int)));
     connect(this, SIGNAL(WygenerowanoSedziow(bool)), &Dialog, SLOT(UdaoSiem(bool)));
     Dialog.exec();

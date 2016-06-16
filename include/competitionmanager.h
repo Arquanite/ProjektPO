@@ -11,7 +11,7 @@
 #include <QFile>
 
 #include "generatematchscores.h"
-#include "generatejugdedialog.h"
+#include "generateumpiredialog.h"
 #include "generateteamsdialog.h"
 #include "selectumpiredialog.h"
 #include "deleteumpiredialog.h"

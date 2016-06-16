@@ -1,7 +1,7 @@
-#include "generatejugdedialog.h"
-#include "ui_generatejugdedialog.h"
+#include "generateumpiredialog.h"
+#include "ui_generateumpiredialog.h"
 
-GenerateJugdeDialog::GenerateJugdeDialog(QWidget *parent) : QDialog(parent), ui(new Ui::GenerateJugdeDialog){
+GenerateUmpireDialog::GenerateUmpireDialog(QWidget *parent) : QDialog(parent), ui(new Ui::GenerateUmpireDialog){
     ui->setupUi(this);
     connect(ui->SiatkowkaPlazowaG, SIGNAL(stateChanged(int)), this, SLOT(ObliczWartosc()));
     connect(ui->SiatkowkaPlazowaP, SIGNAL(stateChanged(int)), this, SLOT(ObliczWartosc()));
@@ -11,16 +11,16 @@ GenerateJugdeDialog::GenerateJugdeDialog(QWidget *parent) : QDialog(parent), ui(
     connect(ui->Anuluj, SIGNAL(clicked(bool)), this, SLOT(reject()));
 }
 
-GenerateJugdeDialog::~GenerateJugdeDialog(){
+GenerateUmpireDialog::~GenerateUmpireDialog(){
     delete ui;
 }
 
-void GenerateJugdeDialog::on_Ilosc_valueChanged(int arg1){
+void GenerateUmpireDialog::on_Ilosc_valueChanged(int arg1){
     m_Liczba = arg1;
     ObliczWartosc();
 }
 
-int GenerateJugdeDialog::ObliczWartosc(){
+int GenerateUmpireDialog::ObliczWartosc(){
     int ilosc = 0;
     if(ui->SiatkowkaPlazowaG->isChecked()) ilosc += m_Liczba;
     if(ui->SiatkowkaPlazowaP->isChecked()) ilosc += m_Liczba;
@@ -30,7 +30,7 @@ int GenerateJugdeDialog::ObliczWartosc(){
     return ilosc;
 }
 
-void GenerateJugdeDialog::Sprawdz(){
+void GenerateUmpireDialog::Sprawdz(){
     if(ObliczWartosc() == 0){
         QMessageBox::warning(this, "Błąd", "Próbujesz wygenerować 0 sędziów!");
         return;
@@ -43,7 +43,7 @@ void GenerateJugdeDialog::Sprawdz(){
     emit GenerujSedziow(m_Liczba, Konkurencje);
 }
 
-void GenerateJugdeDialog::UdaoSiem(bool Odpowiedz){
+void GenerateUmpireDialog::UdaoSiem(bool Odpowiedz){
     if(Odpowiedz) accept();
     else{
         QMessageBox::warning(this, "Błąd", QString("Wystąpił błąd ale nikt nie ujrzy tego komunikatu ponieważ zawiesił mu się program :<"));

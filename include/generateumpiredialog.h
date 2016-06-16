@@ -1,21 +1,21 @@
-#ifndef GENERATEJUGDEDIALOG_H
-#define GENERATEJUGDEDIALOG_H
+#ifndef GENERATEUMPIREDIALOG_H
+#define GENERATEUMPIREDIALOG_H
 
 #include <QDialog>
 #include <QMessageBox>
 
 namespace Ui {
-class GenerateJugdeDialog;
+class GenerateUmpireDialog;
 }
 
-class GenerateJugdeDialog : public QDialog {
+class GenerateUmpireDialog : public QDialog {
     Q_OBJECT
 private:
     int m_Liczba = 0;
 
 public:
-    explicit GenerateJugdeDialog(QWidget *parent = 0);
-    ~GenerateJugdeDialog();
+    explicit GenerateUmpireDialog(QWidget *parent = 0);
+    ~GenerateUmpireDialog();
 
 private slots:
     void on_Ilosc_valueChanged(int arg1);
@@ -29,7 +29,7 @@ public slots:
     void UdaoSiem(bool Odpowiedz);
 
 private:
-    Ui::GenerateJugdeDialog *ui;
+    Ui::GenerateUmpireDialog *ui;
 };
 
-#endif // GENERATEJUGDEDIALOG_H
+#endif // GENERATEUMPIREDIALOG_H
