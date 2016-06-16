@@ -37,7 +37,6 @@ SOURCES += src/main.cpp\
     src/teammodel.cpp \
     src/exitdialog.cpp \
     src/betterproxymodel.cpp \
-    src/judgemodel.cpp \
     src/matchmodel.cpp \
     src/addteamdialog.cpp \
     src/deleteteamdialog.cpp \
@@ -50,7 +49,8 @@ SOURCES += src/main.cpp\
     src/selectumpiredialog.cpp \
     src/addumpiredialog.cpp \
     src/deleteumpiredialog.cpp \
-    src/generateumpiredialog.cpp
+    src/generateumpiredialog.cpp \
+    src/umpiremodel.cpp
 
 HEADERS  += include/competitionmanager.h \
     include/osoba.h \
@@ -75,7 +75,6 @@ HEADERS  += include/competitionmanager.h \
     include/teammodel.h \
     include/exitdialog.h \
     include/betterproxymodel.h \
-    include/judgemodel.h \
     include/konkurencja.h \
     include/matchmodel.h \
     include/addteamdialog.h \
@@ -89,7 +88,8 @@ HEADERS  += include/competitionmanager.h \
     include/selectumpiredialog.h \
     include/addumpiredialog.h \
     include/deleteumpiredialog.h \
-    include/generateumpiredialog.h
+    include/generateumpiredialog.h \
+    include/umpiremodel.h
 
 FORMS    += ui/competitionmanager.ui \
     ui/exitdialog.ui \

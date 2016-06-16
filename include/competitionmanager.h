@@ -23,7 +23,7 @@
 #include "addumpiredialog.h"
 #include "editteamdialog.h"
 #include "addteamdialog.h"
-#include "judgemodel.h"
+#include "umpiremodel.h"
 #include "matchmodel.h"
 #include "exitdialog.h"
 #include "teammodel.h"
@@ -42,13 +42,13 @@ private:
     Zawody *m_Final;
 
     TeamModel *m_TeamModel;
-    JudgeModel *m_JudgeModel;
+    UmpireModel *m_UmpireModel;
     MatchModel *m_MatchModel;
     MatchModel *m_HalfFinalModel;
     MatchModel *m_FinalModel;
 
     BetterProxyModel *m_TeamProxyModel;
-    BetterProxyModel *m_JudgeProxyModel;
+    BetterProxyModel *m_UmpireProxyModel;
     BetterProxyModel *m_MatchProxyModel;
     BetterProxyModel *m_HalfFinalProxyModel;
     BetterProxyModel *m_FinalProxyModel;

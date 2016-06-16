@@ -1,10 +1,10 @@
-#include "judgemodel.h"
+#include "umpiremodel.h"
 
-JudgeModel::JudgeModel(const ListaSedziow *Sedziowie, QObject *parent) : QAbstractTableModel(parent), m_Sedziowie(Sedziowie){
+UmpireModel::UmpireModel(const ListaSedziow *Sedziowie, QObject *parent) : QAbstractTableModel(parent), m_Sedziowie(Sedziowie){
 
 }
 
-int JudgeModel::rowCount(const QModelIndex &parent) const {
+int UmpireModel::rowCount(const QModelIndex &parent) const {
     if(parent.isValid())   return 0;
 
     int rozmiar = 0;
@@ -16,22 +16,22 @@ int JudgeModel::rowCount(const QModelIndex &parent) const {
     return rozmiar;
 }
 
-int JudgeModel::columnCount(const QModelIndex &parent) const {
+int UmpireModel::columnCount(const QModelIndex &parent) const {
     if(parent.isValid()) return 0;
     return 4;
 }
 
-void JudgeModel::AddRow(){
+void UmpireModel::AddRow(){
     beginInsertRows(QModelIndex(), 0, 0);
     endInsertRows();
 }
 
-void JudgeModel::DeleteRow(int index){
+void UmpireModel::DeleteRow(int index){
     beginRemoveRows(QModelIndex(), index, index);
     endRemoveRows();
 }
 
-QVariant JudgeModel::data(const QModelIndex &index, int role) const {
+QVariant UmpireModel::data(const QModelIndex &index, int role) const {
     if(!index.isValid()) return QVariant();
     if(role != Qt::DisplayRole) return QVariant();
 
@@ -93,7 +93,7 @@ QVariant JudgeModel::data(const QModelIndex &index, int role) const {
 
 }
 
-QVariant JudgeModel::headerData(int section, Qt::Orientation orientation, int role) const {
+QVariant UmpireModel::headerData(int section, Qt::Orientation orientation, int role) const {
     if(role != Qt::DisplayRole) return QVariant();
     if(orientation == Qt::Horizontal){
         if(section == 0) return tr("Nazwisko");

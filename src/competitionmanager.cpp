@@ -23,8 +23,8 @@ CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), u
 CompetitionManager::~CompetitionManager(){
     delete m_TeamModel;
     delete m_TeamProxyModel;
-    delete m_JudgeModel;
-    delete m_JudgeProxyModel;
+    delete m_UmpireModel;
+    delete m_UmpireProxyModel;
     delete m_MatchModel;
     delete m_MatchProxyModel;
     delete m_Zawody;
@@ -48,13 +48,13 @@ void CompetitionManager::UtworzZawody(){
     ui->widokDruzyn->sortByColumn(1, Qt::DescendingOrder);
 
     const ListaSedziow* Sedziowie = m_Zawody->Sedziowie();
-    m_JudgeModel = new JudgeModel(Sedziowie);
-    m_JudgeProxyModel = new BetterProxyModel;
+    m_UmpireModel = new UmpireModel(Sedziowie);
+    m_UmpireProxyModel = new BetterProxyModel;
 
-    m_JudgeProxyModel->setSourceModel(m_JudgeModel);
-    m_JudgeProxyModel->setFilterKeyColumn(2);
+    m_UmpireProxyModel->setSourceModel(m_UmpireModel);
+    m_UmpireProxyModel->setFilterKeyColumn(2);
 
-    ui->widokSedziow->setModel(m_JudgeProxyModel);
+    ui->widokSedziow->setModel(m_UmpireProxyModel);
     ui->widokSedziow->resizeColumnsToContents();
     ui->widokSedziow->horizontalHeader()->setSectionsMovable(true);
     ui->widokSedziow->sortByColumn(0, Qt::AscendingOrder);
@@ -93,7 +93,7 @@ void CompetitionManager::on_Wszystkie_clicked(bool checked){
     QString Filtr = QString();
     if(checked){
         m_TeamProxyModel->setFilterFixedString(Filtr);
-        m_JudgeProxyModel->setFilterFixedString(Filtr);
+        m_UmpireProxyModel->setFilterFixedString(Filtr);
         m_MatchProxyModel->setFilterFixedString(Filtr);
     }
 }
@@ -102,7 +102,7 @@ void CompetitionManager::on_SiatkowkaPlazowa_clicked(bool checked){
     QString Filtr = "Siatkówka Plażowa";
     if(checked){
         m_TeamProxyModel->setFilterFixedString(Filtr);
-        m_JudgeProxyModel->setFilterFixedString(Filtr);
+        m_UmpireProxyModel->setFilterFixedString(Filtr);
         m_MatchProxyModel->setFilterFixedString(Filtr);
     }
 }
@@ -111,7 +111,7 @@ void CompetitionManager::on_PrzeciaganieLiny_clicked(bool checked){
     QString Filtr = "Przeciąganie Liny";
     if(checked){
         m_TeamProxyModel->setFilterFixedString(Filtr);
-        m_JudgeProxyModel->setFilterFixedString(Filtr);
+        m_UmpireProxyModel->setFilterFixedString(Filtr);
         m_MatchProxyModel->setFilterFixedString(Filtr);
     }
 }
@@ -120,7 +120,7 @@ void CompetitionManager::on_DwaOgnie_clicked(bool checked){
     QString Filtr = "Dwa Ognie";
     if(checked){
         m_TeamProxyModel->setFilterFixedString(Filtr);
-        m_JudgeProxyModel->setFilterFixedString(Filtr);
+        m_UmpireProxyModel->setFilterFixedString(Filtr);
         m_MatchProxyModel->setFilterFixedString(Filtr);
     }
 }
@@ -190,7 +190,7 @@ void CompetitionManager::on_actionDodaj_sedziego_triggered(){
 
 void CompetitionManager::DodajSedziego(Sedzia NowySedzia, int Konkurencja, bool Pomocniczy){
     if(m_Zawody->ZarejestrujSedziego(NowySedzia, Konkurencja, Pomocniczy)){
-        m_JudgeModel->AddRow();
+        m_UmpireModel->AddRow();
         emit DodanoSedziego(true);
     }
     else {
@@ -224,7 +224,7 @@ void CompetitionManager::UsunSedziego(QString Nazwa){
     Sedziowie.append(m_Zawody->Sedziowie()->ListaDwaOgnieGlowny.keys());
     int index = Sedziowie.indexOf(Nazwa);
     if(m_Zawody->UsunSedziego(Nazwa)){
-        m_JudgeModel->DeleteRow(index);
+        m_UmpireModel->DeleteRow(index);
         emit UsunietoSedziego(true);
     }
     else {
@@ -346,19 +346,19 @@ void CompetitionManager::GenerujSedziow(int Ilosc, int Konkurencje){
     int Liczba;
     Liczba = Ilosc;
     if(Konkurencje & 0x01){
-        if(m_Zawody->GenerujSedziow(Ilosc, 0)) while(Liczba--) m_JudgeModel->AddRow();
+        if(m_Zawody->GenerujSedziow(Ilosc, 0)) while(Liczba--) m_UmpireModel->AddRow();
     }
     Liczba = Ilosc;
     if(Konkurencje & 0x02){
-        if(m_Zawody->GenerujSedziow(Ilosc, 0, true)) while(Liczba--) m_JudgeModel->AddRow();
+        if(m_Zawody->GenerujSedziow(Ilosc, 0, true)) while(Liczba--) m_UmpireModel->AddRow();
     }
     Liczba = Ilosc;
     if(Konkurencje & 0x04){
-        if(m_Zawody->GenerujSedziow(Ilosc, 1)) while(Liczba--) m_JudgeModel->AddRow();
+        if(m_Zawody->GenerujSedziow(Ilosc, 1)) while(Liczba--) m_UmpireModel->AddRow();
     }
     Liczba = Ilosc;
     if(Konkurencje & 0x08){
-        if(m_Zawody->GenerujSedziow(Ilosc, 2)) while(Liczba--) m_JudgeModel->AddRow();
+        if(m_Zawody->GenerujSedziow(Ilosc, 2)) while(Liczba--) m_UmpireModel->AddRow();
     }
     emit WygenerowanoSedziow(true);
 }
@@ -479,9 +479,9 @@ void CompetitionManager::on_widokSedziow_doubleClicked(const QModelIndex &index)
         QMessageBox::warning(this, "Błąd", "Rejestracja jest zamknięta!");
         return;
     }
-    QString Nazwa = m_JudgeProxyModel->data(m_JudgeProxyModel->index(index.row(), 0)).toString();
+    QString Nazwa = m_UmpireProxyModel->data(m_UmpireProxyModel->index(index.row(), 0)).toString();
     Nazwa += " ";
-    Nazwa += m_JudgeProxyModel->data(m_JudgeProxyModel->index(index.row(), 1)).toString();
+    Nazwa += m_UmpireProxyModel->data(m_UmpireProxyModel->index(index.row(), 1)).toString();
     WybranoSedziegoDoEdycji(Nazwa);
 }
 
@@ -515,9 +515,9 @@ bool CompetitionManager::Otworz(){
     m_TeamModel = new TeamModel(m_Zawody->Druzyny(), m_Zawody->LiczbaOsob());
     m_TeamProxyModel->setSourceModel(m_TeamModel);
 
-    delete m_JudgeModel;
-    m_JudgeModel = new JudgeModel(m_Zawody->Sedziowie());
-    m_JudgeProxyModel->setSourceModel(m_JudgeModel);
+    delete m_UmpireModel;
+    m_UmpireModel = new UmpireModel(m_Zawody->Sedziowie());
+    m_UmpireProxyModel->setSourceModel(m_UmpireModel);
 
     delete m_MatchModel;
     m_MatchModel = new MatchModel(m_Zawody->Spotkania());
