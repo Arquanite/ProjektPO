@@ -14,7 +14,7 @@
 #include "generatejugdedialog.h"
 #include "generateteamsdialog.h"
 #include "selectumpiredialog.h"
-#include "deletejudgedialog.h"
+#include "deleteumpiredialog.h"
 #include "planmatchesdialog.h"
 #include "betterproxymodel.h"
 #include "deleteteamdialog.h"

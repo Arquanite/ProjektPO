@@ -1,7 +1,7 @@
-#include "deletejudgedialog.h"
-#include "ui_deletejudgedialog.h"
+#include "deleteumpiredialog.h"
+#include "ui_deleteumpiredialog.h"
 
-DeleteJudgeDialog::DeleteJudgeDialog(QList<QString> NazwySedziow, QWidget *parent) : QDialog(parent), ui(new Ui::DeleteJudgeDialog){
+DeleteUmpireDialog::DeleteUmpireDialog(QList<QString> NazwySedziow, QWidget *parent) : QDialog(parent), ui(new Ui::DeleteUmpireDialog){
     ui->setupUi(this);
     m_JudgeModel = new QStringListModel();
     m_JudgeModel->setStringList(QStringList(NazwySedziow));
@@ -11,22 +11,22 @@ DeleteJudgeDialog::DeleteJudgeDialog(QList<QString> NazwySedziow, QWidget *paren
     connect(ui->WidokSedziow, SIGNAL(clicked(QModelIndex)), this, SLOT(ZmianaZaznaczenia(QModelIndex)));
 }
 
-DeleteJudgeDialog::~DeleteJudgeDialog(){
+DeleteUmpireDialog::~DeleteUmpireDialog(){
     delete ui;
 }
 
-void DeleteJudgeDialog::UdaoSiem(bool Odpowiedz){
+void DeleteUmpireDialog::UdaoSiem(bool Odpowiedz){
     if(Odpowiedz) accept();
     else {
         QMessageBox::warning(this, "Błąd", "Wystąpił błąd, spróbuj jeszcze raz!");
     }
 }
 
-void DeleteJudgeDialog::Sprawdz(){
+void DeleteUmpireDialog::Sprawdz(){
     if(m_Zaznaczenie == -1) QMessageBox::warning(this, "Błąd", "Musisz wybrać, którego sedziego chesz usunąć!");
     else emit UsunSedziego(m_JudgeModel->stringList().at(m_Zaznaczenie));
 }
 
-void DeleteJudgeDialog::ZmianaZaznaczenia(QModelIndex index){
+void DeleteUmpireDialog::ZmianaZaznaczenia(QModelIndex index){
     m_Zaznaczenie = index.row();
 }

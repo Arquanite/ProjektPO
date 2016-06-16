@@ -41,7 +41,6 @@ SOURCES += src/main.cpp\
     src/matchmodel.cpp \
     src/addteamdialog.cpp \
     src/deleteteamdialog.cpp \
-    src/deletejudgedialog.cpp \
     src/generateteamsdialog.cpp \
     src/generatejugdedialog.cpp \
     src/generatematchscores.cpp \
@@ -50,7 +49,8 @@ SOURCES += src/main.cpp\
     src/selectteamdialog.cpp \
     src/editumpiredialog.cpp \
     src/selectumpiredialog.cpp \
-    src/addumpiredialog.cpp
+    src/addumpiredialog.cpp \
+    src/deleteumpiredialog.cpp
 
 HEADERS  += include/competitionmanager.h \
     include/osoba.h \
@@ -80,7 +80,6 @@ HEADERS  += include/competitionmanager.h \
     include/matchmodel.h \
     include/addteamdialog.h \
     include/deleteteamdialog.h \
-    include/deletejudgedialog.h \
     include/generateteamsdialog.h \
     include/generatejugdedialog.h \
     include/generatematchscores.h \
@@ -89,13 +88,13 @@ HEADERS  += include/competitionmanager.h \
     include/selectteamdialog.h \
     include/editumpiredialog.h \
     include/selectumpiredialog.h \
-    include/addumpiredialog.h
+    include/addumpiredialog.h \
+    include/deleteumpiredialog.h
 
 FORMS    += ui/competitionmanager.ui \
     ui/exitdialog.ui \
     ui/addteamdialog.ui \
     ui/deleteteamdialog.ui \
-    ui/deletejudgedialog.ui \
     ui/generateteamsdialog.ui \
     ui/generatejugdedialog.ui \
     ui/generatematchscores.ui \
@@ -104,7 +103,8 @@ FORMS    += ui/competitionmanager.ui \
     ui/selectteamdialog.ui \
     ui/editumpiredialog.ui \
     ui/selectumpiredialog.ui \
-    ui/addumpiredialog.ui
+    ui/addumpiredialog.ui \
+    ui/deleteumpiredialog.ui
 
 RESOURCES += res/resources.qrc
 

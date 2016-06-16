@@ -1,23 +1,23 @@
-#ifndef DELETEJUDGEDIALOG_H
-#define DELETEJUDGEDIALOG_H
+#ifndef DELETEUMPIREDIALOG_H
+#define DELETEUMPIREDIALOG_H
 
 #include <QDialog>
 #include <QStringListModel>
 #include <QMessageBox>
 
 namespace Ui {
-class DeleteJudgeDialog;
+class DeleteUmpireDialog;
 }
 
-class DeleteJudgeDialog : public QDialog{
+class DeleteUmpireDialog : public QDialog{
     Q_OBJECT
 private:
     QStringListModel *m_JudgeModel;
     int m_Zaznaczenie = -1;
 
 public:
-    explicit DeleteJudgeDialog(QList<QString> NazwySedziow, QWidget *parent = 0);
-    ~DeleteJudgeDialog();
+    explicit DeleteUmpireDialog(QList<QString> NazwySedziow, QWidget *parent = 0);
+    ~DeleteUmpireDialog();
 
 public slots:
     void UdaoSiem(bool Odpowiedz);
@@ -28,7 +28,7 @@ signals:
     void UsunSedziego(QString);
 
 private:
-    Ui::DeleteJudgeDialog *ui;
+    Ui::DeleteUmpireDialog *ui;
 };
 
-#endif // DELETEJUDGEDIALOG_H
+#endif // DELETEUMPIREDIALOG_H

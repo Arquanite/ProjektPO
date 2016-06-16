@@ -210,7 +210,7 @@ void CompetitionManager::on_actionUsun_sedziego_triggered(){
     Sedziowie.append(m_Zawody->Sedziowie()->ListaPrzeciaganieLinyGlowny.keys());
     Sedziowie.append(m_Zawody->Sedziowie()->ListaDwaOgnieGlowny.keys());
     qSort(Sedziowie);
-    DeleteJudgeDialog Dialog(Sedziowie, this);
+    DeleteUmpireDialog Dialog(Sedziowie, this);
     connect(&Dialog, SIGNAL(UsunSedziego(QString)), this, SLOT(UsunSedziego(QString)));
     connect(this, SIGNAL(UsunietoSedziego(bool)), &Dialog, SLOT(UdaoSiem(bool)));
     Dialog.exec();
