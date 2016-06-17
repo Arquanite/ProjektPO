@@ -1,8 +1,6 @@
 #include "addteamdialog.h"
 #include "ui_addteamdialog.h"
 
-#include <QDebug>
-
 AddTeamDialog::AddTeamDialog(QWidget *parent, int LiczbaZawodnikow)
     : QDialog(parent), m_LiczbaZawodnikow(LiczbaZawodnikow), ui(new Ui::AddTeamDialog){
     ui->setupUi(this);

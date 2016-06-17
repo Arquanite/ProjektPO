@@ -14,7 +14,7 @@
    <string>CompetitionManager</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../res/resources.qrc">
     <normaloff>:/icons/cm_icon.png</normaloff>:/icons/cm_icon.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -80,7 +80,7 @@ QToolButton:checked{
           <string/>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../res/resources.qrc">
            <normaloff>:/icons/all.png</normaloff>:/icons/all.png</iconset>
          </property>
          <property name="checkable">
@@ -116,7 +116,7 @@ QToolButton:checked{
           <string/>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../res/resources.qrc">
            <normaloff>:/icons/ball.png</normaloff>:/icons/ball.png</iconset>
          </property>
          <property name="checkable">
@@ -149,7 +149,7 @@ QToolButton:checked{
           <string/>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../res/resources.qrc">
            <normaloff>:/icons/rope.png</normaloff>:/icons/rope.png</iconset>
          </property>
          <property name="checkable">
@@ -182,7 +182,7 @@ QToolButton:checked{
           <string/>
          </property>
          <property name="icon">
-          <iconset>
+          <iconset resource="../res/resources.qrc">
            <normaloff>:/icons/fire.png</normaloff>:/icons/fire.png</iconset>
          </property>
          <property name="checkable">
@@ -256,7 +256,7 @@ QTabBar::tab:!selected{
 }</string>
          </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>2</number>
          </property>
          <property name="movable">
           <bool>true</bool>
@@ -468,6 +468,7 @@ QMenu {
     <property name="title">
      <string>Pomoc</string>
     </property>
+    <addaction name="actionO_programie"/>
    </widget>
    <widget class="QMenu" name="menuAutomat">
     <property name="title">
@@ -482,9 +483,7 @@ QMenu {
     <property name="title">
      <string>Zawody</string>
     </property>
-    <addaction name="actionStan"/>
     <addaction name="actionZaplanuj_spotkania"/>
-    <addaction name="actionNastepny_etap"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuDruzyny"/>
@@ -511,75 +510,117 @@ QStatusBar::item{
     <string>Dodaj drużynę</string>
    </property>
    <property name="statusTip">
-    <string>Dodaje drużyne do zawodów</string>
+    <string>Dodaje drużyne do zawodów.</string>
    </property>
   </action>
   <action name="actionEdytuj_druzyne">
    <property name="text">
     <string>Edytuj drużynę</string>
    </property>
+   <property name="statusTip">
+    <string>Edytuj dane drużyny.</string>
+   </property>
   </action>
   <action name="actionUsun_druzyne">
    <property name="text">
     <string>Usuń drużynę</string>
+   </property>
+   <property name="statusTip">
+    <string>Usuń drużynę z zawodów.</string>
    </property>
   </action>
   <action name="actionDodaj_sedziego">
    <property name="text">
     <string>Dodaj sędziego</string>
    </property>
+   <property name="statusTip">
+    <string>Dodaj nowego sędziego.</string>
+   </property>
   </action>
   <action name="actionEdytuj_dane_sedziego">
    <property name="text">
     <string>Edytuj dane sędziego</string>
+   </property>
+   <property name="statusTip">
+    <string>Edytuj dane sędziego.</string>
    </property>
   </action>
   <action name="actionUsun_sedziego">
    <property name="text">
     <string>Usuń sędziego</string>
    </property>
+   <property name="statusTip">
+    <string>Usuń sędziego z zawodów.</string>
+   </property>
   </action>
   <action name="actionNowy">
    <property name="text">
     <string>Nowa baza</string>
+   </property>
+   <property name="statusTip">
+    <string>Utwórz nowy plik z zawodami.</string>
    </property>
   </action>
   <action name="actionWczytaj">
    <property name="text">
     <string>Wczytaj bazę z pliku</string>
    </property>
+   <property name="statusTip">
+    <string>Wczytaj istniejące zawody.</string>
+   </property>
   </action>
   <action name="actionZapisz">
    <property name="text">
     <string>Zapisz</string>
+   </property>
+   <property name="statusTip">
+    <string>Zapisz stan zawodów do pliku.</string>
    </property>
   </action>
   <action name="actionZapisz_jako">
    <property name="text">
     <string>Zapisz jako</string>
    </property>
+   <property name="statusTip">
+    <string>Zapisz stan zawodów do pliku.</string>
+   </property>
   </action>
   <action name="actionZamknij">
    <property name="text">
     <string>Zamknij</string>
+   </property>
+   <property name="statusTip">
+    <string>Zakończ pracę i zamknij program.</string>
    </property>
   </action>
   <action name="actionWygeneruj_Druzyny">
    <property name="text">
     <string>Wygeneruj Drużyny</string>
    </property>
+   <property name="statusTip">
+    <string>Wygeneruj losowe drużyny i dodaj je do zawodów.</string>
+   </property>
   </action>
   <action name="actionWygeneruj_Sedziow">
    <property name="text">
     <string>Wygeneruj Sędziów</string>
+   </property>
+   <property name="statusTip">
+    <string>Wygeneruj losowych sędziów i dodaj ich do zawodów.</string>
    </property>
   </action>
   <action name="actionRozegraj_Mecze">
    <property name="text">
     <string>Rozegraj Mecze</string>
    </property>
+   <property name="statusTip">
+    <string>Wylosuj wyniki wszystkich meczy.</string>
+   </property>
   </action>
   <action name="actionStan">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Pokaż stan</string>
    </property>
@@ -588,14 +629,30 @@ QStatusBar::item{
    <property name="text">
     <string>Zaplanuj spotkania</string>
    </property>
+   <property name="statusTip">
+    <string>Automatycznie zaplanuj spotkania między drużynami.</string>
+   </property>
   </action>
   <action name="actionNastepny_etap">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Przejdz do nastepnego etapu</string>
    </property>
   </action>
+  <action name="actionO_programie">
+   <property name="text">
+    <string>O programie</string>
+   </property>
+   <property name="statusTip">
+    <string>Wyświetla informacje o programie.</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../res/resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

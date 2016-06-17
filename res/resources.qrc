@@ -5,6 +5,7 @@
         <file>fire.png</file>
         <file>rope.png</file>
         <file>cm_icon.png</file>
+        <file>cm_icon_big.png</file>
     </qresource>
     <qresource prefix="/osoby">
         <file>imiona_m</file>

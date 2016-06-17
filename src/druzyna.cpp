@@ -37,10 +37,6 @@ bool Druzyna::operator == (const Druzyna &D) const{
     return ( m_Nazwa == D.m_Nazwa && m_Zawodnicy == D.m_Zawodnicy );
 }
 
-bool Druzyna::operator < (const Druzyna &D) const{
-    return Punkty() > D.Punkty();
-}
-
 QDataStream &operator<<(QDataStream &out, const Druzyna &D){
     out<<D.m_Nazwa<<D.m_Punkty<<D.m_Zawodnicy;
     return out;

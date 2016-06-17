@@ -50,7 +50,8 @@ SOURCES += src/main.cpp\
     src/addumpiredialog.cpp \
     src/deleteumpiredialog.cpp \
     src/generateumpiredialog.cpp \
-    src/umpiremodel.cpp
+    src/umpiremodel.cpp \
+    src/aboutdialog.cpp
 
 HEADERS  += include/competitionmanager.h \
     include/osoba.h \
@@ -75,7 +76,6 @@ HEADERS  += include/competitionmanager.h \
     include/teammodel.h \
     include/exitdialog.h \
     include/betterproxymodel.h \
-    include/konkurencja.h \
     include/matchmodel.h \
     include/addteamdialog.h \
     include/deleteteamdialog.h \
@@ -89,7 +89,8 @@ HEADERS  += include/competitionmanager.h \
     include/addumpiredialog.h \
     include/deleteumpiredialog.h \
     include/generateumpiredialog.h \
-    include/umpiremodel.h
+    include/umpiremodel.h \
+    include/aboutdialog.h
 
 FORMS    += ui/competitionmanager.ui \
     ui/exitdialog.ui \
@@ -104,7 +105,8 @@ FORMS    += ui/competitionmanager.ui \
     ui/selectumpiredialog.ui \
     ui/addumpiredialog.ui \
     ui/deleteumpiredialog.ui \
-    ui/generateumpiredialog.ui
+    ui/generateumpiredialog.ui \
+    ui/aboutdialog.ui
 
 RESOURCES += res/resources.qrc
 

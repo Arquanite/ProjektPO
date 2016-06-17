@@ -1,2 +1,2 @@
-# Projekt PO
-Program ułatwiający organizowanie zawodów sportowych, stworzony jako projekt na przedmiot Programowanie Obiektowe.
+# Competition Manager
+Competition Manager to program do zarządzania zawodami sportowymi umożliwiający dodawanie, usuwanie oraz edycję zarówno sędziów jak i drużyn. Oferuje autorski generator nazw i imion umożliwiający łatwe przetestowanie działania programu. Zawiera także algorytm generujący spotkania na zasadzie każsy z każdym oraz możliwość automatycznego wirtualnego rozegrania meczy. Program został napisany jako projekt na zaliczenie przedmiotu Programowanie Obiektowe. Autorem programu jest Adrian Kryński.

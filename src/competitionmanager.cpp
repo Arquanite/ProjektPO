@@ -1,19 +1,15 @@
 #include "competitionmanager.h"
 #include "ui_competitionmanager.h"
 
-#include <QDebug>
-
 CompetitionManager::CompetitionManager(QWidget *parent) : QMainWindow(parent), ui(new Ui::CompetitionManager) {
     ui->setupUi(this);
     qsrand(QTime::currentTime().msecsSinceStartOfDay());
 
     UtworzZawody();
 
-    ui->statusBar->showMessage("Jak widać, działa :D");
     m_StatusBarEtap = new QLabel("Aktualny etap: " + m_Zawody->EtapToString());
     m_StatusBarEtap->setStyleSheet("color: white");
     ui->statusBar->addPermanentWidget(m_StatusBarEtap);
-    //ui->statusBar->addPermanentWidget(new QProgressBar());
 
     connect(ui->actionZapisz, SIGNAL(triggered(bool)), this, SLOT(Zapisz()));
     connect(ui->actionZapisz_jako, SIGNAL(triggered(bool)), this, SLOT(ZapiszJako()));
@@ -368,8 +364,8 @@ void CompetitionManager::on_actionStan_triggered(){
 }
 
 void CompetitionManager::on_actionRozegraj_Mecze_triggered(){
-    if(m_Zawody->Druzyny()->ListaSiatkowkaPlazowa.isEmpty() && m_Zawody->Druzyny()->ListaPrzeciaganieLiny.isEmpty() && m_Zawody->Druzyny()->ListaDwaOgnie.isEmpty()){
-        QMessageBox::warning(this, "Błąd", "Brak drużyn!");
+    if(m_Zawody->Spotkania()->ListaSiatkowkaPlazowa.isEmpty() && m_Zawody->Spotkania()->ListaPrzeciaganieLiny.isEmpty() && m_Zawody->Spotkania()->ListaDwaOgnie.isEmpty()){
+        QMessageBox::warning(this, "Błąd", "Brak meczy!");
         return;
     }
     GenerateMatchScores Dialog;
@@ -497,14 +493,25 @@ bool CompetitionManager::Zapisz(){
 }
 
 bool CompetitionManager::ZapiszJako(){
+    QString Backup = m_NazwaPliku;
     m_NazwaPliku = QFileDialog::getSaveFileName(this, "Zapisz plik", 0, "Pliki zawodów (*.cm)");
-    if(m_NazwaPliku.isEmpty()) return false;
+    if(m_NazwaPliku.isEmpty()){
+        m_NazwaPliku = Backup;
+        return false;
+    }
     if(m_NazwaPliku.right(3) != ".cm") m_NazwaPliku += ".cm";
     return true;
 }
 
 bool CompetitionManager::Otworz(){
-    m_NazwaPliku = QFileDialog::getOpenFileName();
+    QString Backup = m_NazwaPliku;
+    QMessageBox::warning(this, "UWAGA!", "Jeżeli otworzysz nowy plik to niezapisane zmiany w obecnym zostaną utracone!");
+    m_NazwaPliku = QFileDialog::getOpenFileName(this, "Otwórz plik", 0, "Pliki zawodów (*.cm)");
+    if(m_NazwaPliku.isEmpty()){
+        m_NazwaPliku = Backup;
+        return false;
+    }
+
     QFile Plik(m_NazwaPliku);
     Plik.open(QIODevice::ReadOnly);
     QDataStream in(&Plik);
@@ -524,4 +531,22 @@ bool CompetitionManager::Otworz(){
     m_MatchProxyModel->setSourceModel(m_MatchModel);
 
     return true;
+}
+
+void CompetitionManager::on_actionO_programie_triggered(){
+    AboutDialog Dialog;
+    Dialog.exec();
+}
+
+void CompetitionManager::on_actionNowy_triggered(){
+    QMessageBox::warning(this, "UWAGA!", "Jeżeli utworzysz nowy plik to niezapisane zmiany w obecnym zostaną utracone!");
+    if(!ZapiszJako()) return;
+    delete m_TeamModel;
+    delete m_TeamProxyModel;
+    delete m_UmpireModel;
+    delete m_UmpireProxyModel;
+    delete m_MatchModel;
+    delete m_MatchProxyModel;
+    delete m_Zawody;
+    UtworzZawody();
 }
